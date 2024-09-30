@@ -1,0 +1,150 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header .logo {
+    width: 50px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+header h1 {
+    display: inline-block;
+    font-size: 36px;
+    color: #000;
+}
+
+.form-container {
+    background-color: #f1f1f1;
+    padding: 30px;
+    border-radius: 10px;
+    border-color: #000000;
+    border-width: 1px;
+    border-style: solid;
+    width: 350px;
+}
+
+h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+    text-decoration: underline;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 14px;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-group input { /* username */
+    flex: 1; 
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px 0 0 5px; 
+    border: 1px solid #ccc;
+    margin-bottom: 14px;
+    box-sizing: border-box;
+}
+
+.input-group span { /* @umsystem */
+    flex: 1;
+    background-color: #e9ecef;
+    padding: 9px;
+    font-size: 14;
+    border-radius: 0 5px 5px 0; 
+    border: 1px solid #ccc;
+    border-left: none;
+    margin-bottom: 14px;
+    color: #333;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: #333;
+}
+
+button.register-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #ffc107;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button.register-btn:hover {
+    background-color: #e0a800;
+}
+
+.login-text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.login-text a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 20px;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 12px;
+}
+
+footer a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 5px;
+}
