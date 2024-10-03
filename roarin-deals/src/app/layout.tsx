@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Header from "./_components/Header/Header";
 
 export const metadata: Metadata = {
   title: "Roarin' Deals",
@@ -12,7 +13,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body style={{margin: 0, display: 'flex', flexDirection: 'column'}}>
+        <Header />
         {children}
       </body>
     </html>
