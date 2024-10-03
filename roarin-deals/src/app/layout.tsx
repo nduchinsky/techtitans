@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Header from "./_components/Header/Header";
+import Footer from "./_components/Footer/Footer";
+import '../../globals.css';
 
 export const metadata: Metadata = {
   title: "Roarin' Deals",
@@ -13,9 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body style={{margin: 0, display: 'flex', flexDirection: 'column'}}>
+      <body>
         <Header />
-        {children}
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
