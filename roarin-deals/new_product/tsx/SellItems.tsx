@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Header from './_components/Header/Header'; 
-import Footer from './_components/Footer/Footer'; 
 import './new_product/css/sellItems.css'; 
 
 const SellItemPage: React.FC = () => {
