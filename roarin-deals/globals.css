@@ -8,3 +8,4 @@ html, body {
 main {
   flex: 1; /* This allows the content area to grow and push the footer down */
 }
+
