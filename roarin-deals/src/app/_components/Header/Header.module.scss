@@ -4,6 +4,8 @@
     height: 110px;
     width: 100%;
     background-color: black;
+    display: flex;
+    justify-content: space-between;
 }
 
 .headerText{
@@ -12,4 +14,9 @@
     font-family: 'Monaco', monospace;
     padding-left: 200px;
     padding-top: 35px;
+    font-size: 2rem;
+}
+
+.buttons{
+    padding: 35px 150px;
 }
