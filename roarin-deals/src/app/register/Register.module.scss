@@ -3,7 +3,6 @@
     justify-content: center;
     align-items: center;
 }
-
   
 .formContainer {
     display: flex;
@@ -14,6 +13,7 @@
     border: 1px solid #000000;
     width: 350px;
     margin-top: 50px;
+    margin-bottom: 100px;
 }
   
 .formHeader {
@@ -40,26 +40,26 @@
     display: flex;
     align-items: center;
     width: 100%;
-}
 
-.inputGroup input {
-    flex: 1;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 5px 0 0 5px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-  
-.inputGroup span {
-    background-color: #e9ecef;
-    padding: 9px;
-    font-size: 14px;
-    border-radius: 0 5px 5px 0;
-    border: 1px solid #ccc;
-    border-left: none;
-    color: #333;
-    white-space: nowrap;
+    span{
+        background-color: #e9ecef;
+        padding: 9px;
+        font-size: 14px;
+        border-radius: 0 5px 5px 0;
+        border: 1px solid #ccc;
+        border-left: none;
+        color: #333;
+        white-space: nowrap;
+    }
+
+    input{
+        flex: 1;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 5px 0 0 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
 }
 
 .inputBox{
@@ -71,7 +71,7 @@
     box-sizing: border-box;
 }
   
-button.registerBtn {
+.registerBtn {
     width: 100%;
     padding: 12px;
     font-size: 16px;
@@ -81,23 +81,23 @@ button.registerBtn {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-  
-button.registerBtn:hover {
-    background-color: #e0a800;
+
+    &:hover{
+        background-color: #e0a800;
+    }
 }
   
 .loginText {
     text-align: center;
     margin-top: 20px;
     font-size: 14px;
-}
-  
-.loginText a {
-    color: #000000;
-    text-decoration: none;
-    font-size: 20px;
-    text-decoration: underline;
-    font-weight: bold;
+
+    a{
+        color: #000000;
+        text-decoration: none;
+        font-size: 20px;
+        text-decoration: underline;
+        font-weight: bold;
+    }
 }
   
