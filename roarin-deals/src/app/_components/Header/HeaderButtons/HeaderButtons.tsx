@@ -4,7 +4,6 @@ import styles from './HeaderButtons.module.scss'
 import { useRouter } from 'next/navigation';
 
 export const HeaderButtons = () => {
-
     const router = useRouter();
 
     const handleLoginClick = () => {
@@ -17,7 +16,7 @@ export const HeaderButtons = () => {
 
     return(
         <div className={styles.buttonContainer}>
-            <button className={styles.loginButton}>Login</button>
+            <button className={styles.loginButton} onClick={handleLoginClick}>Login</button>
             <button className={styles.registerButton} onClick={handleRegisterClick}>Register</button>
         </div>
     );

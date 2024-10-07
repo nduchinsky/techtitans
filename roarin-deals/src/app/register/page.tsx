@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Register.module.scss';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   return (
     <div className={styles.pageContainer}>
         <div className={styles.formContainer}>
@@ -41,5 +41,5 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;
 
