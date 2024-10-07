@@ -14,13 +14,13 @@ export default function Header(){
 
     return(
         <div className={styles.headerContainer}>
-            <Image 
+            {/* <Image 
                 src="/images/mizzou_logo.svg"
                 alt="Mizzou Logo"
                 width={70}
                 height={70}
                 className={styles.headerImage}
-            />
+            /> */}
             <span className={styles.headerText} onClick={handleHomeClick}>Roarin' Deals</span>
             <div className={styles.buttons}>
                 <HeaderButtons />

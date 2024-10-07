@@ -1,11 +1,11 @@
 .headerContainer {
     margin: 0;
     padding: 0;
-    height: 400px;
+    height: 100px;
     width: 100%;
     background-color: black;
     display: flex;
-    align-items: center; /* Center items vertically */
+    align-items: center;
     justify-content: center;
 }
 
@@ -14,7 +14,7 @@
     font-family: 'Orbitron', sans-serif;
     font-size: 2rem;
     cursor: pointer;
-    margin-left: 10px; /* Add margin to create space between image and text */
+    margin-left: 10px;
 }
 
 .buttons {
@@ -22,5 +22,5 @@
 }
 
 .headerImage {
-    margin-right: 10px; /* Optional: Add space between the image and text */
+    margin-right: 10px;
 }
