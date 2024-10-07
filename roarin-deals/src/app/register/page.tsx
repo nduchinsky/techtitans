@@ -11,6 +11,7 @@ const Register: React.FC = () => {
                     <label className={styles.formLabel} htmlFor="username">Username</label>
                     <div className={styles.inputGroup}>
                         <input type="text" id="username" placeholder="Enter your username" />
+                        <div className={styles.divider}></div>
                         <span>@umsystem.edu</span>
                     </div>
                 </div>
@@ -30,10 +31,12 @@ const Register: React.FC = () => {
                     <input className={styles.inputBox} type="password" id="password-confirm" placeholder="Enter your password again" />
                 </div>
 
-                <button type="submit" className={styles.registerBtn}>REGISTER</button>
+                <div className={styles.registerBtnContainer}>
+                    <button type="submit" className={styles.registerBtn}>REGISTER</button>
+                </div>
 
                 <p className={styles.loginText}>
-                OR login using <br /> <a href="#">LOGIN</a>
+                OR login using <span className={styles.lineBreak} /> <a href="#">LOGIN</a>
                 </p>
             </form>
         </div>
