@@ -1,0 +1,22 @@
+.loginButton{
+    background-color: #F1B82D;
+    width: 150px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    font-size: 18px;
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.registerButton{
+    @extend .loginButton;
+    background-color: #FFE9B2;
+}
+
+.buttonContainer{
+    display: flex;
+    gap: 24px;
+}
