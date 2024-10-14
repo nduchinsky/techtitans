@@ -140,4 +140,29 @@
     display: flex;
     justify-content: center;
 }
+
+.passwordInputGroup {
+    display: flex;
+    align-items: center;
+    position: relative;
+  
+    .inputBox {
+      flex: 1;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 10px;
+      box-sizing: border-box;
+      border: none;
+    }
+  
+    .eyeIcon {
+      position: absolute;
+      right: 10px;
+      cursor: pointer;
+      font-size: 20px; // Adjust the size as needed
+      color: #333;
+      user-select: none;
+    }
+  }
+  
   

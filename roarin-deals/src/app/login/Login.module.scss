@@ -75,15 +75,6 @@
   background-color: #aeaeae;
 }
 
-.inputBox {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  border: none;
-}
-
 .loginBtnContainer {
   display: flex;
   justify-content: center;
@@ -135,12 +126,20 @@
   position: relative;
 }
 
+.inputBox {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+}
+
 .eyeIcon {
   position: absolute;
   right: 10px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 20px; // Adjust as needed
   color: #333;
   user-select: none;
 }
-
