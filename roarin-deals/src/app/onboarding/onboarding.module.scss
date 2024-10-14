@@ -2,22 +2,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
-/* Container for onboarding content */
-.main-content {
+/* Page container setup */
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the container takes the full viewport height */
+}
+
+/* Main content setup */
+.mainContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
-  max-width: 1200px;
   margin: 2rem auto;
   background-color: white;
-  padding: 2rem;
+  padding: 10px 64px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+  flex-grow: 1; /* Allow the main content to grow */
+  overflow-y: auto; /* Enable scrolling within the main content */
 }
 
 /* Placeholder */
-.image-container {
+.imageContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +39,7 @@
 }
 
 /* Main text */
-.text-section {
+.textSection {
   flex: 1;
   margin-left: 2rem;
   display: flex;
@@ -41,17 +48,16 @@
 }
 
 /* Heading styled with Oswald font */
-.oswald-heading {
+.oswaldHeading {
   font-family: "Oswald", sans-serif;
   font-size: 2.5rem;
   font-weight: bolder;
   color: #000;
   margin-bottom: 1rem;
-  
 }
 
 /* Paragraph styled with Open Sans font */
-.open-sans-text {
+.openSansText {
   font-family: "Open Sans", sans-serif;
   font-size: 1.2rem;
   font-weight: 400; /* Choose weight between 300-800 */

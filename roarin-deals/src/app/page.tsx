@@ -1,8 +1,7 @@
-// app/page.tsx
-import { redirect } from "next/navigation";
+import Onboarding from "./onboarding/page";
 
 export default function Home() {
-  // Redirect to the onboarding page
-  redirect('/onboarding');
-  return null; // This return is just to satisfy the return type
+  return(
+    <Onboarding />
+  );
 }

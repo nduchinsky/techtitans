@@ -6,7 +6,8 @@
     background-color: black;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0px 32px 0px 32px;
 }
 
 .headerText {
@@ -14,11 +15,11 @@
     font-family: 'Orbitron', sans-serif;
     font-size: 2rem;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 50px;
 }
 
 .buttons {
-    padding-left: 200px;
+    padding-right: 100px;
 }
 
 .headerImage {
