@@ -1,9 +1,9 @@
 "use client"
 
-import styles from './HeaderButtons.module.scss'
 import { useRouter } from 'next/navigation';
+import styles from './OnboardingHeaderButtons.module.scss';
 
-export const HeaderButtons = () => {
+export const OnboardingHeaderButtons = () => {
     const router = useRouter();
 
     const handleLoginClick = () => {

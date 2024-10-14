@@ -2,11 +2,18 @@ import Image from 'next/image';
 import placeholderImage from './placeholder.png';
 import styles from './onboarding.module.scss';
 import Header from '../_components/Headers/OnboardingHeader/OnboardingHeader';
+import Link from 'next/link';
 
 const Onboarding = () => {
   return (
     <div className={styles.pageContainer}>
       <Header />
+
+      {/* Temporary Link to Listings Page */}
+      <Link href="/listings">
+        Listings Page
+      </Link>
+
       <div className={styles.mainContent}>
         {/* Placeholder */}
         <div className={styles.imageContainer}>

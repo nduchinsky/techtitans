@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import styles from './OnboardingHeader.module.scss';
-import { HeaderButtons } from './OnboardingHeaderButtons/HeaderButtons';
+import { OnboardingHeaderButtons } from '../../Buttons/OnboardingHeaderButtons/OnboardingHeaderButtons';
 
 const OnboardingHeader = () => {
     const router = useRouter();
@@ -15,7 +15,7 @@ const OnboardingHeader = () => {
         <div className={styles.headerContainer}>
             <span className={styles.headerText} onClick={handleHomeClick}>Roarin' Deals</span>
             <div className={styles.buttons}>
-                <HeaderButtons />
+                <OnboardingHeaderButtons />
             </div>
         </div>
     );
