@@ -1,10 +1,10 @@
-import styles from './AddButton.modules.scss';
+import styles from './AddButton.module.scss';
+import plus from '../../../../public/images/add-button.svg';
 
 export default function AddButton(){
     return(
-        <div>
-        
-        
+        <div className={styles.buttonContainer}>
+            <img src={plus} alt="Add Post"/>
         </div>
     );
 }
