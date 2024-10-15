@@ -1,0 +1,27 @@
+.headerContainer {
+    margin: 0;
+    padding: 0;
+    height: 100px;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 32px 0px 32px;
+}
+
+.headerText {
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    cursor: pointer;
+    margin-left: 50px;
+}
+
+.buttons {
+    padding-right: 100px;
+}
+
+.headerImage {
+    margin-right: 10px;
+}
