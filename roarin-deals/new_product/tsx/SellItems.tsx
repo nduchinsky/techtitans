@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
+import Footer from "./_components/Footer/Footer";
 import './new_product/css/sellItems.css'; 
-import Header from './Header';
-import Footer from './Footer';
+
 
 const SellItemPage: React.FC = () => {
     const [image, setImage] = useState<File | null>(null);
@@ -20,7 +21,7 @@ const SellItemPage: React.FC = () => {
 
     return (
         <div className="container">
-            <Header />
+            <PlainHeader />
             <div className="upload-container">
                 <div className="upload-box">
                     <div className="image-upload">
