@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './new_product/css/sellItems.css'; 
+import Header from './Header';
+import Footer from './Footer';
 
 const SellItemPage: React.FC = () => {
     const [image, setImage] = useState<File | null>(null);
@@ -9,6 +11,11 @@ const SellItemPage: React.FC = () => {
         if (files && files.length > 0) {
             setImage(files[0]);
         }
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log("Form submitted");
     };
 
     return (
@@ -23,7 +30,7 @@ const SellItemPage: React.FC = () => {
                         </div>
                         <input type="file" className="upload-input" multiple onChange={handleImageUpload} />
                     </div>
-                    <div className="form">
+                    <form className="form" onSubmit={handleSubmit}>
                         <input type="text" placeholder="Name" className="input" />
                         <input type="text" placeholder="Description" className="input" />
                         <input type="text" placeholder="$ | Selling Price" className="input" />
@@ -39,8 +46,8 @@ const SellItemPage: React.FC = () => {
                                 <button className="tag">Miscellaneous</button>
                             </div>
                         </div>
-                        <button className="submit-btn">Save & Upload</button>
-                    </div>
+                        <button type="submit" className="submit-button">Submit</button>
+                    </form>
                 </div>
             </div>
             <Footer />
