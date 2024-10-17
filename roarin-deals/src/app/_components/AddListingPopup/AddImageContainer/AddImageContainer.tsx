@@ -1,4 +1,5 @@
-import styles from './AddImageContainer.module.scss'
+import styles from './AddImageContainer.module.scss';
+import { FiUpload } from "react-icons/fi";
 
 const PopupImageContainer = () => {
     return(

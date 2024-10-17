@@ -1,10 +1,10 @@
 .pageContainer {
     display: flex;
     flex-direction: column;
-    padding: 0 20px;
     box-sizing: border-box;
     width: 100% !important;
     overflow: hidden;
+    padding-left: 20px;
 }
 
 .input {
