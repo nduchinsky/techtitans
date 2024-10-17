@@ -1,0 +1,54 @@
+.settingsContainer {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar button {
+  background-color: #ffd700;
+  border: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.sidebar .activeButton {
+  background-color: #e6c300;
+}
+
+.contentArea {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.placeholder {
+  width: 100px;
+  height: 100px;
+  background-color: #ddd;
+  margin: 10px;
+}
+
+.profileSection {
+  display: flex;
+  align-items: center;
+}
+
+.profileImage {
+  margin-right: 20px;
+}
+
+.userInfo h3 {
+  margin: 0;
+}
+
+.buttonClass {
+  background-color: #ffd700;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
