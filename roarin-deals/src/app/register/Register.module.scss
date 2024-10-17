@@ -131,8 +131,8 @@
     }
 
     span{
-        display: block; /* Make span behave like a block element */
-        margin: 15px 0; /* Optional: Adjust margin for spacing */
+        display: block;
+        margin: 15px 0;
     }
 }
 
@@ -159,7 +159,7 @@
       position: absolute;
       right: 10px;
       cursor: pointer;
-      font-size: 20px; // Adjust the size as needed
+      font-size: 20px;
       color: #333;
       user-select: none;
     }

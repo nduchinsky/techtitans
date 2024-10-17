@@ -5,7 +5,7 @@ import { FaDollarSign } from "react-icons/fa";
 
 const PopupInputs = () => {
 
-    // State to hold input values
+  // States to hold input values
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -18,17 +18,16 @@ const PopupInputs = () => {
       description,
       price,
     };
-    console.log('Submitted Data:', formData);
-    // You can also add logic to send formData to your API or handle it as needed
+    
     // Resetting form fields
     setName('');
     setDescription('');
     setPrice('');
   };
     return(
-        <div>
+      <div className={styles.pageContainer}>
         <form onSubmit={handleSubmit} className={styles.formContainer}>
-          <div style={{ marginBottom: '15px' }}>
+          <div>
             <input
               type="text"
               id="name"
@@ -39,8 +38,8 @@ const PopupInputs = () => {
               className={styles.input}
             />
           </div>
-  
-          <div style={{ marginBottom: '15px' }}>
+
+          <div>
             <input
               type="text"
               id="description"
@@ -51,27 +50,29 @@ const PopupInputs = () => {
               className={styles.input}
             />
           </div>
-  
-          <div style={{ marginBottom: '15px', display: 'flex', alignItems: 'center' }}>
-            <FaDollarSign style={{ marginRight: '8px', alignItems: 'center' }} />
+
+          <div>
             <input
-                type="number"
-                id="price"
-                placeholder="Selling Price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                required
-                className={styles.input}
-                style={{ flex: 1 }} // Optional: Makes the input take remaining space
+              type="number"
+              id="price"
+              value={price}
+              placeholder='Selling Price'
+              onChange={(e) => setPrice(e.target.value)}
+              required
+              className={styles.input}
             />
-            </div>
-  
-          <button type="submit" className={styles.submitButton}>
-            Save and Upload
-          </button>
-        </form>
+          </div>
+      </form>
+      <div className={styles.tagsContainer}>
+        <p className={styles.tagsContainerLabel}>Apply relevant tags</p>
       </div>
-    );
+      <div className={styles.buttonContainer}>
+        <button type="submit" className={styles.submitButton}>
+          Save and Upload
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default PopupInputs;

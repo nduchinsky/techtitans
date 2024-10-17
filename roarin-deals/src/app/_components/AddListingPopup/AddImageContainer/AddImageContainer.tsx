@@ -1,4 +1,3 @@
-import { div } from "framer-motion/client";
 import styles from './AddImageContainer.module.scss'
 
 const PopupImageContainer = () => {

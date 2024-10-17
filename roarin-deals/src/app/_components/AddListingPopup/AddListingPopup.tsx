@@ -22,7 +22,7 @@ const AddListingPopup: FC<AddListingPopupProps> = ({ open, onClose, children }) 
       y: '0%', // Slide to original position
       opacity: 1, // Fade in
       transition: {
-        duration: 0.3, // Duration of the animation
+        duration: 0.2, // Duration of the animation
       },
     },
     exit: {
@@ -48,11 +48,11 @@ const AddListingPopup: FC<AddListingPopupProps> = ({ open, onClose, children }) 
              <div>
                 <PopupImageContainer />
             </div>
-            <div style={{width: '50%'}}>
+            <div style={{width: '100%'}}>
                 <PopupInputs />
             </div>
-            <div style={{marginLeft: '90px', marginTop: '-20px'}}>
-                <CloseButton />
+            <div style={{marginTop: '-20px'}}>
+                <CloseButton onClick={onClose}/>
             </div>
         </div>
       </motion.div>
