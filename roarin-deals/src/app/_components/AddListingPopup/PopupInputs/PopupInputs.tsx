@@ -65,8 +65,14 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
             />
           </div>
       </form>
+      {/* <p className={styles.tagsContainerLabel}>Apply relevant tags</p> */}
       <div className={styles.tagsContainer}>
-        <p className={styles.tagsContainerLabel}>Apply relevant tags</p>
+        <div className={styles.tag}>Furniture</div>
+        <div className={styles.tag}>Electronics</div>
+        <div className={styles.tag}>Books</div>
+        <div className={styles.tag}>Clothing</div>
+        <div className={styles.tag}>Home Goods</div>
+        <div className={styles.tag}>Miscellanious</div>
       </div>
       <div className={styles.buttonContainer}>
         <button type="submit" className={styles.submitButton} onClick={onClick}>

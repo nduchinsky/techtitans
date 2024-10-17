@@ -45,8 +45,12 @@
 
 .buttonContainer {
     display: flex;
-    justify-content: center; /* Center the button */
+    justify-content: center;
     margin-left: -10%;
+
+    @media (min-width: 1400px){
+        margin-left: -20%;
+    }
 }
 
 .iconStyles {
@@ -69,6 +73,9 @@
     border: none;
     margin-bottom: 20px;
     margin-top: 20px;
+    display: grid;
+    grid-template-columns: 166.7px 166.7px 166.7px;
+    justify-content: center;
 }
 
 .tagsContainerLabel{
@@ -76,4 +83,21 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
     padding-left: 20px;
+}
+
+.tag{
+    width: 100%;
+    max-width: 120px;
+    height: 35px;
+    background-color: #F1B82D;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    margin-top: 30px;
+    margin-left: 20px;
 }
