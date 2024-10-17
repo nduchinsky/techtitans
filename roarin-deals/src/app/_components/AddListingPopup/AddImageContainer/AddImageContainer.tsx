@@ -4,7 +4,9 @@ import { FiUpload } from "react-icons/fi";
 const PopupImageContainer = () => {
     return(
         <div className={styles.pageContainer}>
-            <div className={styles.imageContainer} />
+            <div className={styles.imageContainer}>
+                <FiUpload className={styles.icon} />
+            </div>
             <div>
                 <button className={styles.uploadButton}>Upload Images</button>
             </div>
