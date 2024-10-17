@@ -20,10 +20,7 @@ export default function SalesHistory() {
 
       {/* Sales History Content */}
       <div className={styles.contentArea}>
-        <h2>Sales History</h2>
-        <div className={styles.placeholder}>?</div>
-        <div className={styles.placeholder}>?</div>
-        <div className={styles.placeholder}>?</div>
+        <h2 className={styles['open-sans-text']}>Sales History</h2>
       </div>
     </div>
   );

@@ -20,12 +20,9 @@ export default function MyOrders() {
 
       {/* My Orders Content */}
       <div className={styles.contentArea}>
-        <h2>My Orders</h2>
-        <p>Seller | Date bought | Item code</p>
-        <p>[Item description]</p>
-        <div className={styles.placeholder}>?</div>
-        <div className={styles.placeholder}>?</div>
-        <div className={styles.placeholder}>?</div>
+        <h2 className={styles['open-sans-text']}>My Orders</h2>
+        <p className={styles['open-sans-text']}>Seller | Date bought | Item code</p>
+        <p className={styles['open-sans-text']}>[Item description]</p>
       </div>
     </div>
   );

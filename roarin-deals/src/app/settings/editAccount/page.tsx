@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '../settings.module.scss';
+import placeholderImage from '../placeholder.png';
 
 export default function EditAccount() {
   return (
@@ -20,17 +22,42 @@ export default function EditAccount() {
 
       {/* Edit Account Content */}
       <div className={styles.contentArea}>
-        <h2>Edit account</h2>
         <div className={styles.profileSection}>
-          <div className={styles.profileImage}>
-            <img src="/path/to/profile-image" alt="Profile" />
-            <button className={styles.buttonClass}>Edit profile image ✏️</button>
+          {/* Profile Image Container with Circle Image */}
+          <div className={styles.profileImageContainer}>
+            <Image
+              src={placeholderImage}
+              alt="Profile"
+              width={100}
+              height={100}
+              className={styles.profileImage}
+            />
+
+            <button className={`${styles.buttonClass} ${styles.orbitronText}`}>
+              <center/>Edit profile image ✏️
+            </button>
           </div>
+
+          {/* User Info Section */}
           <div className={styles.userInfo}>
-            <h3>USERNAME</h3>
-            <p>username@university.edu ✏️</p>
-            <p>Phone: (xxx) xxx - xxxx ✏️</p>
-            <button className={styles.buttonClass}>Change Password ✏️</button>
+            <h3 className={styles['open-sans-text']}>
+              <button className={`${styles.buttonClass} ${styles.orbitronText}`}>
+                USERNAME ✏️
+              </button>
+            </h3>
+            <p className={styles['open-sans-text']}>
+              <button className={`${styles.buttonClass} ${styles.orbitronText}`}>
+                username@university.edu ✏️
+              </button>
+            </p>
+            <p className={styles['open-sans-text']}>
+              <button className={`${styles.buttonClass} ${styles.orbitronText}`}>
+                Phone: (xxx) xxx - xxxx ✏️
+              </button>
+            </p>
+            <button className={`${styles.buttonClass} ${styles.orbitronText}`}>
+              Change Password ✏️
+            </button>
           </div>
         </div>
       </div>

@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+
+
 .settingsContainer {
   display: flex;
 }
@@ -6,30 +11,38 @@
   width: 200px;
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 }
 
 .sidebar button {
-  background-color: #ffd700;
+  width: 100%; /* Full width button within the sidebar */
+  text-align: center; /* Center text in the button */
+  background-color: #FFE9B2;
   border: none;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 5px;
+  margin-bottom: 5px;
   cursor: pointer;
+  border-radius: 0 20px 20px 0; /* Curved edge on the right side */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.sidebar button:hover {
+  background-color: #ffd700; /* Slightly change color on hover */
 }
 
 .sidebar .activeButton {
-  background-color: #e6c300;
+  background-color: #ffd700; /* Active state background */
 }
+
+/* Optional: To ensure uniform height for buttons, add a min-height */
+.sidebar button {
+  min-height: 40px; /* Adjust as needed */
+}
+
 
 .contentArea {
   flex-grow: 1;
-  padding: 20px;
-}
-
-.placeholder {
-  width: 100px;
-  height: 100px;
-  background-color: #ddd;
-  margin: 10px;
+  padding: 5%;
 }
 
 .profileSection {
@@ -51,4 +64,37 @@
   padding: 10px;
   cursor: pointer;
   border-radius: 5px;
+}
+
+/* Paragraph styled with Open Sans font */
+.open-sans-text {
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400; /* Choose weight between 300-800 */
+  color: #333;
+  line-height: 1.6;
+}
+.orbitronText {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: bold;
+}
+
+.profileImage {
+  /* Styling for circular profile image */
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profileImage img {
+  width: 100%; 
+  height: 100%;
+  object-fit: cover;
 }
