@@ -32,8 +32,8 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
           <div>
             <input
               type="text"
-              id="name"
-              placeholder='Name'
+              id="title"
+              placeholder='Post Title'
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -46,7 +46,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
               type="text"
               id="description"
               value={description}
-              placeholder='Description'
+              placeholder='Short Post Description'
               onChange={(e) => setDescription(e.target.value)}
               required
               className={styles.input}

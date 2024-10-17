@@ -1,3 +1,5 @@
+"use client"
+
 import React, { FC, useState, useEffect } from 'react';
 import styles from './AddListingPopup.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -17,6 +19,8 @@ const AddListingPopup: FC<AddListingPopupProps> = ({ open, onClose, children }) 
   useEffect(() => {
     if (open) {
       setIsVisible(true);
+    } else {
+      setIsVisible(false);
     }
   }, [open]);
 
@@ -25,8 +29,8 @@ const AddListingPopup: FC<AddListingPopupProps> = ({ open, onClose, children }) 
     setTimeout(onClose, 300); // Match the duration of exit animation
   };
 
-  // Define motion variants
-  const variants = {
+  // animation variants
+  const popupVariants = {
     hidden: {
       y: '100%', // Start hidden below
       opacity: 0, // Start invisible
@@ -35,27 +39,52 @@ const AddListingPopup: FC<AddListingPopupProps> = ({ open, onClose, children }) 
       y: '0%', // Slide to original position
       opacity: 1, // Fade in
       transition: {
-        duration: 0.2, // Duration of the animation
+        duration: 0.1, // Duration of the animation
       },
     },
     exit: {
-      y: '180%', // Slide back down when exiting
-      opacity: 1, // Fade out
+      y: '100%', // Slide back down when exiting
+      opacity: 0, // Fade out
       transition: {
         duration: 0.3, // Duration of the animation
       },
     },
   };
 
+  const backdropVariants = {
+    hidden: {
+      opacity: 0, // Start invisible
+    },
+    visible: {
+      opacity: 1, // Fade out
+      transition: {
+        duration: 0.3, // Duration of the animation
+      },
+    },
+    exit: {
+      opacity: 0, // Fade out
+      transition: {
+        duration: 0.3, // Duration of the animation
+      },
+    },
+  }
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
       <AnimatePresence>
         {isVisible && (
           <>
-            <div className={styles.backdrop} onClick={handleClose} />
+            <motion.div
+              className={styles.backdrop}
+              onClick={handleClose}
+              variants={backdropVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            />
             <motion.div
               className={styles.container}
-              variants={variants}
+              variants={popupVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
