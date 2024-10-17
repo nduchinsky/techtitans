@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import styles from './PopupInputs.module.scss'
-import { FaDollarSign } from "react-icons/fa";
 
+interface PopupInputsProps{
+  onClick: () => void;
+}
 
-const PopupInputs = () => {
+const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
 
   // States to hold input values
   const [name, setName] = useState('');
@@ -67,7 +69,7 @@ const PopupInputs = () => {
         <p className={styles.tagsContainerLabel}>Apply relevant tags</p>
       </div>
       <div className={styles.buttonContainer}>
-        <button type="submit" className={styles.submitButton}>
+        <button type="submit" className={styles.submitButton} onClick={onClick}>
           Save and Upload
         </button>
       </div>
