@@ -100,4 +100,28 @@
     font-size: 14px;
     margin-top: 30px;
     margin-left: 20px;
+
+    &:hover{
+        border: 3px solid black;
+    }
+
+}
+
+.tagActive{
+    width: 100%;
+    max-width: 120px;
+    height: 35px;
+    background-color: #F1B82D;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    margin-top: 30px;
+    margin-left: 20px;
+    border: 3px solid black;
+
 }
