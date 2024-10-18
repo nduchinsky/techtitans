@@ -4,7 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.593);
+    background: rgba(255, 255, 255, 0.729);
     display: flex;
     justify-content: center;
     align-items: flex-end; /* Align to the bottom */
@@ -13,23 +13,39 @@
 .container {
     background: #E4E4E4;
     border-radius: 20px;
-    width: 90%;
-    height: 94%;
+    width: 75%;
+    height: 90%;
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     z-index: 9999;
     position: fixed;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     bottom: 0;
+
+    @media (min-width: 1400px){
+        height: 65%;
+        width: 60%;
+        margin-bottom: 10%;
+    }
+
+    @media (min-height: 700px) and (max-height: 800px){
+        height: 75%;
+        margin-bottom: 100px;
+    }
+
+    @media (min-height: 801px){
+        height: 65%
+    }
 }
 
 .content{
-    padding: 20px;
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
     display: flex;
     flex-direction: row;
-    gap: 50px;
-    margin-top: 20px;
+    gap: 30px;
 }
   

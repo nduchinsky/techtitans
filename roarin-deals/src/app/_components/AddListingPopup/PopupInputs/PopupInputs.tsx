@@ -1,77 +1,109 @@
 import { useState } from 'react';
-import styles from './PopupInputs.module.scss'
-import { FaDollarSign } from "react-icons/fa";
+import styles from './PopupInputs.module.scss';
 
+interface PopupInputsProps {
+  onClick: () => void;
+}
 
-const PopupInputs = () => {
-
-    // State to hold input values
+const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
+  // States to hold input values
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [activeTags, setActiveTags] = useState<string[]>([]); // Track multiple active tags
+
+  const handleClick = (tag: string) => {
+    // Check if the tag is already active
+    if (activeTags.includes(tag)) {
+      // If it is, remove it from the active tags
+      setActiveTags(activeTags.filter(activeTag => activeTag !== tag));
+    } else {
+      // If it isn't, add it to the active tags
+      setActiveTags([...activeTags, tag]);
+    }
+  };
 
   // Handle form submission
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const formData = {
       name,
       description,
       price,
+      tags: activeTags, // Include the array of active tags in the form data
     };
-    console.log('Submitted Data:', formData);
-    // You can also add logic to send formData to your API or handle it as needed
+
+    // Handle the submission logic here (e.g., send formData to an API)
+
     // Resetting form fields
     setName('');
     setDescription('');
     setPrice('');
+    setActiveTags([]); // Reset the active tags after submission
+    onClick(); // Call the onClick function after submission
   };
-    return(
+
+  return (
+    <div className={styles.pageContainer}>
+      <form onSubmit={handleSubmit} className={styles.formContainer}>
         <div>
-        <form onSubmit={handleSubmit} className={styles.formContainer}>
-          <div style={{ marginBottom: '15px' }}>
-            <input
-              type="text"
-              id="name"
-              placeholder='Name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className={styles.input}
-            />
-          </div>
-  
-          <div style={{ marginBottom: '15px' }}>
-            <input
-              type="text"
-              id="description"
-              value={description}
-              placeholder='Description'
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              className={styles.input}
-            />
-          </div>
-  
-          <div style={{ marginBottom: '15px', display: 'flex', alignItems: 'center' }}>
-            <FaDollarSign style={{ marginRight: '8px', alignItems: 'center' }} />
-            <input
-                type="number"
-                id="price"
-                placeholder="Selling Price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                required
-                className={styles.input}
-                style={{ flex: 1 }} // Optional: Makes the input take remaining space
-            />
-            </div>
-  
+          <input
+            type="text"
+            id="title"
+            placeholder='Post Title'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className={styles.input}
+          />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            id="description"
+            value={description}
+            placeholder='Short Post Description'
+            onChange={(e) => setDescription(e.target.value)}
+            required
+            className={styles.input}
+          />
+        </div>
+
+        <div>
+          <input
+            type="number"
+            id="price"
+            value={price}
+            placeholder='Selling Price'
+            onChange={(e) => setPrice(e.target.value)}
+            required
+            className={styles.input}
+          />
+        </div>
+
+        <div className={styles.tagsContainer}>
+          {['Furniture', 'Electronics', 'Books', 'Clothing', 'Home Goods', 'Miscellaneous'].map((tag) => (
+            <button
+              key={tag}
+              onClick={() => handleClick(tag)} // Pass the tag name to identify it
+              type="button" // Prevent form submission when clicking tag buttons
+              className={`${activeTags.includes(tag) ? styles.tagActive : styles.tag}`} // Check if the current tag is active
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
+        <div className={styles.buttonContainer}>
           <button type="submit" className={styles.submitButton}>
             Save and Upload
           </button>
-        </form>
-      </div>
-    );
-}
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default PopupInputs;

@@ -1,24 +1,127 @@
-.input{
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100% !important;
+    overflow: hidden;
+    margin-left: 30px;
+}
+
+.input {
     background-color: white;
-    width: 100%;
-    margin-top: '5px';
+    width: 100% !important;
+    max-width: 500px !important;
+    margin-top: 5px;
     height: 40px;
     border: none;
     border-radius: 20px;
     margin-bottom: 15px;
-    padding-left: 10px;
+    padding-left: 20px;
+    box-sizing: border-box;
+
+    &::placeholder{
+        color: #C9C9C9;
+    }
+
+    /* Hide the default arrows, or "spinners", on number inputs */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    -moz-appearance: textfield; /* Hide the spinners on Firefox */
 }
 
-.submitButton{
-    border-radius: 20px;;
-    height: 50px;
-    width: 200px;
+.submitButton {
+    border-radius: 20px;
+    height: 40px;
+    width: 100%;
+    max-width: 200px;
     background-color: #F1B82D;
     border: none;
-    cursor: 'pointer';
+    cursor: pointer;
 }
 
-// .formContainer{
-//     display: flex;
-//     flex-direction: column;
-// }
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-left: -10%;
+
+    @media (min-width: 1400px){
+        margin-left: -20%;
+    }
+}
+
+.iconStyles {
+    margin-right: 8px;
+}
+
+.priceContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.tagsContainer {
+    background-color: white;
+    width: 100% !important;
+    max-width: 500px !important;
+    height: 200px;
+    max-height: 200px !important;
+    border-radius: 20px;
+    border: none;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 166.7px 166.7px 166.7px;
+    justify-content: center;
+}
+
+.tagsContainerLabel{
+    color: #C9C9C9;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    padding-left: 20px;
+}
+
+.tag{
+    width: 100%;
+    max-width: 120px;
+    height: 35px;
+    background-color: #F1B82D;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    margin-top: 30px;
+    margin-left: 20px;
+
+    &:hover{
+        border: 3px solid black;
+    }
+
+}
+
+.tagActive{
+    width: 100%;
+    max-width: 120px;
+    height: 35px;
+    background-color: #F1B82D;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    margin-top: 30px;
+    margin-left: 20px;
+    border: 3px solid black;
+
+}

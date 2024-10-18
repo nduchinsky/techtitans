@@ -10,14 +10,21 @@
     height: 250px;
     background-color: #E4E4E4;
     width: 250px;
-    border: 1px dashed black;
+    border: 2px dashed black;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .uploadButton{
     border-radius: 20px;;
-    height: 50px;
+    height: 40px;
     width: 200px;
     background-color: #F1B82D;
     border: none;
-    cursor: 'pointer';
+    cursor: pointer;
+}
+
+.icon{
+    font-size: 60px;
 }
