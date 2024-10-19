@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import styles from './Login.module.scss';
 import Link from 'next/link';
 import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
-// Import eye icons from react-icons
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login: React.FC = () => {
@@ -40,7 +39,7 @@ const Login: React.FC = () => {
                   placeholder="Enter your password"
                 />
                 <span className={styles.eyeIcon} onClick={togglePasswordVisibility}>
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </span>
               </div>
             </div>
