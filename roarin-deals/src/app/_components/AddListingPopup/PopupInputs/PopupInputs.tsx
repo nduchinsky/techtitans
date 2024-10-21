@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './PopupInputs.module.scss';
+import { FaDollarSign } from 'react-icons/fa';
 
 interface PopupInputsProps {
   onClick: () => void;
@@ -47,11 +48,11 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   return (
     <div className={styles.pageContainer}>
       <form onSubmit={handleSubmit} className={styles.formContainer}>
-        <div>
+        <div className={styles.inputContainer}>
           <input
             type="text"
             id="title"
-            placeholder='Post Title'
+            placeholder="Post Title"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -59,41 +60,46 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
           />
         </div>
 
-        <div>
+        <div className={styles.inputContainer}>
           <input
             type="text"
             id="description"
             value={description}
-            placeholder='Short Post Description'
+            placeholder="Short Post Description"
             onChange={(e) => setDescription(e.target.value)}
             required
             className={styles.input}
           />
         </div>
 
-        <div>
+        <div className={styles.inputContainer}>
+          <FaDollarSign className={styles.iconStyles} />
           <input
             type="number"
             id="price"
             value={price}
-            placeholder='Selling Price'
+            placeholder="Selling Price"
             onChange={(e) => setPrice(e.target.value)}
             required
-            className={styles.input}
+            className={styles.inputSellingPrice} 
           />
         </div>
 
         <div className={styles.tagsContainer}>
-          {['Furniture', 'Electronics', 'Books', 'Clothing', 'Home Goods', 'Miscellaneous'].map((tag) => (
-            <button
-              key={tag}
-              onClick={() => handleClick(tag)} // Pass the tag name to identify it
-              type="button" // Prevent form submission when clicking tag buttons
-              className={`${activeTags.includes(tag) ? styles.tagActive : styles.tag}`} // Check if the current tag is active
-            >
-              {tag}
-            </button>
-          ))}
+          {['Furniture', 'Electronics', 'Books', 'Clothing', 'Home Goods', 'Miscellaneous'].map(
+            (tag) => (
+              <button
+                key={tag}
+                onClick={() => handleClick(tag)} // Pass the tag name to identify it
+                type="button" // Prevent form submission when clicking tag buttons
+                className={`${
+                  activeTags.includes(tag) ? styles.tagActive : styles.tag
+                }`} // Check if the current tag is active
+              >
+                {tag}
+              </button>
+            )
+          )}
         </div>
 
         <div className={styles.buttonContainer}>

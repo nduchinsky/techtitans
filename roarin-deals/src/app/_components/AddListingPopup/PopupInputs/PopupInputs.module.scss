@@ -5,35 +5,74 @@
     width: 100% !important;
     overflow: hidden;
     margin-left: 30px;
-}
-
-.input {
-    background-color: white;
+  }
+  
+  .inputContainer {
+    position: relative;
     width: 100% !important;
     max-width: 500px !important;
     margin-top: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .iconStyles {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #000000;
+    font-size: 15px;
+  }
+  
+  .input {
+    background-color: white;
+    width: 100% !important;
     height: 40px;
     border: none;
     border-radius: 20px;
     margin-bottom: 15px;
     padding-left: 20px;
     box-sizing: border-box;
-
-    &::placeholder{
-        color: #C9C9C9;
+  
+    &::placeholder {
+      color: #C9C9C9;
     }
-
+  
     /* Hide the default arrows, or "spinners", on number inputs */
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+      -webkit-appearance: none;
+      margin: 0;
     }
-
+  
     -moz-appearance: textfield; /* Hide the spinners on Firefox */
-}
+  }
 
-.submitButton {
+  .inputSellingPrice {
+    background-color: white;
+    width: 100% !important;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    padding-left: 40px;
+    box-sizing: border-box;
+  
+    &::placeholder {
+      color: #C9C9C9;
+    }
+  
+    /* Hide the default arrows, or "spinners", on number inputs */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  
+    -moz-appearance: textfield; /* Hide the spinners on Firefox */
+  }
+  
+  .submitButton {
     border-radius: 20px;
     height: 40px;
     width: 100%;
@@ -41,29 +80,25 @@
     background-color: #F1B82D;
     border: none;
     cursor: pointer;
-}
-
-.buttonContainer {
+  }
+  
+  .buttonContainer {
     display: flex;
     justify-content: center;
     margin-left: -10%;
-
-    @media (min-width: 1400px){
-        margin-left: -20%;
+  
+    @media (min-width: 1400px) {
+      margin-left: -20%;
     }
-}
-
-.iconStyles {
-    margin-right: 8px;
-}
-
-.priceContainer {
+  }
+  
+  .priceContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
-}
-
-.tagsContainer {
+  }
+  
+  .tagsContainer {
     background-color: white;
     width: 100% !important;
     max-width: 500px !important;
@@ -74,20 +109,16 @@
     margin-bottom: 20px;
     margin-top: 20px;
     display: grid;
-    grid-template-columns: 166.7px 166.7px 166.7px;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
-}
-
-.tagsContainerLabel{
-    color: #C9C9C9;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    padding-left: 20px;
-}
-
-.tag{
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    gap: 10px;
+  }
+  
+  .tag {
     width: 100%;
-    max-width: 120px;
     height: 35px;
     background-color: #F1B82D;
     border: none;
@@ -98,21 +129,17 @@
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
-    margin-top: 30px;
-    margin-left: 20px;
-
-    &:hover{
-        border: 3px solid black;
+  
+    &:hover {
+      border: 3px solid black;
     }
-
-}
-
-.tagActive{
+  }
+  
+  .tagActive {
     width: 100%;
-    max-width: 120px;
     height: 35px;
     background-color: #F1B82D;
-    border: none;
+    border: 3px solid black;
     cursor: pointer;
     border-radius: 20px;
     display: flex;
@@ -120,8 +147,5 @@
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
-    margin-top: 30px;
-    margin-left: 20px;
-    border: 3px solid black;
-
-}
+  }
+  
