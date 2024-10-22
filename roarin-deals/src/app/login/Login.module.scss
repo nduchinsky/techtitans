@@ -11,7 +11,8 @@
   padding: 35px;
   border-radius: 30px;
   border: 1px solid #000000;
-  width: 350px;
+  width: 100%;
+  max-width: 350px;
   margin-top: 50px;
   margin-bottom: 100px;
 }
@@ -50,7 +51,7 @@
     background-color: white;
     padding: 10px;
     font-size: 14px;
-    border-radius: 10px;
+    border-radius: 0 10px 10px 0;
     color: #333;
     white-space: nowrap;
     font-family: Arial, sans-serif;
@@ -71,7 +72,7 @@
 
 .divider {
   width: 1px;
-  padding-top: 20px;
+  height: 30px;
   background-color: #aeaeae;
 }
 
@@ -123,22 +124,79 @@
   display: flex;
   align-items: center;
   position: relative;
+
+  .inputBox {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: none;
+    padding-right: 40px;
+  }
+
+  .eyeIcon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+    user-select: none;
+  }
 }
 
-.inputBox {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  border: none;
-}
+@media screen and (max-width: 480px) {
+  .formContainer {
+    padding: 20px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+  }
 
-.eyeIcon {
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
-  font-size: 20px; // Adjust as needed
-  color: #333;
-  user-select: none;
+  .formHeader {
+    font-size: 24px;
+  }
+
+  .formLabel {
+    font-size: 14px;
+  }
+
+  .inputGroup {
+    flex-direction: column;
+    align-items: stretch;
+
+    input {
+      border-radius: 10px;
+    }
+
+    .divider {
+      display: none;
+    }
+
+    span {
+      border-radius: 0 0 10px 10px;
+      width: 100%;
+      text-align: left;
+      padding-left: 10px;
+      margin-top: 5px;
+      display: block;
+    }
+  }
+
+  .loginBtn {
+    width: 100%;
+  }
+
+  .loginText {
+    font-size: 12px;
+
+    .registerLink {
+      font-size: 16px;
+    }
+  }
+
+  .passwordInputGroup {
+    .inputBox {
+      padding-right: 40px;
+    }
+  }
 }
