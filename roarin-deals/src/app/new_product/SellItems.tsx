@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
-import Footer from "./_components/Footer/Footer";
+import Footer from "../_components/Footer/Footer";
 import './new_product/css/sellItems.css'; 
 
 
