@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Header from "./_components/Header/Header";
 import Footer from "./_components/Footer/Footer";
 import '../../globals.css';
 
@@ -19,10 +18,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <Header />
-        <main>
-          {children}
-        </main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

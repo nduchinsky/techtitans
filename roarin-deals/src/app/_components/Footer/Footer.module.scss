@@ -1,5 +1,17 @@
-.footerContainer{
+.footerContainer {
     background-color: #EDEDED;
-    height: 50px;
-    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-top: auto;
+    display: flex;
+    flex-direction: row;
 }
+
+.footerText{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 70px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(98, 98, 98);
+}
+  
