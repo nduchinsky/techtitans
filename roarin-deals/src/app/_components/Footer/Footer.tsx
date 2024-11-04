@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './Footer.module.scss';
 
 export default function Footer(){
@@ -10,7 +11,9 @@ export default function Footer(){
                 <p>Contact Us</p>
             </div>
             <div className={styles.footerText}>
-                <p>Help</p>
+                <Link href="/faq">
+                    <p>Help</p>
+                </Link>
             </div>
         </div>
     );
