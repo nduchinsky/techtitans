@@ -5,6 +5,7 @@ import styles from './Register.module.scss';
 import Link from 'next/link';
 import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import axios from 'axios';
 
 const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,6 +13,9 @@ const Register: React.FC = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -23,10 +27,10 @@ const Register: React.FC = () => {
     setShowPasswordConfirm(prevShowPasswordConfirm => !prevShowPasswordConfirm);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // At least one digit, one special character, and it must be 8 charcters in length
+    // At least one digit, one special character, and it must be 8 characters in length
     const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[A-Z])(?=.{8,})/;
 
     // Check if passwords match
@@ -45,8 +49,23 @@ const Register: React.FC = () => {
 
     // Logic if passwords pass criteria
     setErrorMessage('');
-    console.log('Registration successful:', { username, password });
-    alert('Registration successful!');
+
+    try {
+      const response = await axios.post('/api/register', {
+        username,
+        password,
+        firstName,
+        lastName,
+      });
+      console.log('Registration successful:', response.data);
+      alert('Registration successful!');
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        setErrorMessage(error.response?.data?.error || 'An error occurred. Please try again.');
+      } else {
+        setErrorMessage('An unknown error occurred. Please try again.');
+      }
+    }
   };
 
   return (
@@ -102,6 +121,32 @@ const Register: React.FC = () => {
                 <span className={styles.eyeIcon} onClick={togglePasswordConfirmVisibility}>
                   {showPasswordConfirm ? <FaEye /> : <FaEyeSlash />}
                 </span>
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="firstname">First Name</label>
+              <div className={styles.inputGroup}>
+                <input
+                  type="text"
+                  id="firstname"
+                  placeholder="Enter your First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="lastname">Last Name</label>
+              <div className={styles.inputGroup}>
+                <input
+                  type="text"
+                  id="lastname"
+                  placeholder="Enter your Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
               </div>
             </div>
 
