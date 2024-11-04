@@ -1,4 +1,4 @@
-// src/app/settings/editAccount/page.tsx
+// page.tsx
 
 "use client";
 
@@ -31,13 +31,13 @@ export default function EditAccount() {
   const handleModalSubmit = async () => {
     if (modalType === 'profileImage' && file) {
       console.log("Uploading profile image:", file);
-      // Your file upload logic to AWS here
+      // Upload logic here
     } else if (inputValue !== confirmValue) {
-      setError("Values do not match.");
+      setError("Values do not match."); // Show error if values don’t match
     } else {
       setError('');
       console.log("Submitted value:", inputValue);
-      // Handle other changes (e.g., username, email, etc.)
+      // Process submission (e.g., save changes)
       closeModal();
     }
   };
@@ -48,12 +48,35 @@ export default function EditAccount() {
     }
   };
 
+  const getModalTitle = () => {
+    switch (modalType) {
+      case 'profileImage':
+        return 'Change Profile Image';
+      case 'username':
+        return 'Enter New Username';
+      case 'email':
+        return 'Enter New Email';
+      case 'phone':
+        return 'Enter New Phone Number';
+      case 'password':
+        return 'Change Password';
+      default:
+        return '';
+    }
+  };
+
   return (
     <div className={styles.settingsContainer}>
       <div className={styles.sidebar}>
-        <Link href="/settings/editAccount"><button className={styles.activeButton}>Edit account</button></Link>
-        <Link href="/settings/myOrders"><button>My Orders</button></Link>
-        <Link href="/settings/salesHistory"><button>Sales History</button></Link>
+        <Link href="/settings/editAccount">
+          <button className={styles.activeButton}>Edit account</button>
+        </Link>
+        <Link href="/settings/myOrders">
+          <button>My Orders</button>
+        </Link>
+        <Link href="/settings/salesHistory">
+          <button>Sales History</button>
+        </Link>
       </div>
 
       <div className={styles.contentArea}>
@@ -76,6 +99,8 @@ export default function EditAccount() {
         isOpen={isModalOpen}
         onClose={closeModal}
         onSubmit={handleModalSubmit}
+        title={getModalTitle()}
+        error={error} // Pass error to the modal
       >
         {modalType === 'profileImage' ? (
           <div>
@@ -84,14 +109,27 @@ export default function EditAccount() {
           </div>
         ) : (
           <>
-            <div>
-              <label>Enter new {modalType}</label>
-              <input type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} required />
+            <div className={styles.modalField}>
+              <label className={styles.modalLabel}>Enter new {modalType}</label>
+              <br/>
+              <input 
+                type="text" 
+                value={inputValue} 
+                onChange={(e) => setInputValue(e.target.value)} 
+                required 
+                className={styles.inputBox} 
+              />
             </div>
-            <div>
-              <label>Enter new {modalType} again</label>
-              <input type="text" value={confirmValue} onChange={(e) => setConfirmValue(e.target.value)} required />
-              {error && <p style={{ color: 'red' }}>{error}</p>}
+            <div className={styles.modalField}>
+              <label className={styles.modalLabel}>Enter new {modalType} again</label>
+              <br/>
+              <input 
+                type="text" 
+                value={confirmValue} 
+                onChange={(e) => setConfirmValue(e.target.value)} 
+                required 
+                className={styles.inputBox} 
+              />
             </div>
           </>
         )}
