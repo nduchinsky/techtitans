@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+.settingsContainer {
+  display: flex;
+}
+
+.sidebar {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.sidebar button {
+  width: 120%;
+  text-align: center;
+  background-color: #FFE9B2;
+  border: none;
+  padding: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  border-radius: 0 20px 20px 0;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar button:hover {
+  background-color: #ffd700;
+}
+
+.sidebar .activeButton {
+  background-color: #ffd700;
+}
+
+.contentArea {
+  flex-grow: 1;
+  padding: 40px;
+}
+
+.profileSection {
+  display: flex;
+  align-items: center;
+}
+
+.profileImageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
+.profileImage {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profileImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.editButton {
+  background-color: transparent;
+  border: none;
+  font-family: 'Orbitron', sans-serif;
+  color: #000000;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.editButton:hover {
+  color: #ffd700;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userInfo button {
+  background-color: transparent;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 10px;
+  text-align: left;
+}
