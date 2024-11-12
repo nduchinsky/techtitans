@@ -7,17 +7,18 @@ const pool = new Pool({
     database: 'techtitans', 
     password: process.env.DB_PASSWORD,
     port: 5432,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    ssl: false
 });
 
 // Function to create a table
 const createTable = async () => {
     const query = `
-        CREATE TABLE IF NOT EXISTS example_table (
+        CREATE TABLE IF NOT EXISTS Users (
             id SERIAL PRIMARY KEY,
-            name VARCHAR(100) NOT NULL
+            first_name VARCHAR(100) NOT NULL
+            last_name VARCHAR(100) NOT NULL
+            email VARCHAR(100) NOT NULL
+            password VARCHAR(100) NOT NULL
         )
     `;
     try {

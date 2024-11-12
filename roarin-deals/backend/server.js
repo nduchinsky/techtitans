@@ -4,7 +4,7 @@ const registerRoute = require('./register');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3100;
+const PORT = process.env.PORT || 3300;
 
 // Middleware to parse JSON
 app.use(express.json());
