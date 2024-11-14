@@ -7,31 +7,6 @@ const pool = new Pool({
     database: 'techtitans', 
     password: process.env.DB_PASSWORD,
     port: 5432,
-<<<<<<< HEAD
-    ssl: false
-});
-
-// Function to create a table
-const createTable = async () => {
-    const query = `
-        CREATE TABLE IF NOT EXISTS Users (
-            id SERIAL PRIMARY KEY,
-            first_name VARCHAR(100) NOT NULL
-            last_name VARCHAR(100) NOT NULL
-            email VARCHAR(100) NOT NULL
-            password VARCHAR(100) NOT NULL
-        )
-    `;
-    try {
-        await pool.query(query);
-        console.log("Table created successfully");
-    } catch (err) {
-        console.error("Error creating table:", err);
-    } finally {
-        await pool.end(); // Close the pool
-    }
-};
-=======
     ssl: { 
         rejectUnauthorized: false
     }
@@ -66,6 +41,5 @@ const createTable = async () => {
 //        await pool.end();
 //    }
 //}
->>>>>>> 9468d7179f1b56eeefe789893d36d59f589bee82
 
 module.exports = { createTable };
