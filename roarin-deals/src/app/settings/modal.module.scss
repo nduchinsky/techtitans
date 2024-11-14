@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #e8e8e8;
+  padding: 35px;
+  border-radius: 30px;
+  border: 1px solid #000000;
+  width: 100%;
+  max-width: 350px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.modalHeader {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+  text-decoration: underline;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.modalField {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalLabel {
+  font-size: 16px;
+  color: #333;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.inputBox {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+}
+
+.errorText {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.submitButton {
+  background-color: #ffd700;
+  color: black;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-family: 'Open Sans', sans-serif; // Apply Open Sans font
+  align-self: center; // Center the button within the form
+}
+
+.submitButton:hover {
+  background-color: #bca000;
+}

@@ -9,12 +9,12 @@ const PORT = process.env.PORT || 3300;
 // Middleware to parse JSON
 app.use(express.json());
 
+
 app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`);
-
-    // Create the table when the server starts
+    
     try {
-        await createTable();
+        await createTable();  // Attempt to delete the table on startup
     } catch (error) {
         console.error("Error during table creation:", error);
     }
