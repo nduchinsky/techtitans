@@ -60,7 +60,7 @@ const Register: React.FC = () => {
         phone
       });
       console.log('Registration successful:', response.data);
-      alert('Registration successful!');
+      window.location.href = '/login';
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setErrorMessage(error.response?.data?.error || 'An error occurred. Please try again.');
