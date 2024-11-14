@@ -11,10 +11,11 @@ const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
 
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -51,11 +52,12 @@ const Register: React.FC = () => {
     setErrorMessage('');
 
     try {
-      const response = await axios.post('/api/register', {
-        username,
-        password,
+      const response = await axios.post('http://localhost:3000/api/register', {
+        email,
         firstName,
         lastName,
+        password,
+        phone
       });
       console.log('Registration successful:', response.data);
       alert('Registration successful!');
@@ -76,17 +78,56 @@ const Register: React.FC = () => {
           <h2 className={styles.formHeader}>Register</h2>
           <form onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="username">Username</label>
+              <label className={styles.formLabel} htmlFor="email">University Email</label>
               <div className={styles.inputGroup}>
                 <input
                   type="text"
-                  id="username"
-                  placeholder="Enter your username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  id="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <div className={styles.divider}></div>
                 <span>@umsystem.edu</span>
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="phone">Phone Number</label>
+              <div className={styles.inputGroup}>
+                <input
+                  type="tel"
+                  id="phone"
+                  placeholder="Enter your phone number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="firstname">First Name</label>
+              <div className={styles.inputGroup}>
+                <input
+                  type="text"
+                  id="firstname"
+                  placeholder="Enter your First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.formLabel} htmlFor="lastname">Last Name</label>
+              <div className={styles.inputGroup}>
+                <input
+                  type="text"
+                  id="lastname"
+                  placeholder="Enter your Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
               </div>
             </div>
 
@@ -121,32 +162,6 @@ const Register: React.FC = () => {
                 <span className={styles.eyeIcon} onClick={togglePasswordConfirmVisibility}>
                   {showPasswordConfirm ? <FaEye /> : <FaEyeSlash />}
                 </span>
-              </div>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="firstname">First Name</label>
-              <div className={styles.inputGroup}>
-                <input
-                  type="text"
-                  id="firstname"
-                  placeholder="Enter your First Name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="lastname">Last Name</label>
-              <div className={styles.inputGroup}>
-                <input
-                  type="text"
-                  id="lastname"
-                  placeholder="Enter your Last Name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                />
               </div>
             </div>
 
