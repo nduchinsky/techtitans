@@ -6,7 +6,7 @@ import Link from 'next/link';
 import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
 import axios from 'axios';
 import { FaEye, FaEyeSlash, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
-// @ts-ignore
+// @ts-expect-error
 import zxcvbn from 'zxcvbn';
 
 const Register: React.FC = () => {
