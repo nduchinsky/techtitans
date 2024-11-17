@@ -3,12 +3,11 @@ const bcrypt = require('bcrypt');
 const { db } = require('./db');
 const router = express.Router();
 
-const emailDomain = '@umsystem.edu';
-
-router.post('/register', async (req, res) => {
+// Define the route without '/register' since it's already specified in server.js
+router.post('/', async (req, res) => {
     const { email, password, firstName, lastName, phone } = req.body;
 
-    const fullEmail = `${email}${emailDomain}`;
+    const fullEmail = `${email}@umsystem.edu`;
 
     // Checking if the email already exists
     const userCheckQuery = 'SELECT * FROM users WHERE email = $1';
