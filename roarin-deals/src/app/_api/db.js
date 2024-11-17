@@ -11,7 +11,6 @@ const db = pgp({
     ssl: { rejectUnauthorized: false }
 });
 
-// Function to create a table
 const createUsersTable = async () => {
     const query = `
         CREATE TABLE IF NOT EXISTS Users (
@@ -32,5 +31,4 @@ const createUsersTable = async () => {
     }
 };
 
-// Export db connection and createUsersTable function
 module.exports = { db, createUsersTable };

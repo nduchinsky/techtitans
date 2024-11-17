@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt');
 const { db } = require('./db');
 const router = express.Router();
 
-// Define the route without '/register' since it's already specified in server.js
 router.post('/', async (req, res) => {
     const { email, password, firstName, lastName, phone } = req.body;
 
