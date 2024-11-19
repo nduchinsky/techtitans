@@ -11,7 +11,8 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [activeTags, setActiveTags] = useState<string[]>([]); // Track multiple active tags
+  const [activeTags, setActiveTags] = useState<string[]>([]);
+  const [condition, setCondition] = useState("")
 
   const handleClick = (tag: string) => {
     // Check if the tag is already active
@@ -85,16 +86,32 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
           />
         </div>
 
+        <div className={styles.inputContainer}>
+        <select
+          id="condition"
+          value={condition}
+          onChange={(e) => setCondition(e.target.value)}
+          required
+          className={styles.input}
+          >
+          <option value="" disabled>Condition</option>
+          <option value="Excellent">New</option>
+          <option value="Good">Like new</option>
+          <option value="Fair">Used</option>
+          <option value="Poor">Refurbished</option>
+        </select>
+        </div>
+
         <div className={styles.tagsContainer}>
           {['Furniture', 'Electronics', 'Books', 'Clothing', 'Home Goods', 'Miscellaneous'].map(
             (tag) => (
               <button
                 key={tag}
-                onClick={() => handleClick(tag)} // Pass the tag name to identify it
-                type="button" // Prevent form submission when clicking tag buttons
+                onClick={() => handleClick(tag)}
+                type="button"
                 className={`${
                   activeTags.includes(tag) ? styles.tagActive : styles.tag
-                }`} // Check if the current tag is active
+                }`}
               >
                 {tag}
               </button>

@@ -21,7 +21,7 @@ const Login: React.FC = () => {
 
     const emailWithoutDomain = email.split('@')[0];
     try {
-      const response = await fetch('http://localhost:3000/api/login', { // Ensure this matches your server's address
+      const response = await fetch('http://localhost:3000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

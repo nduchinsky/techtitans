@@ -11,13 +11,11 @@
     position: relative;
     width: 100% !important;
     max-width: 500px !important;
-    margin-top: 5px;
-    margin-bottom: 15px;
   }
   
   .iconStyles {
     position: absolute;
-    top: 50%;
+    top: 35%;
     left: 15px;
     transform: translateY(-50%);
     color: #000000;
@@ -102,7 +100,7 @@
     background-color: white;
     width: 100% !important;
     max-width: 500px !important;
-    height: 200px;
+    height: 150px;
     max-height: 200px !important;
     border-radius: 20px;
     border: none;

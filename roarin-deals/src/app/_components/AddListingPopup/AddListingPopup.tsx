@@ -26,7 +26,7 @@ const AddListingPopup: FC<AddListingPopupProps> = ({ open, onClose, children }) 
 
   const handleClose = () => {
     setIsVisible(false);
-    setTimeout(onClose, 300); // Match the duration of exit animation
+    setTimeout(onClose, 300);
   };
 
   // animation variants
