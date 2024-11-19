@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const { createUsersTable } = require('./db');
+const { createUsersTable, createTempProductsTable } = require('./db');
 const registerRoute = require('./register');
 const loginRoute = require('./login');
+const { create } = require('domain');
 require('dotenv').config();
 
 const app = express();
@@ -20,6 +21,7 @@ app.listen(PORT, async () => {
     
     try {
         await createUsersTable();
+        await createTempProductsTable();
     } catch (error) {
         console.error("Error during table creation:", error);
     }

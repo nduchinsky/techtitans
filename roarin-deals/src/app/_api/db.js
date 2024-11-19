@@ -25,10 +25,35 @@ const createUsersTable = async () => {
     try {
         // Use db.none() for queries that don't return data (like CREATE TABLE)
         await db.none(query);
-        console.log("Table created successfully");
+        console.log("Users table created successfully");
     } catch (err) {
-        console.error("Error creating table:", err);
+        console.error("Error creating Users table:", err);
     }
 };
 
-module.exports = { db, createUsersTable };
+const createTempProductsTable = async () => {
+    const query = `
+        CREATE TABLE IF NOT EXISTS ProductsTemp (
+            id SERIAL PRIMARY KEY,
+            user VARCHAR(100) NOT NULL,
+            desc VARCHAR(500) NOT NULL,
+            price DECIMAL(10, 2) NOT NULL,
+            image BYTEA,
+            furniture BOOLEAN DEFAULT FALSE,
+            electronics BOOLEAN DEFAULT FALSE,
+            books BOOLEAN DEFAULT FALSE,
+            clothing BOOLEAN DEFAULT FALSE,
+            home goods BOOLEAN DEFAULT FALSE,
+            misc BOOLEAN DEFAULT FALSE,
+        )
+    `;
+    try {
+        // Use db.none() for queries that don't return data (like CREATE TABLE)
+        await db.none(query);
+        console.log("Product table created successfully");
+    } catch (err) {
+        console.error("Error creating product table:", err);
+    }
+};
+
+module.exports = { db, createUsersTable, createTempProductsTable };
