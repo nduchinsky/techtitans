@@ -4,8 +4,8 @@ import React, { FC, useState, useEffect } from 'react';
 import styles from './AddListingPopup.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 import CloseButton from '../Buttons/CloseButton/CloseButton';
-import PopupImageContainer from './AddImageContainer/AddImageContainer';
-import PopupInputs from './PopupInputs/PopupInputs';
+import PopupImageContainer from './PageOne/AddImageContainer/AddImageContainer';
+import PopupInputs from './PageOne/PopupInputs/PopupInputs';
 
 interface AddListingPopupProps {
   open: boolean;

@@ -1,0 +1,14 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100% !important;
+    overflow: hidden;
+    margin-left: 30px;
+}
+    
+.inputContainer {
+    position: relative;
+    width: 100% !important;
+    max-width: 500px !important;
+}

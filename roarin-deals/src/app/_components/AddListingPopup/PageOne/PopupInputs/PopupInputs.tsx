@@ -8,14 +8,14 @@ interface PopupInputsProps {
 }
 
 const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
-  // States to hold input values
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [condition, setCondition] = useState("")
+  const [showPageTwo, setShowPageTwo] = useState(false);
 
-  const handleClick = (tag: string) => {
+  const handleTagClick = (tag: string) => {
     // Check if the tag is already active
     if (activeTags.includes(tag)) {
       // If it is, remove it from the active tags
@@ -26,30 +26,29 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
     }
   };
 
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handlePageOneSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = {
       name,
       description,
       price,
-      tags: activeTags, // Include the array of active tags in the form data
+      condition,
+      tags: activeTags,
     };
 
-    // Handle the submission logic here (e.g., send formData to an API)
-
-    // Resetting form fields
     setName('');
     setDescription('');
     setPrice('');
-    setActiveTags([]); // Reset the active tags after submission
-    onClick(); // Call the onClick function after submission
+    setCondition('');
+    setActiveTags([]);
+    onClick();
+    setShowPageTwo(true);
   };
 
   return (
     <div className={styles.pageContainer}>
-      <form onSubmit={handleSubmit} className={styles.formContainer}>
+      <form onSubmit={handlePageOneSubmit}>
         <div className={styles.inputContainer}>
           <input
             type="text"
@@ -109,7 +108,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
             (tag) => (
               <button
                 key={tag}
-                onClick={() => handleClick(tag)}
+                onClick={() => handleTagClick(tag)}
                 type="button"
                 className={`${
                   activeTags.includes(tag) ? styles.tagActive : styles.tag
@@ -123,7 +122,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
 
         <div className={styles.buttonContainer}>
           <button type="submit" className={styles.submitButton}>
-            Save and Upload
+            Add Pickup Address
           </button>
         </div>
       </form>
