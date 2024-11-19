@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './PopupInputs.module.scss';
 import { FaDollarSign } from 'react-icons/fa';
+import { FaAngleDown } from "react-icons/fa6";
 
 interface PopupInputsProps {
   onClick: () => void;
@@ -92,7 +93,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
           value={condition}
           onChange={(e) => setCondition(e.target.value)}
           required
-          className={styles.input}
+          className={styles.conditionInput}
           >
           <option value="" disabled>Condition</option>
           <option value="Excellent">New</option>
@@ -100,6 +101,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
           <option value="Fair">Used</option>
           <option value="Poor">Refurbished</option>
         </select>
+        <FaAngleDown className={styles.conditionIcon} />
         </div>
 
         <div className={styles.tagsContainer}>

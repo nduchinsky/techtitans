@@ -146,4 +146,18 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
   }
+
+.conditionInput{
+  @extend .input;
+  padding-right: 40px !important;
+  appearance: none;
+}
+
+.conditionIcon{
+  position: absolute;
+  right: 20px;
+  top: 35%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
   
