@@ -4,7 +4,7 @@
     box-sizing: border-box;
     width: 100% !important;
     overflow: hidden;
-    margin-left: 30px;
+    margin-left: 20px;
 }
     
 .inputContainer {
@@ -12,3 +12,110 @@
     width: 100% !important;
     max-width: 500px !important;
 }
+
+.input {
+    background-color: white;
+    width: 100% !important;
+    height: 50px;
+    border: none;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    padding-left: 20px;
+    box-sizing: border-box;
+
+    &::placeholder {
+        color: #C9C9C9;
+    }
+
+    /* Hide the default arrows, or "spinners", on number inputs */
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    -moz-appearance: textfield; /* Hide the spinners on Firefox */
+
+    &::placeholder{
+        font-size: 14px;
+        font-family: "Open Sans", sans-serif;
+        font-weight: 700;
+        color: #a6a6a6;
+    }
+}
+
+.headerTwo{
+    margin-top: -1%;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.headers{
+    font-family: "Open Sans", sans-serif;
+}
+
+.formContainer{
+    margin-top: 15px;
+}
+
+.lineThree {
+    display: grid;
+    grid-template-columns: 36% 15%; /* Adjust columns to 60% for city, 40% for state */
+    gap: 10px; /* Adjust this gap value to reduce space between the inputs */
+}
+  
+.cityInput, .stateInput, .zipInput {
+    background-color: white;
+    height: 50px;
+    border: none;
+    border-radius: 20px;
+    padding-left: 20px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+
+    &::placeholder{
+        font-size: 14px;
+        font-family: "Open Sans", sans-serif;
+        font-weight: 700;
+        color: #a6a6a6;
+    }
+}
+
+.cityInput {
+    width: 100%;
+}
+
+.stateInput {
+    width: 100%;
+    font-size: 14px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    color: #a6a6a6;
+    appearance: none;
+}
+
+.zipInput{
+    width: 40%;
+}
+
+.stateIcon{
+    position: absolute;
+    pointer-events: none;
+    transform: translate(2950%, 100%);
+}
+
+.submitButton {
+    border-radius: 20px;
+    height: 40px;
+    width: 100%;
+    max-width: 200px;
+    background-color: #F1B82D;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 700;
+    margin-top: 30px;
+}
+  

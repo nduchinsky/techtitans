@@ -42,7 +42,7 @@ const page2Variants = {
 const pageTransition = {
   type: 'tween',
   ease: 'anticipate',
-  duration: 0.5,
+  duration: 0.8,
 };
 
 const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
@@ -124,8 +124,8 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
                   value={condition}
                   onChange={(e) => setCondition(e.target.value)}
                   required
-                  className={styles.conditionInput}
-                >
+                  className={`${styles.conditionInput} ${condition ? styles.selected : ""}`}
+                  >
                   <option value="" disabled>Condition</option>
                   <option value="New">New</option>
                   <option value="Like new">Like new</option>

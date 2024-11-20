@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './AddressInputs.module.scss';
+import { FaAngleDown } from 'react-icons/fa6';
 
 interface AddressInputProps {
   onSubmit: () => void;
@@ -33,7 +34,11 @@ const AddressInputs: React.FC<AddressInputProps> = ({ onSubmit }) => {
 
   return (
     <div className={styles.pageContainer}>
-      <form onSubmit={handlePageTwoSubmit}>
+        <div className={styles.headers}>
+            <h2>Please input the desired pick up address</h2>
+            <h3 className={styles.headerTwo}>Potential buyers will only be able to see the ZIP code radius</h3>
+        </div>
+      <form onSubmit={handlePageTwoSubmit} className={styles.formContainer}>
         <div className={styles.inputContainer}>
           <input
             type="text"
@@ -42,6 +47,7 @@ const AddressInputs: React.FC<AddressInputProps> = ({ onSubmit }) => {
             value={street1}
             onChange={(e) => setStreet1(e.target.value)}
             required
+            className={styles.input}
           />
         </div>
         <div className={styles.inputContainer}>
@@ -51,29 +57,34 @@ const AddressInputs: React.FC<AddressInputProps> = ({ onSubmit }) => {
             value={street2}
             placeholder="Address Line 2"
             onChange={(e) => setStreet2(e.target.value)}
+            className={styles.input}
           />
         </div>
-        <div className={styles.inputContainer}>
-          <input
-            type="text"
-            id="city"
-            value={city}
-            placeholder="City"
-            onChange={(e) => setCity(e.target.value)}
-            required
-          />
+
+        <div className={styles.lineThree}>
+            <input
+                type="text"
+                id="city"
+                value={city}
+                placeholder="City"
+                onChange={(e) => setCity(e.target.value)}
+                required
+                className={styles.cityInput}
+            />
+
+            <select
+                id="state"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                required
+                className={styles.stateInput}
+            >
+                <option value="" disabled>State</option>
+                <option value="MO">MO</option>
+            </select>
+            <FaAngleDown className={styles.stateIcon} />
         </div>
-        <div className={styles.inputContainer}>
-          <select
-            id="state"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-            required
-          >
-            <option value="" disabled>State</option>
-            <option value="MO">MO</option>
-          </select>
-        </div>
+
         <div className={styles.inputContainer}>
           <input
             type="number"
@@ -82,6 +93,7 @@ const AddressInputs: React.FC<AddressInputProps> = ({ onSubmit }) => {
             placeholder="ZIP"
             onChange={(e) => setZip(e.target.value)}
             required
+            className={styles.zipInput}
           />
         </div>
         <div className={styles.buttonContainer}>
