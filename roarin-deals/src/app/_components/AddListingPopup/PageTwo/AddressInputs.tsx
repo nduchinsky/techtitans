@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styles from './AddressInputs.module.scss';
 
-interface PopupInputsProps {
-  onClick: () => void;
+interface AddressInputProps {
+  onSubmit: () => void;
 }
 
-const AddressInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
+const AddressInputs: React.FC<AddressInputProps> = ({ onSubmit }) => {
   const [street1, setStreet1] = useState('');
   const [street2, setStreet2] = useState('');
   const [city, setCity] = useState('');
@@ -28,7 +28,7 @@ const AddressInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
     setCity('');
     setState('');
     setZip('');
-    onClick();
+    onSubmit();
   };
 
   return (
@@ -44,7 +44,6 @@ const AddressInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
             required
           />
         </div>
-
         <div className={styles.inputContainer}>
           <input
             type="text"
@@ -54,7 +53,6 @@ const AddressInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
             onChange={(e) => setStreet2(e.target.value)}
           />
         </div>
-
         <div className={styles.inputContainer}>
           <input
             type="text"
@@ -65,19 +63,17 @@ const AddressInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
             required
           />
         </div>
-
         <div className={styles.inputContainer}>
-        <select
-          id="state"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-          required
+          <select
+            id="state"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
+            required
           >
-          <option value="" disabled>State</option>
-          <option value="MO">MO</option>
-        </select>
+            <option value="" disabled>State</option>
+            <option value="MO">MO</option>
+          </select>
         </div>
-
         <div className={styles.inputContainer}>
           <input
             type="number"
@@ -88,7 +84,6 @@ const AddressInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
             required
           />
         </div>
-
         <div className={styles.buttonContainer}>
           <button type="submit" className={styles.submitButton}>
             Save & Upload
