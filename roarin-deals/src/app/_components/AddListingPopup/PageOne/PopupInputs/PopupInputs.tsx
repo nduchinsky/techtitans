@@ -33,10 +33,6 @@ const page2Variants = {
     x: 0,
     opacity: 1,
   },
-  out: {
-    x: '-100%',
-    opacity: 0,
-  },
 };
 
 const pageTransition = {
@@ -52,6 +48,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [condition, setCondition] = useState("");
   const [showPageTwo, setShowPageTwo] = useState(false);
+  const [showPageOne, setShowPageOne] = useState(true);
 
   const handleTagClick = (tag: string) => {
     if (activeTags.includes(tag)) {
@@ -63,17 +60,19 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
 
   const handlePageOneSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setShowPageOne(false);
     setShowPageTwo(true);
   };
 
   const handlePageTwoSubmit = () => {
     setShowPageTwo(false);
+    onClick();
   };
 
   return (
     <div className={styles.container}>
       <AnimatePresence>
-        {!showPageTwo && (
+        {showPageOne && (
           <motion.div
             key="pageOne"
             initial="initial"
