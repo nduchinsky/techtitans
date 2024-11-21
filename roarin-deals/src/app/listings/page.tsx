@@ -1,12 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddButton from "../_components/Buttons/AddButton/AddButton";
 import PlainHeader from "../_components/Headers/PlainHeader/PlainHeader";
 import styles from "./show_listining.module.scss";
+import { useRouter } from "next/navigation";
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // New state to track if the user is logged in
+  const router = useRouter();
+
+  useEffect(() => {
+    // Make an API request to check the user session
+    const checkSession = async () => {
+      try {
+        const res = await fetch("/api/protected"); // Protected route to check the session
+        const data = await res.json();
+
+        if (res.ok) {
+          // User is logged in, set authentication status to true
+          setIsAuthenticated(true);
+        } else {
+          // User is not authenticated, redirect to login page
+          setIsAuthenticated(false);
+          router.push("/login"); // Redirect to login page
+        }
+      } catch (err) {
+        console.error("Error checking session", err);
+        setIsAuthenticated(false); // In case of error, consider the user as not authenticated
+        router.push("/login");
+      }
+    };
+
+    checkSession();
+  }, [router]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);

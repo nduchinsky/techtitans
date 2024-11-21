@@ -2,19 +2,24 @@ const express = require('express');
 const cors = require('cors');
 const { createUsersTable, createTempProductsTable, createTempAddressesTable, dropProductsTable } = require('./db');
 const registerRoute = require('./register');
-const loginRoute = require('./login');
-const { create } = require('domain');
+const { loginHandler } = require('../../lib/login');
 require('dotenv').config();
+
+const router = express.Router();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3001',
+    methods: ['GET', 'POST'],
+    credentials: true,
+  }));
 
 app.use(express.json());
 
 app.use('/api/register', registerRoute);
-app.use('/api/login', loginRoute);
+router.post('/login', loginHandler);
 
 app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`);
@@ -27,3 +32,5 @@ app.listen(PORT, async () => {
         console.error("Error during table creation:", error);
     }
 });
+
+module.exports = router;

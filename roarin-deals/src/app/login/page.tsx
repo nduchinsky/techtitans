@@ -18,35 +18,38 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    const emailWithoutDomain = email.split('@')[0];
+  
+    // Make sure to send the full email (if that's required by your backend)
+    const emailWithDomain = `${email}@umsystem.edu`;  // Attach domain if missing
+  
     try {
-      const response = await fetch('http://localhost:3000/api/login', {
+      const response = await fetch('http://localhost:3001/api/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: emailWithoutDomain, password })
+        body: JSON.stringify({ email: emailWithDomain, password }),
       });
-
-      console.log('Response status:', response.status);
-
+  
       const contentType = response.headers.get('content-type');
-      console.log('Content-Type:', contentType);
-
+  
+      // Check if response is ok and JSON
       if (response.ok && contentType && contentType.includes('application/json')) {
         const data = await response.json();
+  
+        // Redirect to listings page if login is successful
         window.location.href = '/listings';
       } else {
         const errorData = await response.json();
-        setError(errorData.error);
-        console.log(errorData.error);
+        setError(errorData.error || 'Invalid credentials');
+        console.log('Login failed:', errorData.error);
       }
     } catch (error) {
       console.error('Error:', error);
       setError('An unexpected error occurred');
     }
   };
+  
 
   return (
     <>
