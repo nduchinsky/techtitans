@@ -3,11 +3,12 @@ import placeholderImage from './placeholder.png';
 import styles from './onboarding.module.scss';
 import Header from '../_components/Headers/OnboardingHeader/OnboardingHeader';
 import Link from 'next/link';
+import LoggedInHeader from '../_components/Headers/LoggedInHeader/LoggedInHeader';
 
 const Onboarding = () => {
   return (
     <div className={styles.pageContainer}>
-      <Header />
+      <LoggedInHeader />
 
       {/* Temporary Link to Listings Page */}
       <Link href="/listings">

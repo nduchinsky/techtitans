@@ -5,12 +5,16 @@ import styles from './Login.module.scss';
 import Link from 'next/link';
 import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  const router = useRouter();
 
   const togglePasswordVisibility = () => {
     setShowPassword(prevShowPassword => !prevShowPassword);
@@ -36,14 +40,14 @@ const Login: React.FC = () => {
 
       if (response.ok && contentType && contentType.includes('application/json')) {
         const data = await response.json();
-        window.location.href = '/listings';
+        setIsUserLoggedIn(true);
+        router.push('/listings');
       } else {
         const errorData = await response.json();
         setError(errorData.error);
-        console.log(errorData.error);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('There was an error logging you in. Please try again.');
       setError('An unexpected error occurred');
     }
   };
