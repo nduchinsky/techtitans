@@ -6,15 +6,16 @@ import Link from 'next/link';
 import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '../../../context/AuthContext';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   const router = useRouter();
+  const { setIsUserLoggedIn } = useAuth();
 
   const togglePasswordVisibility = () => {
     setShowPassword(prevShowPassword => !prevShowPassword);
