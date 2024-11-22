@@ -100,7 +100,7 @@
   position: relative;
   background-color: white;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 
 .inputGroup input {
@@ -128,16 +128,6 @@
   width: 1px;
   height: 30px;
   background-color: #aeaeae;
-}
-
-.inputBox {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  border: none;
-  margin-bottom: 15px;
 }
 
 .inputBox:focus {
@@ -181,206 +171,67 @@
   outline: none;
 }
 
-@media screen and (max-width: 480px) {
-  .settingsContainer {
-    display: flex;
-    padding: 20px;
-  }
-  
-  .sidebar {
-    width: 200px;
-    padding-right: 20px;
-  }
-  
-  .activeButton {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #007bff;
-    border: none;
-    background: transparent;
-    text-align: left;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .sidebar button {
-    font-size: 1rem;
-    color: #333;
-    border: none;
-    background: transparent;
-    text-align: left;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .contentArea {
-    flex: 1;
-  }
-  
-  .profileSection {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .profileImageContainer {
-    position: relative;
-  }
-  
-  .profileImage {
-    border-radius: 50%;
-    object-fit: cover;
-    width: 150px;
-    height: 150px;
-  }
-  
-  .editButton {
-    position: absolute;
-    bottom: -10px;
-    right: 0;
-    font-size: 1rem;
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .editButton:hover {
-    background-color: #0056b3;
-  }
-  
-  .userInfo {
-    margin-left: 20px;
-  }
-  
-  .userInfo button {
-    display: block;
-    margin: 5px 0;
-    font-size: 1rem;
-    color: #333;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  
+.inputBox {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+  margin-bottom: 0 !important; /* Force removal of bottom margin */
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 0 !important; /* Remove any spacing below the group */
+  gap: 5px;
+}
+
+.modalField {
+  margin-bottom: 10px; /* Add slight spacing between fields */
+}
+
+.emailDomain {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  vertical-align: middle;
+}
+
+.invalidFileError {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.passwordInputGroup {
+  display: flex;
+  align-items: center;
+  position: relative;
+
   .inputBox {
-    padding: 8px;
-    font-size: 1rem;
-    width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .inputBox:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  .modalField {
-    margin-bottom: 20px;
-  }
-  
-  .modalLabel {
-    font-weight: bold;
-    font-size: 1rem;
-  }
-  
-  .inputGroup {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .divider {
-    border: 1px solid #ccc;
-    flex-grow: 1;
-  }
-  
-  .emailDomain {
-    font-size: 1rem;
-    color: #007bff;
-  }
-  
-  .invalidFileError {
-    color: red;
-    font-size: 0.875rem;
-  }
-  
-  .modalContent {
-    padding: 20px;
-  }
-  
-  .modalContent input[type="file"] {
-    padding: 5px;
-    font-size: 1rem;
-  }
-  
-  .modalContent .error {
-    color: red;
-    font-size: 0.875rem;
-    margin-top: 10px;
-  }
-  
-  .modalField input[type="text"],
-  .modalField input[type="password"] {
-    padding: 8px;
-    width: 100%;
-    border-radius: 5px;
-    font-size: 1rem;
-  }
-  
-  .modalField input[type="text"]:focus,
-  .modalField input[type="password"]:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  .modalContent .divider {
-    border: 1px solid #ccc;
-    flex-grow: 1;
-  }
-  
-  .modalContent .emailDomain {
-    font-size: 1rem;
-    color: #007bff;
-  }
-  
-  .modalTitle {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .modalContent button {
-    margin-top: 20px;
+    flex: 1;
     padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    font-size: 14px;
+    border-radius: 5px; /* Match the radius in the correct design */
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    padding-right: 40px; /* Space for the eye icon */
+  }
+
+  .eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%; /* Vertically center the icon */
+    transform: translateY(-50%);
     cursor: pointer;
+    font-size: 18px; /* Adjust to match the size in the correct design */
+    color: #555;
+    user-select: none;
   }
-  
-  .modalContent button:hover {
-    background-color: #0056b3;
-  }
-  
-
-  // Add a style for the error message when invalid file type is selected
-.invalidFileError {
-  color: red;
-  margin-top: 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
-}
-
-.invalidFileError {
-  color: red;
-  margin-top: 10px;
-  text-align: center;
-  font-weight: bold;
 }
