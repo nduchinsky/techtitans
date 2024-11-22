@@ -1,0 +1,154 @@
+$listings-yellow-light: #ffe9b2;
+$listings-yellow-dark: #f1b82d;
+$listings-gray-light: #e4e4e4;
+$listings-gray-medium: #d9d9d9;
+$listings-gray-dark: #a3a3a3;
+$listings-black: #000000;
+$listings-white: #ffffff;
+
+.listingsPage {
+  font-family: Arial, sans-serif;
+
+  .categoryBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: $listings-gray-light;
+    border-radius: 15px; 
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .categoriesBubble {
+    background-color: $listings-white; 
+    border-radius: 20px; 
+    padding: 1rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .categoriesWrapper {
+    display: flex;
+    gap: 0.75rem; 
+  }
+  
+  .categoryButton {
+    background-color: $listings-yellow-light;
+    color: $listings-black;
+    border: none;
+    border-radius: 25px; 
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  
+    &:hover {
+      background-color: $listings-yellow-dark;
+      color: $listings-white;
+      transform: scale(1.05);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  .searchWrapper {
+    display: flex;
+    align-items: center;
+    background-color: $listings-gray-medium;
+    border-radius: 25px;
+    padding: 0.6rem 1rem;
+    max-width: 300px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    .searchInput {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 1rem;
+      flex: 1;
+      color: $listings-black;
+      padding-left: 0.5rem;
+  
+      &::placeholder {
+        color: darken($listings-gray-light, 30%);
+        font-style: italic;
+      }
+    }
+  
+    .searchIcon {
+      font-size: 1.2rem;
+      color: $listings-black;
+      margin-left: 0.5rem;
+    }
+  }
+
+  .productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .productCard {
+    background-color: $listings-black;
+    color: $listings-white;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; 
+    height: auto; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+  
+    .productImage {
+      width: 100%;
+      height: 200px; 
+      background-color: $listings-gray-medium;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: darken($listings-gray-medium, 20%);
+      object-fit: cover;
+    }
+  
+    .productDetails {
+      padding: 1rem;
+      background-color: $listings-black;
+      display: flex;
+      flex-direction: column; 
+      gap: 0.5rem; 
+  
+      .productPrice {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+  
+      .productName {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        word-wrap: break-word; 
+      }
+  
+      .productLocation {
+        font-size: 0.9rem;
+        color: $listings-gray-light;
+      }
+    }
+  }
+}

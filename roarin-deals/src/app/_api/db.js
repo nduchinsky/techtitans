@@ -25,10 +25,71 @@ const createUsersTable = async () => {
     try {
         // Use db.none() for queries that don't return data (like CREATE TABLE)
         await db.none(query);
-        console.log("Table created successfully");
+        console.log("Users table created successfully");
     } catch (err) {
-        console.error("Error creating table:", err);
+        console.error("Error creating Users table:", err);
     }
 };
 
-module.exports = { db, createUsersTable };
+const dropProductsTable = async () => {
+    const query = `
+        DROP TABLE IF EXISTS ProductsTemp;
+    `;
+    try {
+        // Use db.none() for queries that don't return data (like DROP TABLE)
+        await db.none(query);
+        console.log("ProductsTemp table dropped successfully");
+    } catch (err) {
+        console.error("Error dropping products table:", err);
+    }
+};
+
+
+
+const createTempProductsTable = async () => {
+    const query = `
+        CREATE TABLE IF NOT EXISTS ProductsTemp (
+            post_id SERIAL PRIMARY KEY,
+            username VARCHAR(100) NOT NULL,
+            description VARCHAR(255) NOT NULL,
+            price DECIMAL(10, 2) NOT NULL,
+            image BYTEA,
+            condition VARCHAR(20) NOT NULL CHECK (condition IN ('New', 'Like New', 'Used', 'Refurbished')),
+            furniture BOOLEAN DEFAULT FALSE,
+            electronics BOOLEAN DEFAULT FALSE,
+            books BOOLEAN DEFAULT FALSE,
+            clothing BOOLEAN DEFAULT FALSE,
+            home_goods BOOLEAN DEFAULT FALSE,
+            misc BOOLEAN DEFAULT FALSE
+        );    
+    `;
+    try {
+        // Use db.none() for queries that don't return data (like CREATE TABLE)
+        await db.none(query);
+        console.log("Product table created successfully");
+    } catch (err) {
+        console.error("Error creating product table:", err);
+    }
+};
+
+const createTempAddressesTable = async () => {
+    const query = `
+        CREATE TABLE IF NOT EXISTS temp-addresses (
+            post_id INTEGER PRIMARY KEY,
+            street VARCHAR(255),
+            city VARCHAR(100),
+            state VARCHAR(2),
+            zip VARCHAR(6),
+            FOREIGN KEY (post_id) REFERENCES Products (post_id) ON DELETE CASCADE
+        );
+    `;
+    try {
+        // Use db.none() for queries that don't return data (like CREATE TABLE)
+        await db.none(query);
+        console.log("addresses table created successfully");
+    } catch (err) {
+        console.error("Error creating addresses table:", err);
+    }
+};
+
+module.exports = { db, createUsersTable, dropProductsTable };

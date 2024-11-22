@@ -1,15 +1,93 @@
+"use client";
+
+import React, { useState } from "react";
 import AddButton from "../_components/Buttons/AddButton/AddButton";
 import PlainHeader from "../_components/Headers/PlainHeader/PlainHeader";
+import styles from "./show_listining.module.scss";
 
-export default function Listings(){
+export default function Listings() {
+  const [searchTerm, setSearchTerm] = useState("");
 
-    return(
-        <div>
-            <PlainHeader />
-            <h1>Listings Shell Page</h1>
-            <div style={{paddingTop: '300px'}}>
-                <AddButton />
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const mockListings = [
+    {
+      id: 1,
+      name: "Name of Product",
+      price: "Price of Product",
+      location: "Location of Product",
+      image: "https://via.placeholder.com/300x200",
+    },
+    {
+      id: 2,
+      name: "Name of Product",
+      price: "Price of Product",
+      location: "Location of Product",
+      image: "https://via.placeholder.com/300x200",
+    },
+    {
+      id: 3,
+      name: "Name of Product",
+      price: "Price of Product",
+      location: "Location of Product",
+      image: "https://via.placeholder.com/300x200",
+    },
+    {
+      id: 4,
+      name: "Name of Product",
+      price: "Price of Product",
+      location: "Location of Product",
+      image: "https://via.placeholder.com/300x200",
+    },
+  ];
+
+  return (
+    <div className={styles.listingsPage}>
+      <PlainHeader />
+      <div className={styles.categoryBar}>
+  <div className={styles.categoriesBubble}>
+    <div className={styles.categoriesWrapper}>
+      <button className={styles.categoryButton}>Furniture</button>
+      <button className={styles.categoryButton}>Electronics</button>
+      <button className={styles.categoryButton}>Books</button>
+      <button className={styles.categoryButton}>Clothing</button>
+      <button className={styles.categoryButton}>Home Goods</button>
+      <button className={styles.categoryButton}>Miscellaneous</button>
+    </div>
+  </div>
+  <div className={styles.searchWrapper}>
+    <input
+      type="text"
+      placeholder="Search for products"
+      value={searchTerm}
+      onChange={handleSearch}
+      className={styles.searchInput}
+    />
+    <span className={styles.searchIcon}>🔍</span>
+  </div>
+</div>
+
+      <div className={styles.content}>
+        <div className={styles.productsGrid}>
+          {mockListings.map((listing) => (
+            <div key={listing.id} className={styles.productCard}>
+              <img
+                src={listing.image}
+                alt={listing.name}
+                className={styles.productImage}
+              />
+              <div className={styles.productDetails}>
+                <h3 className={styles.productName}>{listing.name}</h3>
+                <p className={styles.productPrice}>{listing.price}</p>
+                <p className={styles.productLocation}>{listing.location}</p>
+              </div>
             </div>
+          ))}
         </div>
-    );
+        <AddButton />
+      </div>
+    </div>
+  );
 }
