@@ -19,8 +19,7 @@ export default function AddButton(){
                 <FaPlus className={styles.icon} />
             </div>
             {isPopupOpen && (
-                <AddListingPopup open={isPopupOpen} onClose={togglePopup}>
-                </AddListingPopup>
+                <AddListingPopup onClose={togglePopup} />
             )}
         </>  
     );

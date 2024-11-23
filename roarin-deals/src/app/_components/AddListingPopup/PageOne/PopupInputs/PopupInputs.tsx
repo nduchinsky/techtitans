@@ -82,7 +82,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
             transition={pageTransition}
             className={styles.pageContainer}
           >
-            <form onSubmit={handlePageOneSubmit}>
+            <form onSubmit={handlePageOneSubmit} className={styles.formContainer}>
               <div className={styles.inputContainer}>
                 <input
                   type="text"
