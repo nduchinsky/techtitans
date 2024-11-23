@@ -7,6 +7,8 @@ import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../context/AuthContext';
+import checkIfUserIsMobile from '../../../_utils/checkIfUserIsMobile';
+import { span } from 'framer-motion/client';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,6 +16,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const isUserMobile = checkIfUserIsMobile(400);
   const router = useRouter();
   const { setIsUserLoggedIn } = useAuth();
 
@@ -58,7 +61,7 @@ const Login: React.FC = () => {
       <PlainHeader />
       <div className={styles.pageContainer}>
         <div className={styles.formContainer}>
-          <h2 className={styles.formHeader}>Login</h2>
+          <h2 className={styles.formHeader}>Log In</h2>
           <form onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
               <label className={styles.formLabel} htmlFor="username">University Email</label>
@@ -68,9 +71,12 @@ const Login: React.FC = () => {
                   id="username"
                   placeholder="Enter your email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)} // Capture email input
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={styles.inputClass}
                 />
-                <div className={styles.divider}></div>
+                {!isUserMobile && (
+                  <span>|</span>
+                )}
                 <span>@umsystem.edu</span>
               </div>
             </div>
@@ -84,7 +90,7 @@ const Login: React.FC = () => {
                   id="password"
                   placeholder="Enter your password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)} // Capture password input
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <span className={styles.eyeIcon} onClick={togglePasswordVisibility}>
                   {showPassword ? <FaEye /> : <FaEyeSlash />}
