@@ -30,6 +30,7 @@
     flex-direction: row;
     align-items: center;
     gap: 30px;
+    padding-left: 20px;
 
     @media screen and (max-width: 400px) {
         gap: 10px;

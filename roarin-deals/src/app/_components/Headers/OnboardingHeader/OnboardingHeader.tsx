@@ -6,21 +6,10 @@ import { OnboardingHeaderButtons } from '../../Buttons/OnboardingHeaderButtons/O
 import logo from '../../../../../public/images/RD_logo.svg'
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import checkIfUserIsMobile from '../../../../../_utils/checkIfUserIsMobile';
 
 const OnboardingHeader = () => {
-    const [isUserMobile, setIsUserMobile] = useState(false);
-
-    // Checking if the user is on a mobile device
-    useEffect(() => {
-        const checkIfMobile = () => {
-            setIsUserMobile(window.innerWidth < 400);
-        };
-        checkIfMobile();
-        window.addEventListener('resize', checkIfMobile);
-        return () => {
-            window.removeEventListener('resize', checkIfMobile);
-        };
-    }, []);
+    const isUserMobile = checkIfUserIsMobile(400);
 
     const router = useRouter();
 
