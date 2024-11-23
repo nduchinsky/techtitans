@@ -122,6 +122,12 @@
   font-family: "Open Sans", sans-serif;
 }
 
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #aeaeae;
+}
+
 .passwordInputGroup {
   display: flex;
   align-items: center;
@@ -154,7 +160,6 @@
   }
 
   .formHeader {
-    font-size: 28px;
     margin-bottom: 35px;
   }
 

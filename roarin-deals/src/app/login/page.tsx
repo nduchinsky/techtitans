@@ -75,7 +75,7 @@ const Login: React.FC = () => {
                   className={styles.inputClass}
                 />
                 {!isUserMobile && (
-                  <span>|</span>
+                  <div className={styles.divider}></div>
                 )}
                 <span>@umsystem.edu</span>
               </div>
