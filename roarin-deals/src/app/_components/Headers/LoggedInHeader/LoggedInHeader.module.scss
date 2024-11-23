@@ -1,0 +1,26 @@
+.headerContainer {
+    margin: 0;
+    padding: 0;
+    height: 100px;
+    width: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 55%;
+    padding-left: 5%;
+}
+
+.headerText {
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.titleContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 30px;
+}
