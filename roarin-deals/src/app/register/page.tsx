@@ -25,11 +25,11 @@ const Register: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const togglePasswordVisibility = () => {
-    setShowPassword(prevShowPassword => !prevShowPassword);
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   const togglePasswordConfirmVisibility = () => {
-    setShowPasswordConfirm(prevShowPasswordConfirm => !prevShowPasswordConfirm);
+    setShowPasswordConfirm((prevShowPasswordConfirm) => !prevShowPasswordConfirm);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,41 +50,42 @@ const Register: React.FC = () => {
     setPasswordsMatch(confirmPwd === password);
   };
 
+  // Validation function
+  const isFormValid = () => {
+    return (
+      email.trim() !== '' &&
+      firstName.trim() !== '' &&
+      lastName.trim() !== '' &&
+      passwordsMatch &&
+      passwordScore >= 3
+    );
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Check if passwords match
-    if (!passwordsMatch) {
-      setErrorMessage('Passwords do not match.');
+    // Check if form is valid
+    if (!isFormValid()) {
+      setErrorMessage('Please fill out all required fields and ensure your password meets the criteria.');
       return;
     }
 
-    // Check if password strength is sufficient
-    if (passwordScore < 3) {
-      setErrorMessage('Password is too weak.');
-      return;
-    }
-
-    // Logic if passwords pass criteria
+    // Logic if form passes criteria
     setErrorMessage('');
 
     try {
-      const response = await axios.post('http://localhost:3000/api/register', {
+      await axios.post('http://localhost:3000/api/register', {
         email,
         firstName,
         lastName,
         password,
         phone
       });
-      console.log('Registration successful:', response.data);
+      console.log('Registration successful');
       window.location.href = '/login';
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        // Print more detailed error information
-        console.error('Axios error:', error);
-        console.error('Error response data:', error.response?.data);
-        console.error('Error message:', error.message);
-        setErrorMessage(error.response?.data?.error || error.message || 'An unknown Axios error occurred.');
+        setErrorMessage('An error occurred. Please try again.');
       } else {
         // Fallback for non-Axios errors
         console.error('Unknown error:', error);
@@ -118,9 +119,11 @@ const Register: React.FC = () => {
         <div className={styles.formContainer}>
           <h2 className={styles.formHeader}>Register</h2>
           <form onSubmit={handleSubmit}>
-            {/* Username Field */}
+            {/* University Email Field */}
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="email">University Email</label>
+              <label className={styles.formLabel} htmlFor="email">
+                University Email
+              </label>
               <div className={styles.inputGroup}>
                 <input
                   type="text"
@@ -134,9 +137,11 @@ const Register: React.FC = () => {
               </div>
             </div>
 
-            {/* Password Field with Strength Meter */}
+            {/* Phone Number Field */}
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="phone">Phone Number</label>
+              <label className={styles.formLabel} htmlFor="phone">
+                Phone Number
+              </label>
               <div className={styles.inputGroup}>
                 <input
                   type="tel"
@@ -148,8 +153,11 @@ const Register: React.FC = () => {
               </div>
             </div>
 
+            {/* First Name Field */}
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="firstname">First Name</label>
+              <label className={styles.formLabel} htmlFor="firstname">
+                First Name
+              </label>
               <div className={styles.inputGroup}>
                 <input
                   type="text"
@@ -161,8 +169,11 @@ const Register: React.FC = () => {
               </div>
             </div>
 
+            {/* Last Name Field */}
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="lastname">Last Name</label>
+              <label className={styles.formLabel} htmlFor="lastname">
+                Last Name
+              </label>
               <div className={styles.inputGroup}>
                 <input
                   type="text"
@@ -174,12 +185,15 @@ const Register: React.FC = () => {
               </div>
             </div>
 
+            {/* Password Field with Strength Meter */}
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="password">Password</label>
+              <label className={styles.formLabel} htmlFor="password">
+                Password
+              </label>
               <div className={styles.passwordInputGroup}>
                 <input
                   className={styles.inputBox}
-                  type={showPassword ? "text" : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
                   placeholder="Enter your password"
                   value={password}
@@ -202,7 +216,8 @@ const Register: React.FC = () => {
                     ></div>
                   </div>
                   <p className={styles.strengthLabel}>
-                    Password Strength: {['Too Weak', 'Weak', 'Fair', 'Good', 'Strong'][passwordScore]}
+                    Password Strength:{' '}
+                    {['Too Weak', 'Weak', 'Fair', 'Good', 'Strong'][passwordScore]}
                   </p>
                   {passwordFeedback && (
                     <p className={styles.passwordFeedback}>{passwordFeedback}</p>
@@ -213,11 +228,15 @@ const Register: React.FC = () => {
 
             {/* Confirm Password Field */}
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="password-confirm">Confirm Password</label>
+              <label className={styles.formLabel} htmlFor="password-confirm">
+                Confirm Password
+              </label>
               <div className={styles.passwordInputGroup}>
                 <input
-                  className={`${styles.inputBox} ${confirmPassword && !passwordsMatch ? styles.mismatch : ''}`}
-                  type={showPasswordConfirm ? "text" : "password"}
+                  className={`${styles.inputBox} ${
+                    confirmPassword && !passwordsMatch ? styles.mismatch : ''
+                  }`}
+                  type={showPasswordConfirm ? 'text' : 'password'}
                   id="password-confirm"
                   placeholder="Enter your password again"
                   value={confirmPassword}
@@ -245,16 +264,14 @@ const Register: React.FC = () => {
             </div>
 
             {/* Error Message */}
-            {errorMessage && (
-              <div className={styles.errorMessage}>{errorMessage}</div>
-            )}
+            {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
 
             {/* Register Button */}
             <div className={styles.registerBtnContainer}>
               <button
                 type="submit"
                 className={styles.registerBtn}
-                disabled={!passwordsMatch || passwordScore < 3}
+                disabled={!isFormValid()}
               >
                 REGISTER
               </button>
@@ -263,7 +280,9 @@ const Register: React.FC = () => {
             {/* Login Link */}
             <p className={styles.loginText}>
               OR login using <span className={styles.lineBreak} />
-              <Link href="/login" className={styles.loginLink}>LOGIN</Link>
+              <Link href="/login" className={styles.loginLink}>
+                LOGIN
+              </Link>
             </p>
           </form>
         </div>

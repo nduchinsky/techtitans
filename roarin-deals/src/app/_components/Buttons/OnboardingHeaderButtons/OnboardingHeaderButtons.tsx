@@ -16,7 +16,7 @@ export const OnboardingHeaderButtons = () => {
 
     return(
         <div className={styles.buttonContainer}>
-            <button className={styles.loginButton} onClick={handleLoginClick}>Login</button>
+            <button className={styles.loginButton} onClick={handleLoginClick}>Log In</button>
             <button className={styles.registerButton} onClick={handleRegisterClick}>Register</button>
         </div>
     );
