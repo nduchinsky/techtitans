@@ -1,8 +1,12 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken'); // Import JWT for token generation
 const { db } = require('./db');
 
 const router = express.Router();
+
+// Secret key for JWT
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
@@ -24,8 +28,12 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Invalid email or password' });
     }
 
-    console.log('Password match, login successful for user:', fullEmail);
-    res.status(200).json({ message: 'Login successful', user: userCheckResult });
+    console.log('Password match, generating token...');
+    // Generate a JWT token with user ID in the payload
+    const token = jwt.sign({ id: userCheckResult.id }, JWT_SECRET, { expiresIn: '1h' });
+
+    console.log('Login successful, returning token.');
+    res.status(200).json({ message: 'Login successful', token });
   } catch (err) {
     console.error('Error during login:', err);
     res.status(500).json({ error: 'Internal server error' });
