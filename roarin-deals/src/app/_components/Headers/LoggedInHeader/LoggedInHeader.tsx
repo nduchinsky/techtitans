@@ -9,37 +9,52 @@ import { useAuth } from "../../../../../context/AuthContext"; // Importing AuthC
 import { useEffect } from "react";
 
 const LoggedInHeader = () => {
-  const { isUserLoggedIn, token } = useAuth(); // Use AuthContext for login state
-  const router = useRouter();
+    const { isAuthenticated, user, validateToken, logout } = useAuth(); // Use AuthContext for authentication
+    const router = useRouter();
 
-  const handleHomeClick = () => {
-    router.push("/");
-  };
+    const handleHomeClick = () => {
+        router.push("/");
+    };
 
-  useEffect(() => {
-    console.log("LoggedInHeader - isUserLoggedIn:", isUserLoggedIn);
-    console.log("LoggedInHeader - token:", token);
-  }, [isUserLoggedIn, token]);
+    useEffect(() => {
+        const checkAuthentication = async () => {
+            const isValid = await validateToken();
+            if (!isValid) {
+                console.warn("Token validation failed. Logging out...");
+                logout();
+                router.push("/login");
+            }
+        };
 
-  // Show the header only if the user is logged in
-  if (!isUserLoggedIn) {
-    console.log("User not logged in. Hiding header.");
-    return null;
-  }
+        checkAuthentication();
+    }, [validateToken, logout, router]);
 
-  return (
-    <div className={styles.headerContainer}>
-      <div className={styles.titleContainer}>
-        <span>
-          <Image src={logo} alt="RD Logo" width={60} height={60} />
-        </span>
-        <span className={styles.headerText} onClick={handleHomeClick}>
-          Roarin' Deals
-        </span>
-      </div>
-      <LoggedInHeaderButtons />
-    </div>
-  );
+    useEffect(() => {
+        console.log("LoggedInHeader - isAuthenticated:", isAuthenticated);
+        console.log("LoggedInHeader - user:", user);
+    }, [isAuthenticated, user]);
+
+    // Show the header only if the user is authenticated
+    if (!isAuthenticated) {
+        console.log("User is not authenticated. Hiding header.");
+        return null;
+    }
+
+    return (
+        <div className={styles.headerContainer}>
+            <div className={styles.titleContainer}>
+                <span>
+                    <Image src={logo} alt="RD Logo" width={60} height={60} />
+                </span>
+                <span className={styles.headerText} onClick={handleHomeClick}>
+                    Roarin' Deals
+                </span>
+            </div>
+            <div>
+                <LoggedInHeaderButtons />
+            </div>
+        </div>
+    );
 };
 
 export default LoggedInHeader;

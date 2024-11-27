@@ -102,7 +102,6 @@ const ModalContent: React.FC<ModalContentProps> = ({
   passwordsMatch,
   passwordScore = 0, // Default value
 }) => {
-
   return (
     <Modal
       isOpen={isModalOpen}

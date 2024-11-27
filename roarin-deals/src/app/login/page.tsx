@@ -15,17 +15,16 @@ const Login: React.FC = () => {
   const [error, setError] = useState("");
 
   const router = useRouter();
-  const { setIsUserLoggedIn } = useAuth();
+  const { login } = useAuth(); // Use login from AuthContext
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
   useEffect(() => {
-    // Debugging: Check for redirectTo parameter
     const params = new URLSearchParams(window.location.search);
     const redirectTo = params.get("redirectTo");
-    console.log("Redirect target after login:", redirectTo || "/settings");
+    console.log("Redirect target after login:", redirectTo || "/listings");
   }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -48,21 +47,20 @@ const Login: React.FC = () => {
 
       if (response.ok && contentType && contentType.includes("application/json")) {
         const data = await response.json();
-        setIsUserLoggedIn(true);
 
-        // Store the token securely (preferably via cookies in a production app)
-        localStorage.setItem("token", data.token);
+        // Use login method to store the token and update authentication state
+        login(data.token);
 
         // Check for a redirect query parameter
         const params = new URLSearchParams(window.location.search);
-        const redirectTo = params.get("redirectTo") || "/listings"; // Default to /settings
+        const redirectTo = params.get("redirectTo") || "/listings";
         router.push(redirectTo); // Redirect to the intended or default page
       } else {
         const errorData = await response.json();
         setError(errorData.error);
       }
     } catch (error) {
-      console.error("There was an error logging you in. Please try again.");
+      console.error("There was an error logging you in. Please try again." + error);
       setError("An unexpected error occurred");
     }
   };

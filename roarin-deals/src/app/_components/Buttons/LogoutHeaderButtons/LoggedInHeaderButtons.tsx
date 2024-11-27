@@ -6,12 +6,11 @@ import { useAuth } from "../../../../../context/AuthContext";
 
 export const LoggedInHeaderButtons = () => {
   const router = useRouter();
-  const { setIsUserLoggedIn } = useAuth();
+  const { logout } = useAuth(); // Use logout function from AuthContext
 
   const handleLogoutClick = () => {
-    setIsUserLoggedIn(false);
-    localStorage.removeItem("token"); // Clear token from local storage
-    router.push("/");
+    logout(); // Clear authentication state and token
+    router.push("/"); // Redirect to the home page
   };
 
   const handleProfileClick = () => {
@@ -23,10 +22,7 @@ export const LoggedInHeaderButtons = () => {
       <button className={styles.logoutButton} onClick={handleLogoutClick}>
         Log Out
       </button>
-      <div
-        className={styles.pfpFrame}
-        onClick={handleProfileClick} // Add navigation handler
-      />
+      <div className={styles.pfpFrame} onClick={handleProfileClick} />
     </div>
   );
 };
