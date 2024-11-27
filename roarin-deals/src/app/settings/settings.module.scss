@@ -218,20 +218,21 @@
     flex: 1;
     padding: 10px;
     font-size: 14px;
-    border-radius: 5px; /* Match the radius in the correct design */
+    border-radius: 10px;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    padding-right: 40px; /* Space for the eye icon */
+    padding-right: 1rem; /* Space for the eye icon */
   }
 
   .eyeIcon {
     position: absolute;
-    right: 10px;
-    top: 50%; /* Vertically center the icon */
+    right: 5px; /* Adjust this value to move it further left */
+    top: 50%; /* Center the icon vertically */
     transform: translateY(-50%);
     cursor: pointer;
-    font-size: 18px; /* Adjust to match the size in the correct design */
+    font-size: 18px;
     color: #555;
     user-select: none;
   }
 }
+
