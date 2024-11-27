@@ -118,7 +118,7 @@ const ModalContent: React.FC<ModalContentProps> = ({
           {error && <p className={styleSet.invalidFileError}>{error}</p>}
         </div>
       )}
-
+  
       {modalType === "name" && (
         <>
           <div className={styles.modalField}>
@@ -167,42 +167,41 @@ const ModalContent: React.FC<ModalContentProps> = ({
           </div>
         </>
       )}
-
-{modalType === "email" && (
-  <>
-    <div className={styles.modalEmailField}>
-      <label className={styles.modalLabel}>New Email</label>
-      <div className={styles.inputGroup}>
-        <input
-          type="email"
-          value={inputValue}
-          onChange={(e) => setInputValue?.(e.target.value)}
-          className={styles.inputBox}
-          placeholder="Enter new email"
-          required
-        />
-        <span className={styles.emailDomain}>@umsystem.edu</span>
-      </div>
-
-    </div>
-    <div className={styles.modalField}>
-      <label className={styles.modalField}>Confirm Email</label>
-        <div className={styles.inputGroup}>
-          <input
-            type="email"
-            value={inputValue}
-            onChange={(e) => setInputValue?.(e.target.value)}
-            className={styles.inputBox}
-            placeholder="Enter new email"
-            required
-          />
-          <span className={styles.emailDomain}>@umsystem.edu</span>
-      </div>
-    </div>
-  </>
-)}
   
-{modalType === "phone" && (
+      {modalType === "email" && (
+        <>
+          <div className={styles.modalEmailField}>
+            <label className={styles.modalLabel}>New Email</label>
+            <div className={styles.inputGroup}>
+              <input
+                type="email"
+                value={inputValue}
+                onChange={(e) => setInputValue?.(e.target.value)}
+                className={styles.inputBox}
+                placeholder="Enter new email"
+                required
+              />
+              <span className={styles.emailDomain}>@umsystem.edu</span>
+            </div>
+          </div>
+          <div className={styles.modalField}>
+            <label className={styles.modalLabel}>Confirm Email</label>
+            <div className={styles.inputGroup}>
+              <input
+                type="email"
+                value={inputValue}
+                onChange={(e) => setInputValue?.(e.target.value)}
+                className={styles.inputBox}
+                placeholder="Confirm new email"
+                required
+              />
+              <span className={styles.emailDomain}>@umsystem.edu</span>
+            </div>
+          </div>
+        </>
+      )}
+  
+      {modalType === "phone" && (
         <>
           <div className={styles.modalField}>
             <label className={styles.modalLabel}>New Phone Number</label>
@@ -228,7 +227,7 @@ const ModalContent: React.FC<ModalContentProps> = ({
           </div>
         </>
       )}
-
+  
       {modalType === "password" && (
         <>
           <div className={styles.modalField}>
@@ -249,16 +248,30 @@ const ModalContent: React.FC<ModalContentProps> = ({
                 {showPassword ? <FaEye /> : <FaEyeSlash />}
               </span>
             </div>
-            <div
-              className={styles.passwordStrengthFeedback}
-              style={{
-                color: getStrengthColor ? getStrengthColor(passwordScore) : '#e0e0e0',
-              }}
-            >
-              {passwordFeedback}
-            </div>
-          </div>
 
+            { password && (
+            <div className={styles.passwordStrength}>
+              <div className={styles.strengthBar}>
+                <div
+                  className={styles.strengthIndicator}
+                  style={{
+                    width: `${(passwordScore + 1) * 20}%`,
+                    backgroundColor: (getStrengthColor ?? (() => '#e0e0e0'))(passwordScore),
+                  }}
+                ></div>
+              </div>
+              <p className={styles.strengthLabel}>
+                Password Strength:{' '}
+                {['Too Weak', 'Weak', 'Fair', 'Good', 'Strong'][passwordScore]}
+              </p>
+              {passwordFeedback && (
+                <p className={styles.passwordFeedback}>{passwordFeedback}</p>
+              )}
+            </div>
+          )}
+
+          </div>
+  
           <div className={styles.modalField}>
             <label className={styles.modalLabel}>Confirm new password</label>
             <div className={styles.inputGroupPassword}>
@@ -283,9 +296,6 @@ const ModalContent: React.FC<ModalContentProps> = ({
           </div>
         </>
       )}
-
-
-
     </Modal>
   );
 };

@@ -218,3 +218,31 @@
   font-size: 14px; /* Smaller font for the error message */
   color: red; /* Red color for errors */
 }
+
+.passwordStrength {
+  margin-top: 10px; /* Add spacing between the input and the strength indicator */
+}
+
+.strengthBar {
+  height: 8px; /* Height of the strength bar */
+  background-color: #e0e0e0; /* Background for the entire bar */
+  border-radius: 5px; /* Rounded corners */
+  overflow: hidden; /* Prevent children from overflowing */
+}
+
+.strengthIndicator {
+  height: 100%; /* Full height of the bar */
+  transition: width 0.3s ease, background-color 0.3s ease; /* Smooth transition for width and color */
+}
+
+.strengthLabel {
+  margin-top: 5px; /* Add spacing above the label */
+  font-size: 14px; /* Adjust font size */
+  color: #333; /* Neutral text color */
+}
+
+.passwordFeedback {
+  margin-top: 5px; /* Add spacing above the feedback */
+  font-size: 12px; /* Smaller font for the feedback */
+  color: #ff4d4d; /* Error feedback color */
+}
