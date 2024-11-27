@@ -9,8 +9,16 @@ import Modal from "../modal";
 import placeholderImage from "../placeholder.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import zxcvbn from "zxcvbn";
+import { useAuth } from "../../../../context/AuthContext"; // Adjusted import path
 
 export default function EditAccount() {
+  const {
+    isUserLoggedIn,
+    token,
+    setToken,
+    setIsUserLoggedIn,
+  } = useAuth();
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -21,8 +29,6 @@ export default function EditAccount() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [confirmPhone, setConfirmPhone] = useState("");
-  const [inputValue, setInputValue] = useState("");
-  const [confirmValue, setConfirmValue] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordScore, setPasswordScore] = useState(0);
@@ -30,66 +36,9 @@ export default function EditAccount() {
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState("");
+  const [confirmValue, setConfirmValue] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-  const getStrengthColor = (score: number): string => {
-    switch (score) {
-      case 0:
-        return "#ff4d4d"; // Red
-      case 1:
-        return "#ff751a"; // Orange
-      case 2:
-        return "#ffb31a"; // Yellow
-      case 3:
-        return "#85e085"; // Light Green
-      case 4:
-        return "#00cc44"; // Green
-      default:
-        return "#e0e0e0"; // Grey for unrecognized scores
-    }
-  };
-  
-
-  useEffect(() => {
-    const checkAuthentication = async () => {
-      const storedToken = localStorage.getItem("token");
-      if (!storedToken) {
-        redirectToLogin("No token found. Please log in.");
-        return;
-      }
-
-      try {
-        const response = await axios.post("/api/auth/verifyToken", {
-          token: storedToken,
-        });
-        if (response.status === 200) {
-          setToken(storedToken);
-        } else {
-          redirectToLogin("Invalid token. Please log in.");
-        }
-      } catch (err) {
-        console.error("Token validation error:", err);
-        redirectToLogin("Error validating token. Please log in again.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkAuthentication();
-  }, []);
-
-  const redirectToLogin = (message: string) => {
-    alert(message);
-    window.location.href = "/login";
-  };
-
-  if (isLoading) {
-    return <div className={styles.loader}>Loading...</div>;
-  }
-
-  if (!token) {
-    return null; // Prevent rendering if token is invalid
-  }
 
   const handleModalSubmit = () => {
     switch (modalType) {
@@ -114,6 +63,115 @@ export default function EditAccount() {
     }
   };
 
+  const openModal = (type: string) => {
+    setModalType(type);
+    setModalOpen(true);
+    setError("");
+    setInputValue("");
+    setConfirmValue("");
+    setPassword("");
+    setConfirmPassword("");
+    setFirstName("");
+    setConfirmFirstName("");
+    setLastName("");
+    setConfirmLastName("");
+  };
+
+  const closeModal = () => {
+    setModalType(null);
+    setModalOpen(false);
+    setError("");
+  };
+
+  const getStrengthColor = (score: number): string => {
+    switch (score) {
+      case 0:
+        return "#ff4d4d"; // Red
+      case 1:
+        return "#ff751a"; // Orange
+      case 2:
+        return "#ffb31a"; // Yellow
+      case 3:
+        return "#85e085"; // Light Green
+      case 4:
+        return "#00cc44"; // Green
+      default:
+        return "#e0e0e0"; // Grey for unrecognized scores
+    }
+  };
+
+  const getModalTitle = () => {
+    switch (modalType) {
+      case "email":
+        return "Update Email";
+      case "phone":
+        return "Update Phone Number";
+      case "password":
+        return "Update Password";
+      case "name":
+        return "Update Name";
+      case "profileImage":
+        return "Change Profile Image";
+      default:
+        return "";
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const pwd = e.target.value;
+    setPassword(pwd);
+
+    const result = zxcvbn(pwd);
+    setPasswordScore(result.score);
+    setPasswordFeedback(result.feedback.suggestions[0] || "");
+    setPasswordsMatch(confirmPassword === pwd);
+  };
+
+  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+    setPasswordsMatch(password === e.target.value);
+  };
+
+  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
+
+  const togglePasswordConfirmVisibility = () =>
+    setShowPasswordConfirm((prev) => !prev);
+
+  const handlePhoneSubmit = () => {
+    if (!/^\d{10}$/.test(phone)) {
+      setError("Phone number must be exactly 10 digits.");
+      return;
+    }
+    if (phone !== confirmPhone) {
+      setError("Phone numbers do not match.");
+      return;
+    }
+    console.log("Updated Phone Number:", phone);
+    closeModal();
+  };
+
+  const handleNameSubmit = () => {
+    if (firstName !== confirmFirstName || lastName !== confirmLastName) {
+      setError("First name or last name does not match confirmation.");
+      return;
+    }
+    console.log("Updated Name:", { firstName, lastName });
+    closeModal();
+  };
+
+  const handlePasswordSubmit = () => {
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+    console.log("Updated Password");
+    closeModal();
+  };
+
   const handleEmailSubmit = async () => {
     const updatedEmail = `${inputValue}@umsystem.edu`;
 
@@ -136,7 +194,7 @@ export default function EditAccount() {
 
       if (response.status === 200) {
         console.log("Email updated successfully:", updatedEmail);
-        setEmail(updatedEmail); // Update the UI with the new email
+        setEmail(updatedEmail);
         closeModal();
       } else {
         setError(response.data.error || "Failed to update email.");
@@ -147,104 +205,9 @@ export default function EditAccount() {
     }
   };
 
-  const handlePhoneSubmit = () => {
-    if (!/^\d{10}$/.test(phone)) {
-      setError("Phone number must be exactly 10 digits.");
-      return;
-    }
-    if (phone !== confirmPhone) {
-      setError("Phone numbers do not match.");
-      return;
-    }
-    console.log("Updated Phone Number:", phone);
-    closeModal();
-  };
-
-  const handlePasswordSubmit = () => {
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError("Passwords do not match!");
-      return;
-    }
-    console.log("Updated Password");
-    closeModal();
-  };
-
-  const handleNameSubmit = () => {
-    if (firstName !== confirmFirstName || lastName !== confirmLastName) {
-      setError("First name or last name does not match confirmation.");
-      return;
-    }
-    console.log("Updated Name:", { firstName, lastName });
-    closeModal();
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const pwd = e.target.value;
-    setPassword(pwd);
-
-    const result = zxcvbn(pwd);
-    setPasswordScore(result.score);
-    setPasswordFeedback(result.feedback.suggestions[0] || "");
-    setPasswordsMatch(confirmPassword === pwd);
-  };
-
-  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-    setPasswordsMatch(password === e.target.value);
-  };
-
-  const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
-  const togglePasswordConfirmVisibility = () => setShowPasswordConfirm((prev) => !prev);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      console.log("File selected:", e.target.files[0]);
-    }
-  };
-
-  const openModal = (type: string) => {
-    setModalType(type);
-    setModalOpen(true);
-    setError("");
-    setInputValue("");
-    setConfirmValue("");
-    setPassword("");
-    setConfirmPassword("");
-    setFirstName("");
-    setConfirmFirstName("");
-    setLastName("");
-    setConfirmLastName("");
-  };
-
-  const closeModal = () => {
-    setModalType(null);
-    setModalOpen(false);
-    setError("");
-  };
-
-  const getModalTitle = () => {
-    switch (modalType) {
-      case "email":
-        return "Update Email";
-      case "phone":
-        return "Update Phone Number";
-      case "password":
-        return "Update Password";
-      case "name":
-        return "Update Name";
-      case "profileImage":
-        return "Change Profile Image";
-      default:
-        return "";
-    }
-  };
-
   return (
     <div className={styles.settingsContainer}>
+      {/* Sidebar */}
       <div className={styles.sidebar}>
         <Link href="/settings/editAccount">
           <button className={styles.activeButton}>Edit Account</button>
@@ -256,32 +219,62 @@ export default function EditAccount() {
           <button>Sales History</button>
         </Link>
       </div>
-
+  
+      {/* Main Content */}
       <div className={styles.contentArea}>
+        {/* Profile Section */}
         <div className={styles.profileSection}>
           <div className={styles.profileImageContainer}>
-            <Image src={placeholderImage} alt="Profile" width={200} height={200} className={styles.profileImage} />
-            <button className={styles.editButton} onClick={() => openModal("profileImage")}>
+            <Image
+              src={placeholderImage}
+              alt="Profile"
+              width={200}
+              height={200}
+              className={styles.profileImage}
+            />
+            <button
+              className={styles.editButton}
+              onClick={() => openModal("profileImage")}
+            >
               Edit profile image ✏️
             </button>
           </div>
           <div className={styles.userInfo}>
-            <button className={styles.editButton} onClick={() => openModal("name")} style={{ fontSize: "2rem" }}>
-              {firstName && lastName ? `${firstName} ${lastName}` : "USERNAME ✏️"}
+            <button
+              className={styles.editButton}
+              onClick={() => openModal("name")}
+              style={{ fontSize: "2rem" }}
+            >
+              {firstName && lastName
+                ? `${firstName} ${lastName}`
+                : "USERNAME ✏️"}
             </button>
-            <button className={styles.editButton} onClick={() => openModal("email")} style={{ fontSize: "1rem" }}>
+            <button
+              className={styles.editButton}
+              onClick={() => openModal("email")}
+              style={{ fontSize: "1rem" }}
+            >
               📧 {email ? `${email}` : "username@umsystem.edu"} ✏️
             </button>
-            <button className={styles.editButton} onClick={() => openModal("phone")} style={{ fontSize: "1rem" }}>
+            <button
+              className={styles.editButton}
+              onClick={() => openModal("phone")}
+              style={{ fontSize: "1rem" }}
+            >
               📱 {phone ? phone : "(xxx) xxx - xxxx"} ✏️
             </button>
-            <button className={styles.editButton} onClick={() => openModal("password")} style={{ fontSize: "1rem" }}>
+            <button
+              className={styles.editButton}
+              onClick={() => openModal("password")}
+              style={{ fontSize: "1rem" }}
+            >
               🔒 Change Password ✏️
             </button>
           </div>
         </div>
       </div>
-
+  
+      {/* Modal */}
       <Modal
         isOpen={isModalOpen}
         onClose={closeModal}
@@ -289,6 +282,7 @@ export default function EditAccount() {
         title={getModalTitle()}
         error={error}
       >
+        {/* Modal-specific content */}
         {modalType === "email" ? (
           <>
             <div className={styles.modalField}>

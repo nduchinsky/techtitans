@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken'); // Import JWT for token generation
+const jwt = require('jsonwebtoken');
 const { db } = require('./db');
 
 const router = express.Router();
@@ -30,10 +30,20 @@ router.post('/', async (req, res) => {
 
     console.log('Password match, generating token...');
     // Generate a JWT token with user ID in the payload
-    const token = jwt.sign({ id: userCheckResult.id }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: userCheckResult.id }, JWT_SECRET, { expiresIn: '7d' });
 
     console.log('Login successful, returning token.');
-    res.status(200).json({ message: 'Login successful', token });
+    // Respond with JSON containing the token and optional user data for frontend
+    res.status(200).json({
+      message: 'Login successful',
+      token,
+      user: {
+        id: userCheckResult.id,
+        email: userCheckResult.email,
+        firstName: userCheckResult.first_name,
+        lastName: userCheckResult.last_name,
+      },
+    });
   } catch (err) {
     console.error('Error during login:', err);
     res.status(500).json({ error: 'Internal server error' });

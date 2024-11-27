@@ -11,23 +11,26 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 const authenticate = async (req, res, next) => {
     const token = req.headers['authorization']?.split(' ')[1]; // Extract Bearer token
     if (!token) {
+        console.error("No token provided");
         return res.status(401).json({ error: 'Unauthorized: Token is required' });
     }
 
     try {
         // Verify token and decode payload
         const decoded = jwt.verify(token, JWT_SECRET);
+        console.log("Decoded Token:", decoded);
 
         // Check if user exists in the database
         const user = await db.oneOrNone('SELECT id FROM users WHERE id = $1', [decoded.id]);
         if (!user) {
+            console.error("Invalid token: User not found");
             return res.status(401).json({ error: 'Unauthorized: Invalid token' });
         }
 
         req.userId = decoded.id; // Attach userId to the request for downstream routes
         next();
     } catch (err) {
-        console.error('Authentication error:', err);
+        console.error("Token verification error:", err);
         res.status(401).json({ error: 'Unauthorized: Invalid or expired token' });
     }
 };
@@ -74,6 +77,12 @@ router.put('/', authenticate, async (req, res) => {
         console.error('Error updating user data:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
+});
+
+// Add token verification route
+router.get('/verify-token', authenticate, (req, res) => {
+    console.log("Token is valid for user ID:", req.userId);
+    res.status(200).json({ message: 'Token is valid' });
 });
 
 module.exports = router;
