@@ -15,10 +15,22 @@ const pool = new Pool({
 // Function to create a table
     const createTable = async () => {
         const query = `
-            CREATE TABLE IF NOT EXISTS insert_table_name (
+            CREATE TABLE LISTINGS_TABLE (
                 id SERIAL PRIMARY KEY,
-                name VARCHAR(100) NOT NULL
-            )
+                title VARCHAR(255) NOT NULL,
+                description TEXT NOT NULL,
+                price DECIMAL(10, 2) NOT NULL,
+                condition VARCHAR(255) NOT NULL,
+                tags VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                address1 VARCHAR(255) NOT NULL,
+                address2 VARCHAR(255),
+                city VARCHAR(255) NOT NULL,
+                state VARCHAR(255) NOT NULL,
+                zip VARCHAR(255) NOT NULL,
+                user_id INT,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            );
         `;
         try {
             await pool.query(query);
