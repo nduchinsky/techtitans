@@ -13,16 +13,17 @@ import { useAuth } from "../../../../context/AuthContext";
 import { useRouter } from "next/navigation";
 
 export default function EditAccount() {
-    const { isAuthenticated, user, validateToken, logout, fetchUserDetails } = useAuth();
+    const { isAuthenticated, user, validateToken, logout, fetchUserDetails, token } = useAuth();
     const router = useRouter();
 
+    // State hooks to manage various fields and modal states
     const [isModalOpen, setModalOpen] = useState(false);
     const [modalType, setModalType] = useState<string | null>(null);
     const [error, setError] = useState("");
-    const [firstName, setFirstName] = useState(user?.firstName || "");
-    const [lastName, setLastName] = useState(user?.lastName || "");
-    const [confirmFirstName, setConfirmFirstName] = useState("");
-    const [confirmLastName, setConfirmLastName] = useState("");
+    const [first_name, setfirst_name] = useState(user?.first_name || "");
+    const [last_name, setlast_name] = useState(user?.last_name || "");
+    const [confirmfirst_name, setConfirmfirst_name] = useState("");
+    const [confirmlast_name, setConfirmlast_name] = useState("");
     const [email, setEmail] = useState(user?.email || "");
     const [phone, setPhone] = useState(user?.phone || "");
     const [confirmPhone, setConfirmPhone] = useState("");
@@ -36,24 +37,53 @@ export default function EditAccount() {
     const [inputValue, setInputValue] = useState("");
     const [confirmValue, setConfirmValue] = useState("");
 
-    // Redirect unauthenticated users
+    const [isUserFetched, setIsUserFetched] = useState(false); // Track if user data is fetched
+    const [loading, setLoading] = useState(true); // Loading state to handle async fetch
+
+    // Log user data to check if it's being updated properly
+    useEffect(() => {
+        console.log("User data:", user); // Check if user is being updated
+    }, [user]);
+
+    // Token validation: only called once, when the component mounts or when token changes
     useEffect(() => {
         const checkAuth = async () => {
-            const valid = await validateToken();
-            if (!valid) {
+            if (token) {
+                const isValid = await validateToken(token); // Pass the token for validation
+                if (!isValid) {
+                    console.warn("Token validation failed. Logging out...");
+                    logout();
+                    router.push("/login");
+                }
+            } else {
+                console.warn("No token found. Logging out...");
+                logout();
                 router.push("/login");
             }
         };
         checkAuth();
-    }, [validateToken, router]);
+    }, [token, validateToken, logout, router]); // Token change will re-trigger token validation
 
-    // Fetch the latest user details
+    // Fetch user details: Only fetch if not already fetched
     useEffect(() => {
-        fetchUserDetails().catch((err) =>
-            console.error("Failed to fetch user details on mount:", err)
-        );
-    }, [fetchUserDetails]);
+        const fetchUser = async () => {
+            if (!isUserFetched && token) {
+                setLoading(true); // Set loading to true while fetching
+                try {
+                    await fetchUserDetails(token); // Fetch user data only if not already fetched
+                    setIsUserFetched(true);
+                } catch (err) {
+                    console.error("Failed to fetch user details:", err);
+                    logout();
+                } finally {
+                    setLoading(false); // Set loading to false once data is fetched
+                }
+            }
+        };
+        fetchUser();
+    }, [token, fetchUserDetails, isUserFetched, logout]);
 
+    // Open Modal
     const openModal = (type: string) => {
         setModalType(type);
         setModalOpen(true);
@@ -72,10 +102,10 @@ export default function EditAccount() {
         setConfirmValue("");
         setPassword("");
         setConfirmPassword("");
-        setFirstName("");
-        setConfirmFirstName("");
-        setLastName("");
-        setConfirmLastName("");
+        setfirst_name("");
+        setConfirmfirst_name("");
+        setlast_name("");
+        setConfirmlast_name("");
         setPhone("");
         setConfirmPhone("");
     };
@@ -102,7 +132,7 @@ export default function EditAccount() {
                     throw new Error("Unsupported operation");
             }
             closeModal();
-            await fetchUserDetails(); // Refresh user details after a successful update
+            if (token) await fetchUserDetails(token); // Refresh user details after successful update
         } catch (err: any) {
             setError(err.message || "An error occurred. Please try again.");
         }
@@ -146,19 +176,19 @@ export default function EditAccount() {
     };
 
     const handleNameSubmit = async () => {
-        if (firstName !== confirmFirstName || lastName !== confirmLastName) {
+        if (first_name !== confirmfirst_name || last_name !== confirmlast_name) {
             throw new Error("Name fields do not match.");
         }
         const response = await axios.put(
             "/api/user/updateName",
-            { firstName, lastName },
+            { first_name, last_name },
             { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
         );
         if (response.status !== 200) {
             throw new Error(response.data.error || "Failed to update name.");
         }
-        setFirstName(firstName);
-        setLastName(lastName);
+        setfirst_name(first_name);
+        setlast_name(last_name);
     };
 
     const handlePasswordSubmit = async () => {
@@ -221,8 +251,15 @@ export default function EditAccount() {
         return colors[score] || "#e0e0e0";
     };
 
-    if (!isAuthenticated) {
-        return <p>Redirecting...</p>;
+    // If not authenticated, show a redirect message
+    if (!isAuthenticated || !user) {
+        console.log("User is not authenticated. Hiding header.");
+        return null;
+    }
+
+    // Show loading state until user details are fetched
+    if (loading) {
+        return <p>Loading...</p>;
     }
 
     return (
@@ -262,8 +299,10 @@ export default function EditAccount() {
                             onClick={() => openModal("name")}
                             style={{ fontSize: "2rem" }}
                         >
-                            {user?.firstName && user?.lastName
-                                ? `${user.firstName} ${user.lastName}`: "USERNAME ✏️"}
+                            {/* Display "First Last" if user data is available */}
+                            {user?.first_name && user?.last_name
+                                ? `${user.first_name} ${user.last_name} ✏️`
+                                : "USERNAME ✏️"}
                         </button>
                         <button
                             className={styles.editButton}
@@ -277,7 +316,9 @@ export default function EditAccount() {
                             onClick={() => openModal("phone")}
                             style={{ fontSize: "1rem" }}
                         >
-                            📱 {user?.phone ? `(${user.phone.toString().slice(0, 3)}) ${user.phone.toString().slice(3, 6)}-${user.phone.toString().slice(6)}` : "(xxx) xxx - xxxx"} ✏️
+                            📱 {user?.phone
+                                ? `(${user.phone.toString().slice(0, 3)}) ${user.phone.toString().slice(3, 6)}-${user.phone.toString().slice(6)}`
+                                : "(xxx) xxx - xxxx"} ✏️
                         </button>
                         <button
                             className={styles.editButton}
@@ -315,14 +356,14 @@ export default function EditAccount() {
                     setPassword={setPassword}
                     confirmPassword={confirmPassword}
                     setConfirmPassword={setConfirmPassword}
-                    firstName={firstName}
-                    setFirstName={setFirstName}
-                    confirmFirstName={confirmFirstName}
-                    setConfirmFirstName={setConfirmFirstName}
-                    lastName={lastName}
-                    setLastName={setLastName}
-                    confirmLastName={confirmLastName}
-                    setConfirmLastName={setConfirmLastName}
+                    first_name={first_name}
+                    setfirst_name={setfirst_name}
+                    confirmfirst_name={confirmfirst_name}
+                    setConfirmfirst_name={setConfirmfirst_name}
+                    last_name={last_name}
+                    setlast_name={setlast_name}
+                    confirmlast_name={confirmlast_name}
+                    setConfirmlast_name={setConfirmlast_name}
                     passwordScore={passwordScore}
                     passwordFeedback={passwordFeedback}
                     passwordsMatch={passwordsMatch}

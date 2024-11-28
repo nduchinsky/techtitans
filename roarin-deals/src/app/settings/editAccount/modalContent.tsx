@@ -11,10 +11,10 @@ interface ModalContentProps {
   handleModalSubmit: () => void;
   modalType: string;
   error?: string | undefined;
-  firstName?: string;
-  confirmFirstName?: string;
-  lastName?: string;
-  confirmLastName?: string;
+  first_name?: string;
+  confirmfirst_name?: string;
+  last_name?: string;
+  confirmlast_name?: string;
   inputValue?: string;
   confirmValue?: string;
   password?: string;
@@ -23,10 +23,10 @@ interface ModalContentProps {
   confirmPhone?: string;
   showPassword?: boolean;
   showPasswordConfirm?: boolean;
-  setFirstName?: (value: string) => void;
-  setConfirmFirstName?: (value: string) => void;
-  setLastName?: (value: string) => void;
-  setConfirmLastName?: (value: string) => void;
+  setfirst_name?: (value: string) => void;
+  setConfirmfirst_name?: (value: string) => void;
+  setlast_name?: (value: string) => void;
+  setConfirmlast_name?: (value: string) => void;
   setInputValue?: (value: string) => void;
   setConfirmValue?: (value: string) => void;
   setPhone?: (value: string) => void;
@@ -45,36 +45,16 @@ interface ModalContentProps {
   passwordsMatch?: boolean;
 }
 
-const defaultStrengthColor = (score: number): string => {
-  switch (score) {
-    case 0:
-      return '#ff4d4d'; // Red
-    case 1:
-      return '#ff751a'; // Orange
-    case 2:
-      return '#ffb31a'; // Yellow
-    case 3:
-      return '#85e085'; // Light Green
-    case 4:
-      return '#00cc44'; // Green
-    default:
-      return '#e0e0e0'; // Grey
-  }
-};
-
-
-
-
 const ModalContent: React.FC<ModalContentProps> = ({
   isModalOpen,
   closeModal,
   handleModalSubmit,
   modalType,
   error,
-  firstName,
-  confirmFirstName,
-  lastName,
-  confirmLastName,
+  first_name,
+  confirmfirst_name,
+  last_name,
+  confirmlast_name,
   inputValue,
   confirmValue,
   phone,
@@ -84,10 +64,10 @@ const ModalContent: React.FC<ModalContentProps> = ({
   showPassword,
   showPasswordConfirm,
   handleFileChange,
-  setFirstName,
-  setConfirmFirstName,
-  setLastName,
-  setConfirmLastName,
+  setfirst_name,
+  setConfirmfirst_name,
+  setlast_name,
+  setConfirmlast_name,
   setInputValue,
   setConfirmValue,
   setPhone,
@@ -124,8 +104,8 @@ const ModalContent: React.FC<ModalContentProps> = ({
             <label className={styles.modalLabel}>Enter new First Name</label>
             <input
               type="text"
-              value={firstName}
-              onChange={(e) => setFirstName?.(e.target.value)}
+              value={first_name}
+              onChange={(e) => setfirst_name?.(e.target.value)}
               className={styles.inputBox}
               placeholder="Enter new First Name"
               required
@@ -135,8 +115,8 @@ const ModalContent: React.FC<ModalContentProps> = ({
             <label className={styles.modalLabel}>Confirm First Name</label>
             <input
               type="text"
-              value={confirmFirstName}
-              onChange={(e) => setConfirmFirstName?.(e.target.value)}
+              value={confirmfirst_name}
+              onChange={(e) => setConfirmfirst_name?.(e.target.value)}
               className={styles.inputBox}
               placeholder="Confirm new First Name"
               required
@@ -146,8 +126,8 @@ const ModalContent: React.FC<ModalContentProps> = ({
             <label className={styles.modalLabel}>Last Name</label>
             <input
               type="text"
-              value={lastName}
-              onChange={(e) => setLastName?.(e.target.value)}
+              value={last_name}
+              onChange={(e) => setlast_name?.(e.target.value)}
               className={styles.inputBox}
               placeholder="Enter new Last Name"
               required
@@ -157,8 +137,8 @@ const ModalContent: React.FC<ModalContentProps> = ({
             <label className={styles.modalLabel}>Confirm Last Name</label>
             <input
               type="text"
-              value={confirmLastName}
-              onChange={(e) => setConfirmLastName?.(e.target.value)}
+              value={confirmlast_name}
+              onChange={(e) => setConfirmlast_name?.(e.target.value)}
               className={styles.inputBox}
               placeholder="Confirm new Last Name"
               required

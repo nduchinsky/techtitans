@@ -5,10 +5,10 @@ import axios from "axios";
 
 interface User {
     id: number;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    phone?: string; // Optional phone field
+    phone?: string;
 }
 
 interface AuthContextProps {
@@ -17,8 +17,8 @@ interface AuthContextProps {
     user: User | null;
     login: (token: string) => void;
     logout: () => void;
-    validateToken: () => Promise<boolean>;
-    fetchUserDetails: () => Promise<void>;
+    validateToken: (tokenToValidate: string) => Promise<boolean>;
+    fetchUserDetails: (currentToken: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -41,7 +41,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     if (isValid) {
                         setToken(storedToken);
                         setIsAuthenticated(true);
-                        await fetchUserDetails(storedToken);
+                        // Fetch user details only if they are not already fetched
+                        if (!user) {
+                            await fetchUserDetails(storedToken);
+                        }
                     } else {
                         logout();
                     }
@@ -53,13 +56,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         };
 
         initializeAuth();
-    }, []);
+    }, [user]);  // Now using 'user' instead of 'isUserFetched'
 
     const login = (newToken: string) => {
         setToken(newToken);
         localStorage.setItem("token", newToken);
         setIsAuthenticated(true);
-
+        setUser(null);  // Ensure user is reset on login
         fetchUserDetails(newToken).catch((error) => {
             console.error("Error fetching user details after login:", error);
             logout();
@@ -90,78 +93,46 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             console.error("No token found during user detail fetch");
             throw new Error("User is not authenticated");
         }
-
+    
         try {
             const response = await fetch("http://localhost:3000/api/settings", {
                 method: "GET",
-                headers: {
-                    Authorization: `Bearer ${currentToken}`,
-                    "Content-Type": "application/json",
-                },
+                headers: { Authorization: `Bearer ${currentToken}` },
             });
-
-            if (!response.ok) {
-                const errorData = await response.text();
-                console.error("Failed to fetch user details. Response body:", errorData);
-                throw new Error("Failed to fetch user details");
-            }
-
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                const userDetails = await response.json();
-                console.log("Fetched user details:", userDetails);
-
-                // Format the phone number for consistent display
-                const formatPhoneNumber = (phone: string): string | undefined => {
-                    if (!phone || phone.length !== 10) return phone;
-                    return `(${phone.slice(0, 3)}) ${phone.slice(3, 6)}-${phone.slice(6)}`;
-                };
-
-                const mappedUser: User = {
-                    id: userDetails.id,
-                    firstName: userDetails.first_name,
-                    lastName: userDetails.last_name,
-                    email: userDetails.email,
-                    phone: userDetails.phone ? formatPhoneNumber(userDetails.phone.toString()) : undefined,
-                };
-
-                console.log("Mapped user object:", mappedUser);
-                setUser(mappedUser);
-            } else {
-                console.error("Unexpected response format:", contentType);
-                throw new Error("Response is not JSON");
-            }
+            const data = await response.json();
+    
+            // Ensure data structure is valid and matches the expected User shape
+            console.log("Fetched user data:", data);
+    
+            // Map API response to match the User interface
+            const mappedUser: User = {
+                id: data.id ?? 0,  // Fallback values
+                first_name: data.first_name ?? '',
+                last_name: data.last_name ?? '',
+                email: data.email ?? '',
+                phone: data.phone ?? '',  // Optional field
+            };
+    
+            // Set the user state
+            setUser(mappedUser);
         } catch (error) {
-            if (error instanceof Error) {
-                console.error("Error fetching user details:", error.message, error.stack);
-                throw new Error(error.message);
-            } else {
-                console.error("An unknown error occurred:", error);
-                throw new Error("An unexpected error occurred");
-            }
+            console.error("Error fetching user details:", error);
+            throw new Error("Failed to fetch user details");
         }
     };
+    
+    
 
     return (
-        <AuthContext.Provider
-            value={{
-                token,
-                isAuthenticated,
-                user,
-                login,
-                logout,
-                validateToken: () => validateToken(token || ""),
-                fetchUserDetails: () => fetchUserDetails(token || ""),
-            }}
-        >
+        <AuthContext.Provider value={{ token, isAuthenticated, user, login, logout, validateToken, fetchUserDetails }}>
             {children}
         </AuthContext.Provider>
     );
 };
 
-export const useAuth = (): AuthContextProps => {
+export const useAuth = () => {
     const context = useContext(AuthContext);
-    if (!context) {
+    if (context === undefined) {
         throw new Error("useAuth must be used within an AuthProvider");
     }
     return context;

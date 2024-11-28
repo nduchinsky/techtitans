@@ -16,10 +16,7 @@ const authenticate = async (req, res, next) => {
     }
 
     try {
-        console.log("Received token:", token); // Log the token for debugging
         const decoded = jwt.verify(token, JWT_SECRET);
-        console.log("Decoded Token:", decoded);
-
         const user = await db.oneOrNone('SELECT id FROM users WHERE id = $1', [decoded.id]);
         if (!user) {
             console.error("Invalid token: User not found");
@@ -29,6 +26,11 @@ const authenticate = async (req, res, next) => {
         req.userId = decoded.id; // Attach user ID to the request
         next();
     } catch (err) {
+        if (err instanceof jwt.TokenExpiredError) {
+            return res.status(401).json({ error: 'Unauthorized: Token expired' });
+        } else if (err instanceof jwt.JsonWebTokenError) {
+            return res.status(401).json({ error: 'Unauthorized: Invalid token' });
+        }
         console.error("Token verification error:", err);
         res.status(401).json({ error: 'Unauthorized: Invalid or expired token' });
     }
@@ -44,8 +46,12 @@ router.get('/', authenticate, async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
+        console.log("Fetched user details:", user); // Log the user data fetched from the database
+
+        // Return first_name and last_name separately, mapping to camelCase
         res.status(200).json({
-            username: `${user.first_name} ${user.last_name}`,
+            first_name: user.first_name,  // Return first name separately
+            last_name: user.last_name,    // Return last name separately
             email: user.email,
             phone: user.phone,
         });
@@ -53,13 +59,15 @@ router.get('/', authenticate, async (req, res) => {
         console.error('Error fetching user data:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
+
+    
 });
 
 // Route to update user details
 router.put('/', authenticate, async (req, res) => {
-    const { firstName, lastName, email, phone, currentPassword, newPassword } = req.body;
+    const { first_name, last_name, email, phone, currentPassword, newPassword } = req.body;
 
-    if (!firstName || !lastName || !email || !currentPassword) {
+    if (!first_name || !last_name || !email || !currentPassword) {
         return res.status(400).json({ error: 'All required fields must be provided' });
     }
 
@@ -83,7 +91,7 @@ router.put('/', authenticate, async (req, res) => {
         // Update user details
         await db.none(
             'UPDATE users SET first_name = $1, last_name = $2, email = $3, phone = $4, password = $5 WHERE id = $6',
-            [firstName, lastName, email, phone, updatedPassword, req.userId]
+            [first_name, last_name, email, phone, updatedPassword, req.userId]
         );
 
         res.status(200).json({ message: 'User details updated successfully' });

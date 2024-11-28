@@ -9,7 +9,7 @@ import { useAuth } from "../../../../../context/AuthContext"; // Importing AuthC
 import { useEffect } from "react";
 
 const LoggedInHeader = () => {
-    const { isAuthenticated, user, validateToken, logout } = useAuth(); // Use AuthContext for authentication
+    const { isAuthenticated, user, validateToken, logout, token } = useAuth(); // Use AuthContext for authentication
     const router = useRouter();
 
     const handleHomeClick = () => {
@@ -18,16 +18,22 @@ const LoggedInHeader = () => {
 
     useEffect(() => {
         const checkAuthentication = async () => {
-            const isValid = await validateToken();
-            if (!isValid) {
-                console.warn("Token validation failed. Logging out...");
+            if (token) {
+                const isValid = await validateToken(token); // Pass the token for validation
+                if (!isValid) {
+                    console.warn("Token validation failed. Logging out...");
+                    logout();
+                    router.push("/login");
+                }
+            } else {
+                console.warn("No token found. Logging out...");
                 logout();
                 router.push("/login");
             }
         };
 
         checkAuthentication();
-    }, [validateToken, logout, router]);
+    }, [token, validateToken, logout, router]);
 
     useEffect(() => {
         console.log("LoggedInHeader - isAuthenticated:", isAuthenticated);
