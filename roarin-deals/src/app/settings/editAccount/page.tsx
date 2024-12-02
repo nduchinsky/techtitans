@@ -11,8 +11,12 @@ import placeholderImage from "../placeholder.png";
 import zxcvbn from "zxcvbn";
 import { useAuth } from "../../../../context/AuthContext";
 import { useRouter } from "next/navigation";
+import LoggedInHeader from "../../_components/Headers/LoggedInHeader/LoggedInHeader";
+import AddButton from "../../_components/Buttons/AddButton/AddButton";
+
 
 export default function EditAccount() {
+    
     const { isAuthenticated, user, validateToken, logout, fetchUserDetails, token } = useAuth();
     const router = useRouter();
 
@@ -41,6 +45,12 @@ export default function EditAccount() {
     const [isUserFetched, setIsUserFetched] = useState(false);
     const [loading, setLoading] = useState(true);
 
+    const [listings, setListings] = useState<Array<{ id: number; title: string; description: string; image?: string }>>([
+        { id: 1, title: "Sample Product 1", description: "Description for Product 1", image: placeholderImage.src },
+        { id: 2, title: "Sample Product 2", description: "Description for Product 2", image: placeholderImage.src },
+        { id: 3, title: "Sample Product 3", description: "Description for Product 3", image: placeholderImage.src },
+    ]);
+    
     useEffect(() => {
         console.log("User data:", user);
     }, [user]);
@@ -226,120 +236,159 @@ export default function EditAccount() {
     }
 
     return (
-        <div className={styles.settingsContainer}>
-            <div className={styles.sidebar}>
-                <Link href="/settings/editAccount">
-                    <button className={styles.activeButton}>Edit Account</button>
-                </Link>
-                <Link href="/settings/myOrders">
-                    <button>My Orders</button>
-                </Link>
-                <Link href="/settings/salesHistory">
-                    <button>Sales History</button>
-                </Link>
-            </div>
+        <div>
+    {/* Place the LoggedInHeader above the settings page */}
+    <LoggedInHeader />
 
-            <div className={styles.contentArea}>
-                <div className={styles.profileSection}>
-                    <div className={styles.profileImageContainer}>
-                        <Image
-                            src={placeholderImage}
-                            alt="Profile"
-                            width={200}
-                            height={200}
-                            className={styles.profileImage}
-                        />
-                        <button
-                            className={styles.editButton}
-                            onClick={() => openModal("profileImage")}
-                        >
-                            Edit profile image ✏️
-                        </button>
-                    </div>
-                    <div className={styles.userInfo}>
-                        <button
-                            className={styles.editButton}
-                            onClick={() => openModal("name")}
-                            style={{ fontSize: "2rem" }}
-                        >
-                            {user?.first_name && user?.last_name
-                                ? `${user.first_name} ${user.last_name} ✏️`
-                                : "USERNAME ✏️"}
-                        </button>
-                        <button
-                            className={styles.editButton}
-                            onClick={() => openModal("email")}
-                            style={{ fontSize: "1rem" }}
-                        >
-                            📧 {user?.email || "username@umsystem.edu"} ✏️
-                        </button>
-                        <button
-                            className={styles.editButton}
-                            onClick={() => openModal("phone")}
-                            style={{ fontSize: "1rem" }}
-                        >
-                            📱 {user?.phone
-                                ? `(${user.phone.toString().slice(0, 3)}) ${user.phone.toString().slice(3, 6)}-${user.phone.toString().slice(6)}`
-                                : "(xxx) xxx - xxxx"} ✏️
-                        </button>
-                        <button
-                            className={styles.editButton}
-                            onClick={() => openModal("password")}
-                            style={{ fontSize: "1rem" }}
-                        >
-                            🔒 Change Password ✏️
-                        </button>
-                    </div>
+    {/* Page Content */}
+    <div className={styles.settingsContainer}>
+        <div className={styles.sidebar}>
+            <Link href="/settings/editAccount">
+                <button className={styles.activeButton}>Edit Account</button>
+            </Link>
+            <Link href="/settings/myOrders">
+                <button>My Orders</button>
+            </Link>
+            <Link href="/settings/salesHistory">
+                <button>Sales History</button>
+            </Link>
+        </div>
+        
+        <div className={styles.contentArea}>
+            <div className={styles.profileSection}>
+                <div className={styles.profileImageContainer}>
+                    <Image
+                        src={placeholderImage}
+                        alt="Profile"
+                        width={200}
+                        height={200}
+                        className={styles.profileImage}
+                    />
+                    <button
+                        className={styles.editButton}
+                        onClick={() => openModal("profileImage")}
+                    >
+                        Edit profile image ✏️
+                    </button>
+                </div>
+                <div className={styles.userInfo}>
+                    <button
+                        className={styles.editButton}
+                        onClick={() => openModal("name")}
+                        style={{ fontSize: "2rem" }}
+                    >
+                        {user?.first_name && user?.last_name
+                            ? `${user.first_name} ${user.last_name} ✏️`
+                            : "USERNAME ✏️"}
+                    </button>
+                    <button
+                        className={styles.editButton}
+                        onClick={() => openModal("email")}
+                        style={{ fontSize: "1rem" }}
+                    >
+                        📧 {user?.email || "username@umsystem.edu"} ✏️
+                    </button>
+                    <button
+                        className={styles.editButton}
+                        onClick={() => openModal("phone")}
+                        style={{ fontSize: "1rem" }}
+                    >
+                        📱 {user?.phone
+                            ? `(${user.phone.toString().slice(0, 3)}) ${user.phone
+                                .toString()
+                                .slice(3, 6)}-${user.phone.toString().slice(6)}`
+                            : "(xxx) xxx - xxxx"} ✏️
+                    </button>
+                    <button
+                        className={styles.editButton}
+                        onClick={() => openModal("password")}
+                        style={{ fontSize: "1rem" }}
+                    >
+                        🔒 Change Password ✏️
+                    </button>
                 </div>
             </div>
 
-            <Modal
-                isOpen={isModalOpen}
-                onClose={closeModal}
-                onSubmit={handleModalSubmit}
-                title={getModalTitle()}
-                error={error || undefined}
-            >
-                <ModalContent
-                    isModalOpen={isModalOpen}
-                    closeModal={closeModal}
-                    handleModalSubmit={handleModalSubmit}
-                    getModalTitle={getModalTitle}
-                    modalType={modalType} // modalType is now always a string
-                    inputValue={inputValue}
-                    setInputValue={setInputValue}
-                    confirmValue={confirmValue}
-                    setConfirmValue={setConfirmValue}
-                    phone={phone}
-                    setPhone={setPhone}
-                    confirmPhone={confirmPhone}
-                    setConfirmPhone={setConfirmPhone}
-                    password={password}
-                    setPassword={setPassword}
-                    confirmPassword={confirmPassword}
-                    setConfirmPassword={setConfirmPassword}
-                    currentPassword={currentPassword}
-                    setCurrentPassword={setCurrentPassword}
-                    first_name={first_name}
-                    setfirst_name={setfirst_name}
-                    confirmfirst_name={confirmfirst_name}
-                    setConfirmfirst_name={setConfirmfirst_name}
-                    last_name={last_name}
-                    setlast_name={setlast_name}
-                    confirmlast_name={confirmlast_name}
-                    setConfirmlast_name={setConfirmlast_name}
-                    passwordScore={passwordScore}
-                    passwordFeedback={passwordFeedback}
-                    passwordsMatch={passwordsMatch}
-                    handlePasswordChange={handlePasswordChange}
-                    handleConfirmPasswordChange={handleConfirmPasswordChange}
-                    togglePasswordVisibility={togglePasswordVisibility}
-                    togglePasswordConfirmVisibility={togglePasswordConfirmVisibility}
-                    getStrengthColor={getStrengthColor}
-                    showPassword={showPassword}
-                    showPasswordConfirm={showPasswordConfirm}
-                />
-            </Modal>
+            {/* Listings Section */}
+            <div className={styles.listingsSection}>
+                <div className={styles.productsGrid}>
+                    {/* Render each listing */}
+                    {listings.map((listing, index) => (
+                        <div key={index} className={styles.productCard}>
+                            <Image
+                                src={listing.image || placeholderImage}
+                                alt={listing.title || "Listing"}
+                                width={200}
+                                height={150}
+                                className={styles.productImage}
+                            />
+                            <div className={styles.productDetails}>
+                                <h3 className={styles.productName}>{listing.title || "Product Name"}</h3>
+                                <p className={styles.productLocation}>
+                                    {listing.description || "Product Description"}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+
+                    {/* Add New Listing Button */}
+                    <div className={styles.addListingBox}>
+                        <AddButton />
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+
+    <Modal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onSubmit={handleModalSubmit}
+        title={getModalTitle()}
+        error={error || undefined}
+    >
+        <ModalContent
+            isModalOpen={isModalOpen}
+            closeModal={closeModal}
+            handleModalSubmit={handleModalSubmit}
+            getModalTitle={getModalTitle}
+            modalType={modalType} // modalType is now always a string
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+            confirmValue={confirmValue}
+            setConfirmValue={setConfirmValue}
+            phone={phone}
+            setPhone={setPhone}
+            confirmPhone={confirmPhone}
+            setConfirmPhone={setConfirmPhone}
+            password={password}
+            setPassword={setPassword}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            currentPassword={currentPassword}
+            setCurrentPassword={setCurrentPassword}
+            first_name={first_name}
+            setfirst_name={setfirst_name}
+            confirmfirst_name={confirmfirst_name}
+            setConfirmfirst_name={setConfirmfirst_name}
+            last_name={last_name}
+            setlast_name={setlast_name}
+            confirmlast_name={confirmlast_name}
+            setConfirmlast_name={setConfirmlast_name}
+            passwordScore={passwordScore}
+            passwordFeedback={passwordFeedback}
+            passwordsMatch={passwordsMatch}
+            handlePasswordChange={handlePasswordChange}
+            handleConfirmPasswordChange={handleConfirmPasswordChange}
+            togglePasswordVisibility={togglePasswordVisibility}
+            togglePasswordConfirmVisibility={togglePasswordConfirmVisibility}
+            getStrengthColor={getStrengthColor}
+            showPassword={showPassword}
+            showPasswordConfirm={showPasswordConfirm}
+        />
+    </Modal>
+</div>
+
     );
+    
 }
