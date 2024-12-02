@@ -62,6 +62,14 @@ $listings-white: #ffffff;
   margin-left: 50px;
 }
 
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
 .profileImage {
   border-radius: 50%;
   overflow: hidden;
@@ -208,6 +216,22 @@ $listings-white: #ffffff;
   font-size: 12px;
   color: #f44336;
 }
+
+.orbitron-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.open-sans-text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
 
 .addListingBox {
   display: flex;

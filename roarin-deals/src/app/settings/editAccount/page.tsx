@@ -236,7 +236,7 @@ export default function EditAccount() {
     }
 
     return (
-        <div>
+    <div>
     {/* Place the LoggedInHeader above the settings page */}
     <LoggedInHeader />
 
