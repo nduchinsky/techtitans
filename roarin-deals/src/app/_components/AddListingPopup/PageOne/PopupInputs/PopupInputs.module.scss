@@ -10,7 +10,7 @@
   height: 100%;
 }
 
-  
+
 .inputContainer {
   position: relative;
   width: 100% !important;
@@ -79,7 +79,7 @@
 }
 
 .submitButton {
-  border-radius: 20px;
+  border-radius: 50px;
   height: 40px;
   width: 100%;
   max-width: 200px;
@@ -138,6 +138,7 @@
   align-items: center;
   font-family: "Open Sans", sans-serif;
   font-size: 14px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   &:hover {
     border: 3px solid #F1B82D;
@@ -177,5 +178,105 @@
   top: 35%;
   transform: translateY(-50%);
   pointer-events: none;
+}
+
+@media screen and (max-width: 400px) {
+  .input{
+    width: 80% !important;
+  }
+
+  .inputSellingPrice{
+    width: 80% !important;
+  }
+
+  .iconStyles{
+    margin-top: 2px;
+  }
+
+  .conditionIcon{
+    margin-right: 60px;
+  }
+
+  .formContainer{
+    position: relative !important;
+    left: -40%;
+    margin-top: 30px;
+  }
+
+  .submitButton{
+    margin: 15px 30px 0px 0px;
+  }
+
+  .tagsContainer{
+    width: 80% !important;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr); 
+    padding: 12px !important;
+  }
+
+  .tag{
+    font-size: 12px;
+  }
+}
+
+@media screen and (min-width: 1500px) and (max-width: 2200px) {
+  .inputContainer{
+    width: 100%;
+    max-width: 1000px !important;
+  }
+
+  .input{
+    height: 75px;
+    font-size: 20px;
+
+    &::placeholder{
+      font-size: 20px;
+    }
+  }
+
+  .inputSellingPrice{
+    height: 75px;
+    font-size: 20px;
+
+    &::placeholder{
+      font-size: 20px;
+    }
+  }
+
+  .iconStyles{
+    margin-top: 4px;
+    margin-left: 4px;
+  }
+
+  .tagsContainer{
+    max-width: 1000px !important;
+  }
+
+  .conditionInput{
+
+    @extend .input;
+    box-sizing: border-box;
+
+  }
+
+  .tag{
+    font-size: 18px;
+    height: 45px;
+  }
+  
+  .submitButton{
+    margin-right: 450px;
+    margin-top: 15px;
+    height: 60px;
+    width: 1000px !important;
+    max-width: 400px;
+    font-size: 18px;
+  }
+
+  .tagActive{
+    font-size: 18px;
+    height: 45px;
+  }
+
 }
   

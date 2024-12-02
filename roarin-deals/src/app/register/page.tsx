@@ -8,6 +8,7 @@ import axios from 'axios';
 import { FaEye, FaEyeSlash, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 import zxcvbn from 'zxcvbn';
+import checkIfUserIsMobile from '../../../_utils/checkIfUserIsMobile';
 
 const Register: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,13 +17,14 @@ const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [passwordScore, setPasswordScore] = useState(0);
   const [passwordFeedback, setPasswordFeedback] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const isUserMobile = checkIfUserIsMobile(400);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -79,7 +81,6 @@ const Register: React.FC = () => {
         firstName,
         lastName,
         password,
-        phone
       });
       console.log('Registration successful');
       window.location.href = '/login';
@@ -132,24 +133,10 @@ const Register: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <div className={styles.divider}></div>
+                {!isUserMobile && (
+                  <div className={styles.divider}></div>
+                )}
                 <span>@umsystem.edu</span>
-              </div>
-            </div>
-
-            {/* Phone Number Field */}
-            <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="phone">
-                Phone Number
-              </label>
-              <div className={styles.inputGroup}>
-                <input
-                  type="tel"
-                  id="phone"
-                  placeholder="Enter your phone number"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
               </div>
             </div>
 

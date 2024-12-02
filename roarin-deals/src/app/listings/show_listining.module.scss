@@ -7,7 +7,7 @@ $listings-black: #000000;
 $listings-white: #ffffff;
 
 .listingsPage {
-  font-family: Arial, sans-serif;
+  font-family: "Open Sans", sans-serif;
 
   .categoryBar {
     display: flex;
@@ -27,18 +27,14 @@ $listings-white: #ffffff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   }
   
-  .categoriesWrapper {
-    display: flex;
-    gap: 0.75rem; 
-  }
-  
   .categoryButton {
     background-color: $listings-yellow-light;
     color: $listings-black;
     border: none;
     border-radius: 25px; 
+    margin: 0px 8px 0px 8px; 
     padding: 0.6rem 1.2rem;
-    font-size: 1rem;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -55,12 +51,14 @@ $listings-white: #ffffff;
   .searchWrapper {
     display: flex;
     align-items: center;
-    background-color: $listings-gray-medium;
-    border-radius: 25px;
-    padding: 0.6rem 1rem;
+    background-color: $listings-white;
+    border-radius: 20px;
+    height: 70px;
     max-width: 300px;
     flex-shrink: 0;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 0px 20px 0px 20px;
+    width: 20%;
   
     .searchInput {
       border: none;
@@ -151,4 +149,47 @@ $listings-white: #ffffff;
       }
     }
   }
+}
+
+.addButton {
+  position: fixed;
+  bottom: 40px;
+  right: 20px;
+  z-index: 9999;
+}
+
+
+@media screen and (max-width: 400px) {
+  .productCard{
+    margin: 0px 30px 0px 30px;
+  }
+
+  .categoryBar{
+    flex-direction: column;
+    padding: 10px 20px 10px 20px;
+  }
+
+  .categoriesBubble{
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .categoryButton{
+    font-size: 12px !important;
+    padding: 5px 8px 5px 8px !important;
+    margin: 0 !important;
+  }
+
+  .searchWrapper{
+    width: 83% !important;
+    height: 50px !important;
+    margin: 20px 0px 8px 0px;
+  }
+
+  .productsGrid{
+    margin-bottom: 32px;
+  }
+
 }

@@ -29,6 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .image {
@@ -37,6 +38,10 @@
   background-color: #d3d3d3; /* Gray background */
   border-radius: 15px;
   object-fit: contain; /* Make sure the image fits well */
+
+  @media screen and (max-width: 400px) {
+    margin-top: 0px;
+  }
 }
 
 /* Main text */
@@ -46,6 +51,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media screen and (max-width: 400px) {
+    margin-top: 0px;
+  }
+
 }
 
 /* Heading styled with Oswald font */
@@ -66,8 +76,33 @@
   line-height: 1.6;
 }
 
+.userButtonContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 32px;
+}
+
+.loginButton{
+  background-color: #F1B82D;
+  width: 150px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  font-size: 18px;
+
+  &:hover{
+      cursor: pointer;
+  }
+}
+
+.registerButton{
+  @extend .loginButton;
+  background-color: #FFE9B2;
+}
+
 /* Media queries for responsive design */
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 401px) and (max-width: 768px) {
   .mainContent {
     flex-direction: column;
     align-items: center;
@@ -97,7 +132,7 @@
   }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (min-width: 401px) and (max-width: 768px) {
   .oswaldHeading {
     font-size: 1.8rem;
   }
@@ -109,5 +144,30 @@
   .image {
     width: 100%;
     max-width: 250px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .mainContent{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 40px 20px 40px;
+  }
+
+  .image{
+    width: 100%;
+    height: auto;
+  }
+
+  .textSection{
+    margin-top: -30px;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .oswaldHeading{
+    font-size: 24px;
+    margin-bottom: -5px;
   }
 }
