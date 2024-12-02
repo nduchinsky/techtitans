@@ -8,7 +8,9 @@ export default function Footer(){
                 <p>Roarin' Deals 2024</p>
             </div>
             <div className={styles.footerText}>
-                <p>Contact Us</p>
+                <Link href="/contactUs">
+                    <p>Contact Us</p>
+                </Link>
             </div>
             <div className={styles.footerText}>
                 <Link href="/faq">

@@ -4,8 +4,8 @@ import React, { FC, useState, useEffect } from 'react';
 import styles from './AddListingPopup.module.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 import CloseButton from '../Buttons/CloseButton/CloseButton';
-import PopupImageContainer from './AddImageContainer/AddImageContainer';
-import PopupInputs from './PopupInputs/PopupInputs';
+import PopupImageContainer from './PageOne/AddImageContainer/AddImageContainer';
+import PopupInputs from './PageOne/PopupInputs/PopupInputs';
 
 interface AddListingPopupProps {
   open: boolean;
@@ -25,46 +25,46 @@ const AddListingPopup: FC<AddListingPopupProps> = ({ open, onClose, children }) 
   }, [open]);
 
   const handleClose = () => {
-    setIsVisible(false);
-    setTimeout(onClose, 300); // Match the duration of exit animation
+    setIsVisible(false); 
+    onClose();            
   };
 
   // animation variants
   const popupVariants = {
     hidden: {
-      y: '100%', // Start hidden below
-      opacity: 0, // Start invisible
+      y: '100%',
+      opacity: 0, 
     },
     visible: {
-      y: '0%', // Slide to original position
-      opacity: 1, // Fade in
+      y: '0%', 
+      opacity: 1, 
       transition: {
-        duration: 0.1, // Duration of the animation
+        duration: 0.1,
       },
     },
     exit: {
-      y: '100%', // Slide back down when exiting
-      opacity: 0, // Fade out
+      y: '100%', 
+      opacity: 0, 
       transition: {
-        duration: 0.3, // Duration of the animation
+        duration: 0.3, 
       },
     },
   };
 
   const backdropVariants = {
     hidden: {
-      opacity: 0, // Start invisible
+      opacity: 0, 
     },
     visible: {
-      opacity: 1, // Fade out
+      opacity: 1,
       transition: {
-        duration: 0.3, // Duration of the animation
+        duration: 0.3, 
       },
     },
     exit: {
-      opacity: 0, // Fade out
+      opacity: 0, 
       transition: {
-        duration: 0.3, // Duration of the animation
+        duration: 0.3,
       },
     },
   }

@@ -1,50 +1,67 @@
 "use client";
 
-import React, { useState } from 'react';
-import styles from './Login.module.scss';
-import Link from 'next/link';
-import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import React, { useState, useEffect } from "react";
+import styles from "./Login.module.scss";
+import Link from "next/link";
+import PlainHeader from "../_components/Headers/PlainHeader/PlainHeader";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { useAuth } from "../../../context/AuthContext";
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+  const { login } = useAuth(); // Use login from AuthContext
 
   const togglePasswordVisibility = () => {
-    setShowPassword(prevShowPassword => !prevShowPassword);
+    setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const redirectTo = params.get("redirectTo");
+    console.log("Redirect target after login:", redirectTo || "/listings");
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const emailWithoutDomain = email.split('@')[0];
+    const emailWithoutDomain = email.split("@")[0];
     try {
-      const response = await fetch('http://localhost:3000/api/login', { // Ensure this matches your server's address
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: emailWithoutDomain, password })
+        body: JSON.stringify({ email: emailWithoutDomain, password }),
       });
 
-      console.log('Response status:', response.status);
+      console.log("Response status:", response.status);
 
-      const contentType = response.headers.get('content-type');
-      console.log('Content-Type:', contentType);
+      const contentType = response.headers.get("content-type");
+      console.log("Content-Type:", contentType);
 
-      if (response.ok && contentType && contentType.includes('application/json')) {
+      if (response.ok && contentType && contentType.includes("application/json")) {
         const data = await response.json();
-        window.location.href = '/listings';
+
+        // Use login method to store the token and update authentication state
+        login(data.token);
+
+        // Check for a redirect query parameter
+        const params = new URLSearchParams(window.location.search);
+        const redirectTo = params.get("redirectTo") || "/listings";
+        router.push(redirectTo); // Redirect to the intended or default page
       } else {
         const errorData = await response.json();
         setError(errorData.error);
-        console.log(errorData.error);
       }
     } catch (error) {
-      console.error('Error:', error);
-      setError('An unexpected error occurred');
+      console.error("There was an error logging you in. Please try again." + error);
+      setError("An unexpected error occurred");
     }
   };
 
@@ -56,7 +73,9 @@ const Login: React.FC = () => {
           <h2 className={styles.formHeader}>Login</h2>
           <form onSubmit={handleSubmit}>
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="username">University Email</label>
+              <label className={styles.formLabel} htmlFor="username">
+                University Email
+              </label>
               <div className={styles.inputGroup}>
                 <input
                   type="text"
@@ -71,7 +90,9 @@ const Login: React.FC = () => {
             </div>
 
             <div className={styles.formGroup}>
-              <label className={styles.formLabel} htmlFor="password">Password</label>
+              <label className={styles.formLabel} htmlFor="password">
+                Password
+              </label>
               <div className={styles.passwordInputGroup}>
                 <input
                   className={styles.inputBox}
@@ -81,7 +102,10 @@ const Login: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)} // Capture password input
                 />
-                <span className={styles.eyeIcon} onClick={togglePasswordVisibility}>
+                <span
+                  className={styles.eyeIcon}
+                  onClick={togglePasswordVisibility}
+                >
                   {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </span>
               </div>
@@ -90,12 +114,16 @@ const Login: React.FC = () => {
             {error && <p className={styles.error}>{error}</p>}
 
             <div className={styles.loginBtnContainer}>
-              <button type="submit" className={styles.loginBtn}>LOGIN</button>
+              <button type="submit" className={styles.loginBtn}>
+                LOGIN
+              </button>
             </div>
 
             <p className={styles.loginText}>
-              OR register using <span className={styles.lineBreak} /> 
-              <Link href="/register" className={styles.registerLink}>REGISTER</Link>
+              OR register using <span className={styles.lineBreak} />
+              <Link href="/register" className={styles.registerLink}>
+                REGISTER
+              </Link>
             </p>
           </form>
         </div>

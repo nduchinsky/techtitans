@@ -1,18 +1,26 @@
+"use client"
+
 import Image from 'next/image';
 import placeholderImage from './placeholder.png';
 import styles from './onboarding.module.scss';
 import Header from '../_components/Headers/OnboardingHeader/OnboardingHeader';
 import Link from 'next/link';
+import LoggedInHeader from '../_components/Headers/LoggedInHeader/LoggedInHeader';
+import { useAuth } from '../../../context/AuthContext';
 
 const Onboarding = () => {
+
+  const { isUserLoggedIn } = useAuth();
+
   return (
     <div className={styles.pageContainer}>
-      <Header />
 
-      {/* Temporary Link to Listings Page */}
-      <Link href="/listings">
-        Listings Page
-      </Link>
+      {isUserLoggedIn ? (
+        <LoggedInHeader />
+      ) : (
+        <Header />
+      )}
+
 
       <div className={styles.mainContent}>
         {/* Placeholder */}

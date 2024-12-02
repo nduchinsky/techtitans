@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import AddButton from "../_components/Buttons/AddButton/AddButton";
-import PlainHeader from "../_components/Headers/PlainHeader/PlainHeader";
 import styles from "./show_listining.module.scss";
+import LoggedInHeader from "../_components/Headers/LoggedInHeader/LoggedInHeader";
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -45,7 +45,7 @@ export default function Listings() {
 
   return (
     <div className={styles.listingsPage}>
-      <PlainHeader />
+      <LoggedInHeader />
       <div className={styles.categoryBar}>
   <div className={styles.categoriesBubble}>
     <div className={styles.categoriesWrapper}>

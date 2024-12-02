@@ -92,3 +92,147 @@
   margin-bottom: 10px;
   text-align: left;
 }
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+.inputGroup input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+}
+
+.inputGroup span {
+  background-color: white;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 0 10px 10px 0;
+  color: #333;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  padding-right: 10px;
+}
+
+.divider {
+  width: 1px;
+  height: 30px;
+  background-color: #aeaeae;
+}
+
+.inputBox:focus {
+  outline: none;
+  border: 2px solid #ffd700;
+}
+
+.passwordInputGroup {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.passwordInputGroup .inputBox {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+  padding-right: 40px;
+}
+
+.passwordInputGroup .eyeIcon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  user-select: none;
+}
+
+.errorMessage {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.errorMessage:focus {
+  outline: none;
+}
+
+.inputBox {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+  margin-bottom: 0 !important; /* Force removal of bottom margin */
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 0 !important; /* Remove any spacing below the group */
+  gap: 5px;
+}
+
+.modalField {
+  margin-bottom: 10px; /* Add slight spacing between fields */
+}
+
+.emailDomain {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+  vertical-align: middle;
+}
+
+.invalidFileError {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.passwordInputGroup {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .inputBox {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    padding-right: 1rem; /* Space for the eye icon */
+  }
+
+  .eyeIcon {
+    position: absolute;
+    right: 5px; /* Adjust this value to move it further left */
+    top: 50%; /* Center the icon vertically */
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #555;
+    user-select: none;
+  }
+}
+
