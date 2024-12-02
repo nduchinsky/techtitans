@@ -137,7 +137,6 @@ const ModalContent: React.FC<ModalContentProps> = ({
         inputEmail && confirmEmail && inputEmail !== confirmEmail
           ? "Emails do not match."
           : "",
-      // Add the missing `passwordError` property
       passwordError: validationErrors.passwordError,
     };
     setValidationErrors(errors);
@@ -150,7 +149,7 @@ const ModalContent: React.FC<ModalContentProps> = ({
     confirmPhoneNumber,
     inputEmail,
     confirmEmail,
-    validationErrors.passwordError, // Ensure dependency updates correctly
+    validationErrors.passwordError,
   ]);
   
 

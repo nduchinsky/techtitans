@@ -22,7 +22,7 @@ export default function EditAccount() {
 
     // State hooks to manage various fields and modal states
     const [isModalOpen, setModalOpen] = useState(false);
-    const [modalType, setModalType] = useState<string>(""); // Initialize as empty string
+    const [modalType, setModalType] = useState<string>("");
     const [error, setError] = useState("");
     const [first_name, setfirst_name] = useState(user?.first_name || "");
     const [last_name, setlast_name] = useState(user?.last_name || "");
@@ -121,7 +121,7 @@ export default function EditAccount() {
     const handleModalSubmit = async () => {
         console.log('Form submitted');
         const payload: Record<string, string | undefined> = {};
-        setError(""); // Clear existing errors
+        setError("");
     
         try {
             if (modalType === "name") {
@@ -175,9 +175,8 @@ export default function EditAccount() {
                 return;
             }
     
-            // Update successful
-            closeModal(); // Close the modal
-            await fetchUserDetails(token || ""); // Refresh user data
+            closeModal();
+            await fetchUserDetails(token || "");
         } catch (err) {
             console.error("Error submitting data:", err);
             setError("An error occurred. Please try again.");
@@ -237,7 +236,6 @@ export default function EditAccount() {
 
     return (
     <div>
-    {/* Place the LoggedInHeader above the settings page */}
     <LoggedInHeader />
 
     {/* Page Content */}
@@ -352,7 +350,7 @@ export default function EditAccount() {
             closeModal={closeModal}
             handleModalSubmit={handleModalSubmit}
             getModalTitle={getModalTitle}
-            modalType={modalType} // modalType is now always a string
+            modalType={modalType}
             inputValue={inputValue}
             setInputValue={setInputValue}
             confirmValue={confirmValue}
