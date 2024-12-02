@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import styles from './OnboardingHeader.module.scss';
 import { OnboardingHeaderButtons } from '../../Buttons/OnboardingHeaderButtons/OnboardingHeaderButtons';
-import logo from '../../../../../public/images/RD_logo.svg'
+import logo from '../../../../../public/images/RD_logo.svg';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import checkIfUserIsMobile from '../../../../../_utils/checkIfUserIsMobile';

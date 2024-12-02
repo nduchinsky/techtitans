@@ -1,5 +1,14 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+$listings-yellow-light: #ffe9b2;
+$listings-yellow-dark: #f1b82d;
+$listings-gray-light: #e4e4e4;
+$listings-gray-medium: #d9d9d9;
+$listings-gray-dark: #a3a3a3;
+$listings-black: #000000;
+$listings-white: #ffffff;
 
 .settingsContainer {
   display: flex;
@@ -50,6 +59,14 @@
   margin-left: 50px;
 }
 
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 50px;
+  margin-left: 50px;
+}
+
 .profileImage {
   border-radius: 50%;
   overflow: hidden;
@@ -92,3 +109,245 @@
   margin-bottom: 10px;
   text-align: left;
 }
+
+.listingsSection {
+  margin: 20px auto;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .productCard {
+    background-color: $listings-black;
+    color: $listings-white;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column; 
+    height: auto; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+  
+    .productImage {
+      width: 100%;
+      height: 200px; 
+      background-color: $listings-gray-medium;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: darken($listings-gray-medium, 20%);
+      object-fit: cover;
+    }
+  
+    .productDetails {
+      padding: 1rem;
+      background-color: $listings-black;
+      display: flex;
+      flex-direction: column; 
+      gap: 0.5rem; 
+  
+      .productPrice {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+      }
+  
+      .productName {
+        font-size: 1rem;
+        font-family: 'Open Sans', sans-serif;
+        margin-bottom: 0.5rem;
+        word-wrap: break-word; 
+      }
+  
+      .productLocation {
+        font-size: 0.9rem;
+        color: $listings-gray-light;
+      }
+    }
+  }
+}
+
+.inputGroup {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+
+/* Password Strength Bar and Feedback */
+.passwordStrength {
+  margin-top: 10px;
+}
+
+.strengthBar {
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+}
+
+.strengthIndicator {
+  height: 100%;
+  border-radius: 3px;
+}
+
+.passwordFeedback {
+  font-size: 12px;
+  color: #f44336;
+}
+
+.orbitron-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.open-sans-text {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+
+.addListingBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #d9d9d9;
+  border-radius: 8px;
+  padding: 20px;
+  background: #f9f9f9;
+  cursor: pointer;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  color: #555;
+  font-weight: bold;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background: #ffe9b2;
+  }
+}
+
+
+/* --- show_listining.module.scss --- */
+
+
+.listingsPage {
+  font-family: Arial, sans-serif;
+
+  .categoryBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: $listings-gray-light;
+    border-radius: 15px; 
+    margin-bottom: 1.5rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .categoriesBubble {
+    background-color: $listings-white; 
+    border-radius: 20px; 
+    padding: 1rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .categoriesWrapper {
+    display: flex;
+    gap: 0.75rem; 
+  }
+
+
+  
+  .categoryButton {
+    background-color: $listings-yellow-light;
+    color: $listings-black;
+    border: none;
+    border-radius: 25px; 
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  
+    &:hover {
+      background-color: $listings-yellow-dark;
+      color: $listings-white;
+      transform: scale(1.05);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+  }
+  
+  .searchWrapper {
+    display: flex;
+    align-items: center;
+    background-color: $listings-gray-medium;
+    border-radius: 25px;
+    padding: 0.6rem 1rem;
+    max-width: 300px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    .searchInput {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 1rem;
+      flex: 1;
+      color: $listings-black;
+      padding-left: 0.5rem;
+  
+      &::placeholder {
+        color: darken($listings-gray-light, 30%);
+        font-style: italic;
+      }
+    }
+  
+    .searchIcon {
+      font-size: 1.2rem;
+      color: $listings-black;
+      margin-left: 0.5rem;
+    }
+  }
+
+  .productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  
+}
+

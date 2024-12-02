@@ -6,7 +6,7 @@ import Link from 'next/link';
 import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
 import axios from 'axios';
 import { FaEye, FaEyeSlash, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
-// @ts-expect-error
+
 import zxcvbn from 'zxcvbn';
 import checkIfUserIsMobile from '../../../_utils/checkIfUserIsMobile';
 
@@ -88,9 +88,12 @@ const Register: React.FC = () => {
       if (axios.isAxiosError(error)) {
         setErrorMessage('An error occurred. Please try again.');
       } else {
-        setErrorMessage('An unknown error occurred. Please try again.');
+        // Fallback for non-Axios errors
+        console.error('Unknown error:', error);
+        setErrorMessage('An unexpected error occurred. Please try again.');
       }
     }
+    
   };
 
   const getStrengthColor = (score: number) => {
