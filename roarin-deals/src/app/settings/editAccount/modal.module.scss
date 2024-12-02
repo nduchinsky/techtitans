@@ -97,11 +97,19 @@
   transition: background-color 0.3s;
   text-align: center;
   font-weight: bold;
+  
+  &:hover {
+    background-color: #ffca28;
+  }
+
+  &:disabled, &.locked {
+    background-color: #e0e0e0; /* Greyed out background */
+    color: #b0b0b0;             /* Greyed out text */
+    cursor: not-allowed;        /* Not-allowed cursor */
+    box-shadow: none;           /* No hover effect */
+  }
 }
 
-.submitButton:hover {
-  background-color: #ffca28;
-}
 
 
 .inputGroup {

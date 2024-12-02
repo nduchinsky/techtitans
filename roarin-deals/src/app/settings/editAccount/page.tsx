@@ -18,7 +18,7 @@ export default function EditAccount() {
 
     // State hooks to manage various fields and modal states
     const [isModalOpen, setModalOpen] = useState(false);
-    const [modalType, setModalType] = useState<string | null>(null);
+    const [modalType, setModalType] = useState<string>(""); // Initialize as empty string
     const [error, setError] = useState("");
     const [first_name, setfirst_name] = useState(user?.first_name || "");
     const [last_name, setlast_name] = useState(user?.last_name || "");
@@ -28,6 +28,7 @@ export default function EditAccount() {
     const [phone, setPhone] = useState(user?.phone || "");
     const [confirmPhone, setConfirmPhone] = useState("");
     const [password, setPassword] = useState("");
+    const [currentPassword, setCurrentPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordScore, setPasswordScore] = useState(0);
     const [passwordFeedback, setPasswordFeedback] = useState("");
@@ -37,19 +38,17 @@ export default function EditAccount() {
     const [inputValue, setInputValue] = useState("");
     const [confirmValue, setConfirmValue] = useState("");
 
-    const [isUserFetched, setIsUserFetched] = useState(false); // Track if user data is fetched
-    const [loading, setLoading] = useState(true); // Loading state to handle async fetch
+    const [isUserFetched, setIsUserFetched] = useState(false);
+    const [loading, setLoading] = useState(true);
 
-    // Log user data to check if it's being updated properly
     useEffect(() => {
-        console.log("User data:", user); // Check if user is being updated
+        console.log("User data:", user);
     }, [user]);
 
-    // Token validation: only called once, when the component mounts or when token changes
     useEffect(() => {
         const checkAuth = async () => {
             if (token) {
-                const isValid = await validateToken(token); // Pass the token for validation
+                const isValid = await validateToken(token);
                 if (!isValid) {
                     console.warn("Token validation failed. Logging out...");
                     logout();
@@ -62,28 +61,26 @@ export default function EditAccount() {
             }
         };
         checkAuth();
-    }, [token, validateToken, logout, router]); // Token change will re-trigger token validation
+    }, [token, validateToken, logout, router]);
 
-    // Fetch user details: Only fetch if not already fetched
     useEffect(() => {
         const fetchUser = async () => {
             if (!isUserFetched && token) {
-                setLoading(true); // Set loading to true while fetching
+                setLoading(true);
                 try {
-                    await fetchUserDetails(token); // Fetch user data only if not already fetched
+                    await fetchUserDetails(token);
                     setIsUserFetched(true);
                 } catch (err) {
                     console.error("Failed to fetch user details:", err);
                     logout();
                 } finally {
-                    setLoading(false); // Set loading to false once data is fetched
+                    setLoading(false);
                 }
             }
         };
         fetchUser();
     }, [token, fetchUserDetails, isUserFetched, logout]);
 
-    // Open Modal
     const openModal = (type: string) => {
         setModalType(type);
         setModalOpen(true);
@@ -91,7 +88,7 @@ export default function EditAccount() {
     };
 
     const closeModal = () => {
-        setModalType(null);
+        setModalType("");
         setModalOpen(false);
         setError("");
     };
@@ -108,105 +105,73 @@ export default function EditAccount() {
         setConfirmlast_name("");
         setPhone("");
         setConfirmPhone("");
+        setCurrentPassword("");
     };
 
     const handleModalSubmit = async () => {
+        console.log('Form submitted');
+        const payload: Record<string, string | undefined> = {};
+        setError(""); // Clear existing errors
+    
         try {
-            switch (modalType) {
-                case "email":
-                    await handleEmailSubmit();
-                    break;
-                case "phone":
-                    await handlePhoneSubmit();
-                    break;
-                case "name":
-                    await handleNameSubmit();
-                    break;
-                case "password":
-                    await handlePasswordSubmit();
-                    break;
-                case "profileImage":
-                    console.log("Profile Image Updated");
-                    break;
-                default:
-                    throw new Error("Unsupported operation");
+            if (modalType === "name") {
+                if (first_name !== confirmfirst_name || last_name !== confirmlast_name) {
+                    setError("First and last names must match their confirmation fields.");
+                    return;
+                }
+                payload.first_name = first_name;
+                payload.last_name = last_name;
+            } else if (modalType === "email") {
+                if (inputValue !== confirmValue) {
+                    setError("Emails do not match.");
+                    return;
+                }
+                payload.email = inputValue;
+            } else if (modalType === "phone") {
+                if (phone !== confirmPhone) {
+                    setError("Phone numbers do not match.");
+                    return;
+                }
+                payload.phone = phone;
+            } else if (modalType === "password") {
+                if (password !== confirmPassword) {
+                    setError("Passwords do not match.");
+                    return;
+                }
+                if (!currentPassword) {
+                    setError("Current password is required.");
+                    return;
+                }
+                payload.currentPassword = currentPassword;
+                payload.newPassword = password;
+            } else {
+                setError("Invalid modal type.");
+                return;
             }
-            closeModal();
-            if (token) await fetchUserDetails(token); // Refresh user details after successful update
-        } catch (err: any) {
-            setError(err.message || "An error occurred. Please try again.");
+    
+            // Send API request
+            const response = await fetch("api/settings", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token || ""}`,
+                },
+                body: JSON.stringify(payload),
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                setError(errorData.error || "Failed to update user details.");
+                return;
+            }
+    
+            // Update successful
+            closeModal(); // Close the modal
+            await fetchUserDetails(token || ""); // Refresh user data
+        } catch (err) {
+            console.error("Error submitting data:", err);
+            setError("An error occurred. Please try again.");
         }
-    };
-
-    const handleEmailSubmit = async () => {
-        const updatedEmail = `${inputValue}@umsystem.edu`;
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(updatedEmail)) {
-            throw new Error("Invalid email format.");
-        }
-        if (updatedEmail !== confirmValue) {
-            throw new Error("Emails do not match.");
-        }
-        const response = await axios.put(
-            "/api/user/updateEmail",
-            { email: updatedEmail },
-            { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-        );
-        if (response.status !== 200) {
-            throw new Error(response.data.error || "Failed to update email.");
-        }
-        setEmail(updatedEmail);
-    };
-
-    const handlePhoneSubmit = async () => {
-        if (!/^\d{10}$/.test(phone)) {
-            throw new Error("Phone number must be 10 digits.");
-        }
-        if (phone !== confirmPhone) {
-            throw new Error("Phone numbers do not match.");
-        }
-        const response = await axios.put(
-            "/api/user/updatePhone",
-            { phone },
-            { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-        );
-        if (response.status !== 200) {
-            throw new Error(response.data.error || "Failed to update phone.");
-        }
-        setPhone(phone);
-    };
-
-    const handleNameSubmit = async () => {
-        if (first_name !== confirmfirst_name || last_name !== confirmlast_name) {
-            throw new Error("Name fields do not match.");
-        }
-        const response = await axios.put(
-            "/api/user/updateName",
-            { first_name, last_name },
-            { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-        );
-        if (response.status !== 200) {
-            throw new Error(response.data.error || "Failed to update name.");
-        }
-        setfirst_name(first_name);
-        setlast_name(last_name);
-    };
-
-    const handlePasswordSubmit = async () => {
-        if (password.length < 8) {
-            throw new Error("Password must be at least 8 characters.");
-        }
-        if (password !== confirmPassword) {
-            throw new Error("Passwords do not match.");
-        }
-        const response = await axios.put(
-            "/api/user/updatePassword",
-            { password },
-            { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
-        );
-        if (response.status !== 200) {
-            throw new Error(response.data.error || "Failed to update password.");
-        }
-        console.log("Updated Password");
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -251,13 +216,11 @@ export default function EditAccount() {
         return colors[score] || "#e0e0e0";
     };
 
-    // If not authenticated, show a redirect message
     if (!isAuthenticated || !user) {
         console.log("User is not authenticated. Hiding header.");
         return null;
     }
 
-    // Show loading state until user details are fetched
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -299,7 +262,6 @@ export default function EditAccount() {
                             onClick={() => openModal("name")}
                             style={{ fontSize: "2rem" }}
                         >
-                            {/* Display "First Last" if user data is available */}
                             {user?.first_name && user?.last_name
                                 ? `${user.first_name} ${user.last_name} ✏️`
                                 : "USERNAME ✏️"}
@@ -343,7 +305,7 @@ export default function EditAccount() {
                     closeModal={closeModal}
                     handleModalSubmit={handleModalSubmit}
                     getModalTitle={getModalTitle}
-                    modalType={modalType || ""}
+                    modalType={modalType} // modalType is now always a string
                     inputValue={inputValue}
                     setInputValue={setInputValue}
                     confirmValue={confirmValue}
@@ -356,6 +318,8 @@ export default function EditAccount() {
                     setPassword={setPassword}
                     confirmPassword={confirmPassword}
                     setConfirmPassword={setConfirmPassword}
+                    currentPassword={currentPassword}
+                    setCurrentPassword={setCurrentPassword}
                     first_name={first_name}
                     setfirst_name={setfirst_name}
                     confirmfirst_name={confirmfirst_name}
