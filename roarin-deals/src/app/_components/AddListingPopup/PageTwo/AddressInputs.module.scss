@@ -169,7 +169,7 @@
     }
 }
 
-@media screen and (min-width: 1500px) and (max-width: 2200px) {
+@media screen and (min-width: 1700px) and (max-width: 2200px) {
     .input{
         height: 75px;
         font-size: 20px;
@@ -215,6 +215,58 @@
         width: 1000px !important;
         max-width: 400px;
         font-size: 18px;
+        margin-left: 300px;
+        margin-top: 50px;
+    }
+
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1699px) {
+    .input{
+        height: 40px;
+        font-size: 14px;
+    
+        &::placeholder{
+          font-size: 14px;
+        }
+    }
+
+    .inputContainer{
+        width: 100%;
+        max-width: 1000px !important;
+    }
+
+    .cityInput, .stateInput, .zipInput {
+        height: 40px;
+        font-size: 14px;
+    
+        &::placeholder{
+          font-size: 14px;
+        }
+    }
+
+    .stateIcon{
+        transform: translate(4400%, 75%);
+    }
+
+    .headers{
+        margin-bottom: 30px;
+        margin-top: -30px
+    }
+    
+    .headerOne{
+        font-size: 24px;
+    }
+
+    .headerTwo{
+        font-size: 18px;
+    }
+
+    .submitButton{
+        height: 40px;
+        width: 1000px !important;
+        max-width: 300px;
+        font-size: 15px;
         margin-left: 300px;
         margin-top: 50px;
     }
