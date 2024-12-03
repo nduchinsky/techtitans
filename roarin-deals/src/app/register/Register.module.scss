@@ -78,6 +78,29 @@
 .registerBtnContainer {
   display: flex;
   justify-content: center;
+    &:only-child {
+      border-radius: 10px;
+    }
+
+    &:not(:only-child) {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  }
+
+.divider {
+  width: 1px;
+  height: 30px;
+  background-color: #aeaeae;
+}
+
+.inputBox {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: none;
 }
 
 .registerBtn {

@@ -21,7 +21,7 @@ export default function SalesHistory() {
         {/* Sidebar */}
         <div className={styles.sidebar}>
           <Link href="/settings/editAccount">
-            <button>Edit account</button>
+            <button>Edit Account</button>
           </Link>
           <Link href="/settings/myOrders">
             <button>My Orders</button>
