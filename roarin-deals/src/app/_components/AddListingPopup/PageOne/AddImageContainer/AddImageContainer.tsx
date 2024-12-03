@@ -60,13 +60,22 @@ const PopupImageContainer = () => {
                 </div>
             )}
             <div>
-                <button
-                    className={styles.uploadButton}
-                    onClick={handleUploadClick}
-                >
-                    Upload Images
-                </button>
-                {/* Hidden file input for image upload */}
+                {images.length > 0 ? (
+                    <button
+                        className={styles.uploadButton}
+                        onClick={handleUploadClick}
+                    >
+                        Upload Another
+                    </button>
+                ):(
+                    <button
+                        className={styles.uploadButton}
+                        onClick={handleUploadClick}
+                    >
+                        Upload Image
+                    </button>
+                )}
+
                 <input
                     type="file"
                     ref={fileInputRef}
