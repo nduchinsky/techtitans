@@ -2,7 +2,7 @@
     background-color: #FFE9B2;
     width: 150px;
     height: 40px;
-    border-radius: 5px;
+    border-radius: 20px;
     border: none;
     font-size: 18px;
 
@@ -16,6 +16,7 @@
     flex-direction: row;
     align-items: center;
     gap: 16px;
+    padding-right: 70px;
 }
 
 .pfpFrame{
@@ -23,4 +24,15 @@
     height: 70px;
     border: 1px solid white;
     border-radius: 50%;
+}
+
+@media screen and (max-width: 400px) {
+    .container{
+        gap: 110px;
+    }
+
+    .pfpFrame{
+        width: 60px;
+        height: 60px;;
+    }
 }

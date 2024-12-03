@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import styles from "./Login.module.scss";
-import Link from "next/link";
-import PlainHeader from "../_components/Headers/PlainHeader/PlainHeader";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../../../context/AuthContext";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../../context/AuthContext';
+import checkIfUserIsMobile from '../../../_utils/checkIfUserIsMobile';
+import styles from './Login.module.scss';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,6 +26,7 @@ const Login: React.FC = () => {
 
   const [error, setError] = useState("");
 
+  const isUserMobile = checkIfUserIsMobile(400);
   const router = useRouter();
   const { login } = useAuth(); // Use login from AuthContext
 
@@ -144,7 +146,7 @@ const Login: React.FC = () => {
       <PlainHeader />
       <div className={styles.pageContainer}>
         <div className={styles.formContainer}>
-          <h2 className={styles.formHeader}>Login</h2>
+          <h2 className={styles.formHeader}>Log In</h2>
           <form onSubmit={handleSubmit}>
             {/* University Email Field */}
             <div className={styles.formGroup}>
@@ -161,7 +163,9 @@ const Login: React.FC = () => {
                   onChange={handleEmailChange}
                   onBlur={handleEmailBlur}
                 />
-                <div className={styles.divider}></div>
+                {!isUserMobile && (
+                  <div className={styles.divider}></div>
+                )}
                 <span>@umsystem.edu</span>
               </div>
               {emailError && <p className={styles.fieldError}>{emailError}</p>}

@@ -20,10 +20,9 @@
 .formHeader {
   text-align: center;
   font-size: 28px;
-  margin-bottom: 20px;
-  color: #333;
   text-decoration: underline;
   font-family: 'Orbitron', sans-serif;
+  margin-top: 0;
 }
 
 .formGroup {
@@ -35,7 +34,8 @@
   color: #333;
   display: block;
   margin-bottom: 8px;
-  font-family: Arial, sans-serif;
+  padding-left: 3px;
+  font-family: "Open Sans", sans-serif;
   font-weight: bold;
 }
 
@@ -46,6 +46,7 @@
   position: relative;
   background-color: white;
   border-radius: 10px;
+  font-family: "Open Sans", sans-serif;
 
   span {
     background-color: white;
@@ -69,12 +70,10 @@
     border: none;
     height: 40px;
   }
-}
 
-.divider {
-  width: 1px;
-  height: 30px;
-  background-color: #aeaeae;
+  &::placeholder{
+    font-family: "Open Sans", sans-serif;
+  }
 }
 
 .loginBtnContainer {
@@ -94,6 +93,7 @@
   cursor: pointer;
   margin-top: 25px;
   text-align: center;
+  font-family: "Open Sans", sans-serif;
 
   &:hover {
     background-color: #e0a800;
@@ -107,6 +107,7 @@
   font-family: Arial, sans-serif;
   color: rgb(137, 137, 137);
   font-weight: bold;
+  font-family: "Open Sans", sans-serif;
 
   span {
     display: block;
@@ -119,6 +120,13 @@
   text-decoration: underline;
   font-size: 20px;
   font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #aeaeae;
 }
 
 .passwordInputGroup {
@@ -147,33 +155,14 @@
   }
 }
 
-.error {
-  color: red;
-  margin-top: 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
-/* Styles for field errors */
-.fieldError {
-  color: #ff4d4d;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.invalidInput {
-  border: 1px solid #ff4d4d !important;
-}
-
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 400px) {
   .formContainer {
-    padding: 20px;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    padding: 20px 20px 60px 20px;
+    margin: 50px 30px 50px 30px;
   }
 
   .formHeader {
-    font-size: 24px;
+    margin-bottom: 35px;
   }
 
   .formLabel {
@@ -186,18 +175,18 @@
 
     input {
       border-radius: 10px;
-    }
 
-    .divider {
-      display: none;
+      &:focus{
+        outline: none;
+      }
     }
 
     span {
       border-radius: 0 0 10px 10px;
-      width: 100%;
+      width: 80%;
       text-align: left;
       padding-left: 10px;
-      margin-top: 5px;
+      margin-top: -5px;
       display: block;
     }
   }

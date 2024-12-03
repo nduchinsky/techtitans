@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AddButton from "../_components/Buttons/AddButton/AddButton";
 import styles from "./show_listining.module.scss";
 import LoggedInHeader from "../_components/Headers/LoggedInHeader/LoggedInHeader";
+import { BsSearch } from "react-icons/bs";
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -47,27 +48,25 @@ export default function Listings() {
     <div className={styles.listingsPage}>
       <LoggedInHeader />
       <div className={styles.categoryBar}>
-  <div className={styles.categoriesBubble}>
-    <div className={styles.categoriesWrapper}>
-      <button className={styles.categoryButton}>Furniture</button>
-      <button className={styles.categoryButton}>Electronics</button>
-      <button className={styles.categoryButton}>Books</button>
-      <button className={styles.categoryButton}>Clothing</button>
-      <button className={styles.categoryButton}>Home Goods</button>
-      <button className={styles.categoryButton}>Miscellaneous</button>
-    </div>
-  </div>
-  <div className={styles.searchWrapper}>
-    <input
-      type="text"
-      placeholder="Search for products"
-      value={searchTerm}
-      onChange={handleSearch}
-      className={styles.searchInput}
-    />
-    <span className={styles.searchIcon}>🔍</span>
-  </div>
-</div>
+        <div className={styles.categoriesBubble}>
+            <button className={styles.categoryButton}>Furniture</button>
+            <button className={styles.categoryButton}>Electronics</button>
+            <button className={styles.categoryButton}>Books</button>
+            <button className={styles.categoryButton}>Clothing</button>
+            <button className={styles.categoryButton}>Home Goods</button>
+            <button className={styles.categoryButton}>Misc.</button>
+        </div>
+        <div className={styles.searchWrapper}>
+          <input
+            type="text"
+            placeholder="Search for products"
+            value={searchTerm}
+            onChange={handleSearch}
+            className={styles.searchInput}
+          />
+          <span><BsSearch /></span>
+        </div>
+      </div>
 
       <div className={styles.content}>
         <div className={styles.productsGrid}>
@@ -86,7 +85,9 @@ export default function Listings() {
             </div>
           ))}
         </div>
-        <AddButton />
+        <div className={styles.addButton}>
+          <AddButton />
+        </div>
       </div>
     </div>
   );

@@ -35,7 +35,7 @@ const AddressInputs: React.FC<AddressInputProps> = ({ onSubmit }) => {
   return (
     <div className={styles.pageContainer}>
         <div className={styles.headers}>
-            <h2>Please input the desired pick up address</h2>
+            <h2 className={styles.headerOne}>Please input the desired pick up address</h2>
             <h3 className={styles.headerTwo}>Potential buyers will only be able to see the ZIP code radius</h3>
         </div>
       <form onSubmit={handlePageTwoSubmit} className={styles.formContainer}>

@@ -1,10 +1,8 @@
 .pageContainer {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
+    position: absolute !important;
     width: 100% !important;
-    overflow: hidden;
-    margin-left: 20px;
+    height: 100% !important;
+    left: 0 !important;
 }
     
 .inputContainer {
@@ -61,8 +59,8 @@
 
 .lineThree {
     display: grid;
-    grid-template-columns: 36% 15%; /* Adjust columns to 60% for city, 40% for state */
-    gap: 10px; /* Adjust this gap value to reduce space between the inputs */
+    grid-template-columns: 36% 15%;
+    gap: 10px;
 }
   
 .cityInput, .stateInput, .zipInput {
@@ -118,4 +116,169 @@
     font-weight: 700;
     margin-top: 30px;
 }
+
+@media screen and (max-width: 400px) {
+    .input{
+      width: 80% !important;
+    }
+  
+    .inputSellingPrice{
+      width: 80% !important;
+    }
+  
+    .iconStyles{
+      margin-top: 2px;
+    }
+  
+    .conditionIcon{
+      margin-right: 60px;
+    }
+  
+    .formContainer{
+      position: relative !important;
+      left: -40%;
+      margin-top: 30px;
+    }
+  
+    .submitButton{
+      margin: 15px 30px 0px 0px;
+    }
+  
+    .tagsContainer{
+      width: 80% !important;
+      grid-template-rows: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr); 
+      padding: 12px !important;
+    }
+  
+    .tag{
+      font-size: 12px;
+    }
+
+    .headers{
+        margin-left: -110px;
+        width: 80%;
+    }
+
+    .stateInput{
+        width: 270%;
+    }
+
+    .submitButton{
+        margin-left: 20px;
+    }
+}
+
+@media screen and (min-width: 1700px) and (max-width: 2200px) {
+    .input{
+        height: 75px;
+        font-size: 20px;
+    
+        &::placeholder{
+          font-size: 20px;
+        }
+    }
+
+    .inputContainer{
+        width: 100%;
+        max-width: 1000px !important;
+    }
+
+    .cityInput, .stateInput, .zipInput {
+        height: 75px;
+        font-size: 20px;
+    
+        &::placeholder{
+          font-size: 20px;
+        }
+    }
+
+    .stateIcon{
+        transform: translate(3800%, 150%);
+    }
+
+    .headers{
+        margin-bottom: 50px;
+        margin-top: -70px
+    }
+    
+    .headerOne{
+        font-size: 30px;
+    }
+
+    .headerTwo{
+        font-size: 20px;
+    }
+
+    .submitButton{
+        height: 60px;
+        width: 1000px !important;
+        max-width: 400px;
+        font-size: 18px;
+        margin-left: 300px;
+        margin-top: 50px;
+    }
+
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1699px) {
+    .input{
+        height: 50px;
+        font-size: 14px;
+    
+        &::placeholder{
+          font-size: 14px;
+        }
+    }
+
+    .inputContainer{
+        width: 100%;
+        max-width: 1000px !important;
+        margin-bottom: 10px;
+    }
+
+    .cityInput, .stateInput, .zipInput {
+        height: 50px;
+        font-size: 14px;
+        margin-bottom: 25px;
+    
+        &::placeholder{
+          font-size: 14px;
+        }
+    }
+
+    .stateIcon{
+        transform: translate(4500%, 100%);
+    }
+
+    .headers{
+        margin-bottom: 30px;
+        margin-top: -30px;
+        margin-left: -1%;
+    }
+    
+    .headerOne{
+        font-size: 24px;
+    }
+
+    .headerTwo{
+        font-size: 18px;
+    }
+
+    .submitButton{
+        height: 40px;
+        width: 1000px !important;
+        max-width: 300px;
+        font-size: 15px;
+        margin-left: 300px;
+        margin-top: 50px;
+    }
+
+    .formContainer{
+        margin-left: -20px;
+    }
+
+}
+
+
   
