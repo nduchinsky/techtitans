@@ -5,7 +5,12 @@ export default function Footer(){
     return(
         <div className={styles.footerContainer}>
             <div className={styles.footerText}>
-                <p>Contact Us</p>
+                <p>Roarin' Deals 2024</p>
+            </div>
+            <div className={styles.footerText}>
+                <Link href="/contactUs">
+                    <p>Contact Us</p>
+                </Link>
             </div>
             <div className={styles.footerText}>
                 <Link href="/faq">
