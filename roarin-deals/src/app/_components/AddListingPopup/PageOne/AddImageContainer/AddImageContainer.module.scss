@@ -61,3 +61,20 @@
         font-size: 14px;
     }
 }
+
+@media screen and (max-width: 400px){
+    .imageContainer{
+        height: 200px;
+        width: 200px;
+        margin-top: 50px;
+    }
+
+    .pageContainer{
+        margin-left: -97%;
+    }
+
+    .uploadButton{
+        width: 150px;
+        font-size: 13px;
+    }
+}

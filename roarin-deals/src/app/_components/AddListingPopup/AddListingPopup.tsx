@@ -2,15 +2,18 @@ import styles from './AddListingPopup.module.scss';
 import CloseButton from '../Buttons/CloseButton/CloseButton';
 import PopupInputs from './PageOne/PopupInputs/PopupInputs';
 import AddImageContainer from './PageOne/AddImageContainer/AddImageContainer';
+import checkIfUserIsMobile from '../../../../_utils/checkIfUserIsMobile';
 
 interface AddListingPopupProps {
-  onClose: () => void; // This prop is passed from the parent
+  onClose: () => void;
 }
 
 const AddListingPopup = ({ onClose }: AddListingPopupProps) => {
 
+  const isUserMobile = checkIfUserIsMobile(400);
+
   const handleCloseClick = () => {
-    onClose();  // Call the function passed via props to close the popup
+    onClose(); 
   };
 
   return (
@@ -23,9 +26,12 @@ const AddListingPopup = ({ onClose }: AddListingPopupProps) => {
         <h1 className={styles.headerText}>Create a Listing</h1>
           <div className={styles.content}>
 
-            <div className={styles.addImageContainer}>
-              <AddImageContainer />
-            </div>
+            {!isUserMobile && (
+              <div className={styles.addImageContainer}>
+                <AddImageContainer />
+              </div>
+            )}
+
 
             <div className={styles.inputContainer}>
               <PopupInputs onClick={handleCloseClick} />
