@@ -32,7 +32,6 @@ const AddListingPopup = ({ onClose }: AddListingPopupProps) => {
               </div>
             )}
 
-
             <div className={styles.inputContainer}>
               <PopupInputs onClick={handleCloseClick} />
             </div>
