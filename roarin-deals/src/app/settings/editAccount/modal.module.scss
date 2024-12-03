@@ -53,7 +53,7 @@
   transition: color 0.2s;
 
   &:hover {
-    color: #ff0000; /* Change color on hover for better UX */
+    color: #ff0000;
   }
 }
 
@@ -97,43 +97,51 @@
   transition: background-color 0.3s;
   text-align: center;
   font-weight: bold;
+  
+  &:hover {
+    background-color: #ffca28;
+  }
+
+  &:disabled, &.locked {
+    background-color: #e0e0e0;
+    color: #b0b0b0; 
+    cursor: not-allowed;
+    box-shadow: none;
+  }
 }
 
-.submitButton:hover {
-  background-color: #ffca28;
-}
 
 
 .inputGroup {
   display: flex;
-  align-items: flex; /* Vertically align the input and the domain */
-  border: 1px solid #ccc; /* Shared border */
-  border-radius: 5px; /* Apply rounded corners to the whole group */
-  overflow: hidden; /* Prevent overflow from children */
-  width: 100%; /* Fill the container */
+  align-items: flex;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
 }
 
 .inputBox {
-  flex: 1; /* Input takes up remaining space */
+  flex: 1;
   border: 1px solid #ccc;
-  padding: 10px 12px; /* Adjust padding */
-  font-size: 16px; /* Ensure font size matches */
-  outline: none; /* Remove default focus styles */
-  box-sizing: border-box; /* Ensure padding doesn't affect width */
+  padding: 10px 12px;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
 }
 
 .inputBox:focus {
-  outline: none; /* Remove focus outline */
+  outline: none;
 }
 
 .emailDomain {
-  background-color: #f7f7f7; /* Set background to match input */
-  color: #555; /* Subtle text color */
-  font-size: 16px; /* Match font size of input */
-  padding: 10px 12px; /* Same padding as input */
-  white-space: nowrap; /* Prevent wrapping of text */
-  border-left: 1px solid #ccc; /* Dividing border between input and domain */
-  box-sizing: border-box; /* Ensure consistent sizing */
+  background-color: #f7f7f7;
+  color: #555;
+  font-size: 16px;
+  padding: 10px 12px;
+  white-space: nowrap;
+  border-left: 1px solid #ccc;
+  box-sizing: border-box
 }
 
 
@@ -142,7 +150,7 @@
 /// 
 .inputEmailGroup {
   display: flex;
-  align-items: center; /* Align input and span vertically */
+  align-items: center;
   background-color: white;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -156,21 +164,21 @@
     border-radius: 10px;
     box-sizing: flex;
     border: 1px solid #ccc;
-    padding-right: 1rem; /* Space for the eye icon */
+    padding-right: 1rem;
 }
 
 .emailDomain {
-  background-color: #f4f4f4; /* Visually differentiate the domain */
+  background-color: #f4f4f4;
   color: #555;
   padding: 10px 15px;
   font-size: 1rem;
   font-weight: bold;
-  white-space: nowrap; /* Prevent wrapping */
-  border-left: 1px solid #ccc; /* Divider between input and domain */
+  white-space: nowrap;
+  border-left: 1px solid #ccc;
 }
 
 .modalEmailField {
-  margin-bottom: 1rem; /* Add spacing between fields */
+  margin-bottom: 1rem;
 }
 
 .modalEmailLabel {
@@ -182,67 +190,67 @@
 
 .inputGroupPassword {
   display: flex;
-  align-items: center; /* Align input and icon vertically */
-  border: 1px solid #ccc; /* Shared border */
-  border-radius: 5px; /* Rounded corners */
-  overflow: hidden; /* Prevent overflow */
-  width: 100%; /* Ensure input group spans the container width */
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
 }
 
 .inputBoxPassword {
-  flex: 1; /* Input takes up remaining space */
-  border: none; /* Remove input border */
-  padding: 10px 12px; /* Adjust padding */
-  font-size: 16px; /* Standard font size */
-  outline: none; /* Remove focus outline */
-  box-sizing: border-box; /* Include padding in width calculation */
+  flex: 1;
+  border: none;
+  padding: 10px 12px;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box;
 }
 
 .passwordVisibilityTogglePassword {
-  cursor: pointer; /* Pointer cursor for the toggle icon */
-  padding: 10px; /* Add spacing around the icon */
-  font-size: 18px; /* Match icon size to input font */
-  color: #555; /* Neutral icon color */
+  cursor: pointer;
+  padding: 10px;
+  font-size: 18px; 
+  color: #555;
   display: flex;
-  align-items: center; /* Center the icon vertically */
+  align-items: center;
 }
 
 .passwordStrengthFeedback {
-  margin-top: 4px; /* Add spacing between input and strength message */
-  font-size: 14px; /* Smaller font for the feedback */
-  color: #ff4d4d; /* Default feedback color (adjust dynamically) */
+  margin-top: 4px;
+  font-size: 14px;
+  color: #ff4d4d;
 }
 
 .errorPassword {
-  margin-top: 4px; /* Add spacing above the error message */
-  font-size: 14px; /* Smaller font for the error message */
-  color: red; /* Red color for errors */
+  margin-top: 4px;
+  font-size: 14px;
+  color: red;
 }
 
 .passwordStrength {
-  margin-top: 10px; /* Add spacing between the input and the strength indicator */
+  margin-top: 10px;
 }
 
 .strengthBar {
-  height: 8px; /* Height of the strength bar */
-  background-color: #e0e0e0; /* Background for the entire bar */
-  border-radius: 5px; /* Rounded corners */
-  overflow: hidden; /* Prevent children from overflowing */
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .strengthIndicator {
-  height: 100%; /* Full height of the bar */
-  transition: width 0.3s ease, background-color 0.3s ease; /* Smooth transition for width and color */
+  height: 100%;
+  transition: width 0.3s ease, background-color 0.3s ease;
 }
 
 .strengthLabel {
-  margin-top: 5px; /* Add spacing above the label */
-  font-size: 14px; /* Adjust font size */
-  color: #333; /* Neutral text color */
+  margin-top: 5px;
+  font-size: 14px;
+  color: #333;
 }
 
 .passwordFeedback {
-  margin-top: 5px; /* Add spacing above the feedback */
-  font-size: 12px; /* Smaller font for the feedback */
-  color: #ff4d4d; /* Error feedback color */
+  margin-top: 5px;
+  font-size: 12px;
+  color: #ff4d4d;
 }

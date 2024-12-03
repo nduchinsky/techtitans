@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Modal from "./modal"; // Assuming a Modal component exists
 import styles from "./modal.module.scss";
 import styleSet from "../settings.module.scss";
-
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 interface ModalContentProps {
   isModalOpen: boolean;
   closeModal: () => void;
-  handleModalSubmit: () => void;
   modalType: string;
   error?: string | undefined;
   first_name?: string;
@@ -17,10 +15,11 @@ interface ModalContentProps {
   confirmlast_name?: string;
   inputValue?: string;
   confirmValue?: string;
-  password?: string;
-  confirmPassword?: string;
   phone?: string;
   confirmPhone?: string;
+  password?: string;
+  confirmPassword?: string;
+  currentPassword?: string;
   showPassword?: boolean;
   showPasswordConfirm?: boolean;
   setfirst_name?: (value: string) => void;
@@ -31,24 +30,25 @@ interface ModalContentProps {
   setConfirmValue?: (value: string) => void;
   setPhone?: (value: string) => void;
   setConfirmPhone?: (value: string) => void;
-  setPassword?: (value: string) => void; // Add this
-  setConfirmPassword?: (value: string) => void; // Add this
-  handlePasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleConfirmPasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setPassword?: (value: string) => void;
+  setConfirmPassword?: (value: string) => void;
+  setCurrentPassword?: (value: string) => void;
   togglePasswordVisibility?: () => void;
   togglePasswordConfirmVisibility?: () => void;
   getModalTitle: () => string;
   getStrengthColor?: (score: number) => string;
-  handleFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Added this
-  passwordScore?: number; // Added this
+  handlePasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleConfirmPasswordChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  passwordScore?: number;
   passwordFeedback?: string;
   passwordsMatch?: boolean;
+  handleModalSubmit: () => Promise<void>; // Add this line
 }
+
 
 const ModalContent: React.FC<ModalContentProps> = ({
   isModalOpen,
   closeModal,
-  handleModalSubmit,
   modalType,
   error,
   first_name,
@@ -63,7 +63,6 @@ const ModalContent: React.FC<ModalContentProps> = ({
   confirmPassword,
   showPassword,
   showPasswordConfirm,
-  handleFileChange,
   setfirst_name,
   setConfirmfirst_name,
   setlast_name,
@@ -72,21 +71,144 @@ const ModalContent: React.FC<ModalContentProps> = ({
   setConfirmValue,
   setPhone,
   setConfirmPhone,
-  handlePasswordChange,
-  handleConfirmPasswordChange,
   togglePasswordVisibility,
   togglePasswordConfirmVisibility,
   getModalTitle,
   getStrengthColor,
-  passwordFeedback,
-  passwordsMatch,
-  passwordScore = 0, // Default value
 }) => {
+  const [validationErrors, setValidationErrors] = useState({
+    firstNameError: "",
+    lastNameError: "",
+    phoneError: "",
+    emailError: "",
+    passwordError: "",
+  });
+
+  const [inputEmail, setInputEmail] = useState(inputValue || "");
+  const [confirmEmail, setConfirmEmail] = useState(confirmValue || "");
+  const [inputPhone, setInputPhone] = useState(phone || "");
+  const [confirmPhoneNumber, setConfirmPhoneNumber] = useState(confirmPhone || "");
+  const [inputPassword, setInputPassword] = useState(password || "");
+  const [confirmPasswordValue, setConfirmPasswordValue] = useState(confirmPassword || "");
+  const [passwordStrength, setPasswordStrength] = useState(0);
+
+  const passwordsMatch = inputPassword === confirmPasswordValue;
+
+  const calculatePasswordStrength = (password: string) => {
+    let score = 0;
+    if (password.length >= 8) score++;
+    if (/[A-Z]/.test(password)) score++;
+    if (/[a-z]/.test(password)) score++;
+    if (/\d/.test(password)) score++;
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
+    return score;
+  };
+
+  useEffect(() => {
+    setPasswordStrength(calculatePasswordStrength(inputPassword));
+    setValidationErrors((prev) => ({
+      ...prev,
+      passwordError:
+        inputPassword &&
+        confirmPasswordValue &&
+        (inputPassword !== confirmPasswordValue || passwordStrength < 4)
+          ? "Passwords must match and meet strength requirements."
+          : "",
+    }));
+  }, [inputPassword, confirmPasswordValue]);
+
+  useEffect(() => {
+    const errors = {
+      firstNameError:
+        first_name && confirmfirst_name && first_name !== confirmfirst_name
+          ? "First names do not match."
+          : "",
+      lastNameError:
+        last_name && confirmlast_name && last_name !== confirmlast_name
+          ? "Last names do not match."
+          : "",
+      phoneError:
+        inputPhone && 
+        confirmPhoneNumber &&
+        (!/^\d{10}$/.test(inputPhone) || inputPhone !== confirmPhoneNumber)
+          ? "Phone numbers must match and be 10 digits."
+          : "",
+      emailError:
+        inputEmail && confirmEmail && inputEmail !== confirmEmail
+          ? "Emails do not match."
+          : "",
+      passwordError: validationErrors.passwordError,
+    };
+    setValidationErrors(errors);
+  }, [
+    first_name,
+    confirmfirst_name,
+    last_name,
+    confirmlast_name,
+    inputPhone,
+    confirmPhoneNumber,
+    inputEmail,
+    confirmEmail,
+    validationErrors.passwordError,
+  ]);
+  
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      console.log("Selected file:", file);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!validationErrors || Object.values(validationErrors).some((error) => error)) {
+        alert("Please fix validation errors.");
+        return;
+    }
+
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert("Authentication token is missing. Please log in.");
+            return;
+        }
+
+        const response = await fetch("/api/settings", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                first_name,
+                last_name,
+                email: inputEmail,
+                phone: inputPhone,
+                currentPassword: inputPassword,
+                newPassword: confirmPasswordValue,
+            }),
+        });
+
+        if (response.ok) {
+            alert("Profile updated successfully!");
+            closeModal();
+        } else {
+            const result = await response.json();
+            alert(result.error || "Failed to update profile.");
+        }
+    } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("An error occurred.");
+    }
+};
+
+  
+
   return (
     <Modal
       isOpen={isModalOpen}
       onClose={closeModal}
-      onSubmit={handleModalSubmit}
+      onSubmit={handleSubmit}
       title={getModalTitle()}
       error={error}
     >
@@ -97,7 +219,7 @@ const ModalContent: React.FC<ModalContentProps> = ({
           {error && <p className={styleSet.invalidFileError}>{error}</p>}
         </div>
       )}
-  
+
       {modalType === "name" && (
         <>
           <div className={styles.modalField}>
@@ -110,6 +232,9 @@ const ModalContent: React.FC<ModalContentProps> = ({
               placeholder="Enter new First Name"
               required
             />
+            {validationErrors.firstNameError && (
+              <p className={styles.errorPassword}>{validationErrors.firstNameError}</p>
+            )}
           </div>
           <div className={styles.modalField}>
             <label className={styles.modalLabel}>Confirm First Name</label>
@@ -132,6 +257,9 @@ const ModalContent: React.FC<ModalContentProps> = ({
               placeholder="Enter new Last Name"
               required
             />
+            {validationErrors.lastNameError && (
+              <p className={styles.errorPassword}>{validationErrors.lastNameError}</p>
+            )}
           </div>
           <div className={styles.modalField}>
             <label className={styles.modalLabel}>Confirm Last Name</label>
@@ -146,16 +274,16 @@ const ModalContent: React.FC<ModalContentProps> = ({
           </div>
         </>
       )}
-  
-      {modalType === "email" && (
+
+{modalType === "email" && (
         <>
           <div className={styles.modalEmailField}>
             <label className={styles.modalLabel}>New Email</label>
             <div className={styles.inputGroup}>
               <input
                 type="email"
-                value={inputValue}
-                onChange={(e) => setInputValue?.(e.target.value)}
+                value={inputEmail}
+                onChange={(e) => setInputEmail(e.target.value)}
                 className={styles.inputBox}
                 placeholder="Enter new email"
                 required
@@ -168,54 +296,60 @@ const ModalContent: React.FC<ModalContentProps> = ({
             <div className={styles.inputGroup}>
               <input
                 type="email"
-                value={inputValue}
-                onChange={(e) => setInputValue?.(e.target.value)}
+                value={confirmEmail}
+                onChange={(e) => setConfirmEmail(e.target.value)}
                 className={styles.inputBox}
                 placeholder="Confirm new email"
                 required
               />
               <span className={styles.emailDomain}>@umsystem.edu</span>
             </div>
+            {validationErrors.emailError && (
+              <p className={styles.errorPassword}>{validationErrors.emailError}</p>
+            )}
           </div>
         </>
       )}
-  
+
       {modalType === "phone" && (
-        <>
-          <div className={styles.modalField}>
-            <label className={styles.modalLabel}>New Phone Number</label>
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone?.(e.target.value)}
-              className={styles.inputBox}
-              placeholder="Enter new phone number"
-              required
-            />
-          </div>
-          <div className={styles.modalField}>
-            <label className={styles.modalLabel}>Confirm Phone Number</label>
-            <input
-              type="tel"
-              value={confirmPhone}
-              onChange={(e) => setConfirmPhone?.(e.target.value)}
-              className={styles.inputBox}
-              placeholder="Confirm new phone number"
-              required
-            />
-          </div>
-        </>
-      )}
-  
-      {modalType === "password" && (
+              <>
+                <div className={styles.modalField}>
+                  <label className={styles.modalLabel}>New Phone Number</label>
+                  <input
+                    type="tel"
+                    value={inputPhone}
+                    onChange={(e) => setInputPhone(e.target.value.replace(/\D/g, ''))}  // Allow only digits
+                    className={styles.inputBox}
+                    placeholder="Enter new phone number"
+                    required
+                  />
+                  {validationErrors.phoneError && (
+                    <p className={styles.errorPassword}>{validationErrors.phoneError}</p>
+                  )}
+                </div>
+                <div className={styles.modalField}>
+                  <label className={styles.modalLabel}>Confirm Phone Number</label>
+                  <input
+                    type="tel"
+                    value={confirmPhoneNumber}
+                    onChange={(e) => setConfirmPhoneNumber(e.target.value.replace(/\D/g, ''))}  // Allow only digits
+                    className={styles.inputBox}
+                    placeholder="Confirm new phone number"
+                    required
+                  />
+                </div>
+              </>
+            )}
+
+{modalType === "password" && (
         <>
           <div className={styles.modalField}>
             <label className={styles.modalLabel}>Enter new password</label>
             <div className={styles.inputGroupPassword}>
               <input
                 type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={handlePasswordChange}
+                value={inputPassword}
+                onChange={(e) => setInputPassword(e.target.value)}
                 required
                 placeholder="Enter your password"
                 className={styles.inputBoxPassword}
@@ -228,36 +362,38 @@ const ModalContent: React.FC<ModalContentProps> = ({
               </span>
             </div>
 
-            { password && (
-            <div className={styles.passwordStrength}>
-              <div className={styles.strengthBar}>
-                <div
-                  className={styles.strengthIndicator}
-                  style={{
-                    width: `${(passwordScore + 1) * 20}%`,
-                    backgroundColor: (getStrengthColor ?? (() => '#e0e0e0'))(passwordScore),
-                  }}
-                ></div>
-              </div>
-              <p className={styles.strengthLabel}>
-                Password Strength:{' '}
-                {['Too Weak', 'Weak', 'Fair', 'Good', 'Strong'][passwordScore]}
+            {inputPassword && !calculatePasswordStrength(inputPassword) && (
+              <p className={styles.passwordFeedback}>
+                Password must be at least 8 characters long, contain uppercase, lowercase, numbers, and special characters.
               </p>
-              {passwordFeedback && (
-                <p className={styles.passwordFeedback}>{passwordFeedback}</p>
-              )}
-            </div>
-          )}
+            )}
 
+            {inputPassword && (
+              <div className={styles.passwordStrength}>
+                <div className={styles.strengthBar}>
+                  <div
+                    className={styles.strengthIndicator}
+                    style={{
+                      width: `${passwordStrength * 20}%`,
+                      backgroundColor: (getStrengthColor ?? (() => '#e0e0e0'))(passwordStrength),
+                    }}
+                  ></div>
+                </div>
+                <p className={styles.strengthLabel}>
+                  Password Strength:{' '}
+                  {['Too Weak', 'Weak', 'Fair', 'Good', 'Strong'][passwordStrength]}
+                </p>
+              </div>
+            )}
           </div>
-  
+
           <div className={styles.modalField}>
             <label className={styles.modalLabel}>Confirm new password</label>
             <div className={styles.inputGroupPassword}>
               <input
                 type={showPasswordConfirm ? 'text' : 'password'}
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
+                value={confirmPasswordValue}
+                onChange={(e) => setConfirmPasswordValue(e.target.value)}
                 required
                 placeholder="Enter your password again"
                 className={styles.inputBoxPassword}
@@ -275,6 +411,19 @@ const ModalContent: React.FC<ModalContentProps> = ({
           </div>
         </>
       )}
+
+      <button
+        type="submit"
+        className={styles.submitButton}
+        onClick={() => {
+          console.log('Button clicked');
+          handleSubmit(); // Ensure this is directly invoked
+        }}
+      >
+        Submit
+      </button>
+
+
     </Modal>
   );
 };

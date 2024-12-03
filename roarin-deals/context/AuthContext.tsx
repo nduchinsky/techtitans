@@ -32,6 +32,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
+    // Base URL from environment variables
+    const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
     useEffect(() => {
         const initializeAuth = async () => {
             try {
@@ -41,28 +44,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     if (isValid) {
                         setToken(storedToken);
                         setIsAuthenticated(true);
-                        // Fetch user details only if they are not already fetched
-                        if (!user) {
-                            await fetchUserDetails(storedToken);
-                        }
+                        await fetchUserDetails(storedToken);
                     } else {
                         logout();
                     }
                 }
             } catch (error) {
-                console.error("Error initializing authentication:", error);
+                console.error("Error during auth initialization:", error);
                 logout();
             }
         };
 
         initializeAuth();
-    }, [user]);  // Now using 'user' instead of 'isUserFetched'
+    }, []);
 
     const login = (newToken: string) => {
         setToken(newToken);
         localStorage.setItem("token", newToken);
         setIsAuthenticated(true);
-        setUser(null);  // Ensure user is reset on login
         fetchUserDetails(newToken).catch((error) => {
             console.error("Error fetching user details after login:", error);
             logout();
@@ -78,7 +77,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const validateToken = async (tokenToValidate: string): Promise<boolean> => {
         try {
-            const response = await axios.get("http://localhost:3000/api/settings/verify-token", {
+            const response = await axios.get(`${BASE_URL}/api/settings/verify-token`, {
                 headers: { Authorization: `Bearer ${tokenToValidate}` },
             });
             return response.status === 200;
@@ -90,38 +89,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const fetchUserDetails = async (currentToken: string) => {
         if (!currentToken) {
-            console.error("No token found during user detail fetch");
-            throw new Error("User is not authenticated");
+            throw new Error("Token is missing");
         }
-    
+
         try {
-            const response = await fetch("http://localhost:3000/api/settings", {
-                method: "GET",
+            const response = await axios.get(`${BASE_URL}/api/settings`, {
                 headers: { Authorization: `Bearer ${currentToken}` },
             });
-            const data = await response.json();
-    
-            // Ensure data structure is valid and matches the expected User shape
-            console.log("Fetched user data:", data);
-    
-            // Map API response to match the User interface
-            const mappedUser: User = {
-                id: data.id ?? 0,  // Fallback values
-                first_name: data.first_name ?? '',
-                last_name: data.last_name ?? '',
-                email: data.email ?? '',
-                phone: data.phone ?? '',  // Optional field
-            };
-    
-            // Set the user state
-            setUser(mappedUser);
+            setUser(response.data);
         } catch (error) {
             console.error("Error fetching user details:", error);
             throw new Error("Failed to fetch user details");
         }
     };
-    
-    
 
     return (
         <AuthContext.Provider value={{ token, isAuthenticated, user, login, logout, validateToken, fetchUserDetails }}>
