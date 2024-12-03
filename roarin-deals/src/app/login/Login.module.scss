@@ -7,7 +7,7 @@
 .formContainer {
   display: flex;
   flex-direction: column;
-  background-color: #E8E8E8;
+  background-color: #e8e8e8;
   padding: 35px;
   border-radius: 30px;
   border: 1px solid #000000;
@@ -67,6 +67,7 @@
     border-bottom-left-radius: 10px;
     box-sizing: border-box;
     border: none;
+    height: 40px;
   }
 }
 
@@ -133,6 +134,7 @@
     box-sizing: border-box;
     border: none;
     padding-right: 40px;
+    height: 40px;
   }
 
   .eyeIcon {
@@ -143,6 +145,24 @@
     color: #333;
     user-select: none;
   }
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Styles for field errors */
+.fieldError {
+  color: #ff4d4d;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.invalidInput {
+  border: 1px solid #ff4d4d !important;
 }
 
 @media screen and (max-width: 480px) {
