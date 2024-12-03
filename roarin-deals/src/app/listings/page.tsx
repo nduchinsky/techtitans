@@ -1,13 +1,33 @@
 "use client";
 
 import React, { useState } from "react";
-import AddButton from "../_components/Buttons/AddButton/AddButton";
+import AddButton from "./Components/AddButton/AddButton";
+import Modal from "./Components/Modal/Modal";
 import styles from "./show_listining.module.scss";
 import LoggedInHeader from "../_components/Headers/LoggedInHeader/LoggedInHeader";
 import { BsSearch } from "react-icons/bs";
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<{ id: number; name: string; price: string; location: string; image: string } | null>(null);
+
+  const handleCardClick = (listing: { id: number; name: string; price: string; location: string; image: string }) => {
+    console.log("Clicked listing:", listing);
+    setSelectedProduct(listing); // Save the clicked product's details
+    setIsAddModalOpen(true); // Open the modal
+  };
+  
+  const handleAddButtonClick = () => {
+    setIsAddModalOpen(true); // Open modal for adding a new listing
+  };
+
+  const handleAddListingSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Handle adding the listing logic here
+    console.log("New listing added!");
+    setIsAddModalOpen(false); // Close modal after submission
+  };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -71,7 +91,10 @@ export default function Listings() {
       <div className={styles.content}>
         <div className={styles.productsGrid}>
           {mockListings.map((listing) => (
-            <div key={listing.id} className={styles.productCard}>
+            <div 
+              key={listing.id}
+              className={styles.productCard}
+              onClick={() => handleCardClick(listing)}> {/* Attach onClick to each card */}
               <img
                 src={listing.image}
                 alt={listing.name}
@@ -86,7 +109,7 @@ export default function Listings() {
           ))}
         </div>
         <div className={styles.addButton}>
-          <AddButton />
+          <AddButton onClick={handleAddButtonClick} />
         </div>
       </div>
     </div>
