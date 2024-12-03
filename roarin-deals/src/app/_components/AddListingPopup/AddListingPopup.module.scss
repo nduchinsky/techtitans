@@ -54,7 +54,7 @@
     }
 }
 
-@media screen and (min-width: 1500px) and (max-width: 2200px) {
+@media screen and (min-width: 1700px) and (max-width: 2200px) {
     .container{
         align-items: unset;
         margin-left: 20px;
@@ -79,6 +79,33 @@
         margin-left: 1700px;
         margin-bottom: 10px;
         margin-top: 20px;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 1699px) {
+    .container{
+        align-items: unset;
+        margin-left: 20px;
+    }
+
+    .content{
+        margin-left: 25%;
+    }
+
+    .addImageContainer{
+        margin-left: -270px;
+        margin-right: 100px;
+    }
+
+    .closeButton{
+        margin-left: 1350px;
+        margin-top: 20px;
+    }
+
+    .headerText{
+        margin-left: 50px;
+        margin-bottom: 50px;
+        margin-top: -40px;
     }
 }
 

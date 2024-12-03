@@ -219,7 +219,7 @@
   }
 }
 
-@media screen and (min-width: 1500px) and (max-width: 2200px) {
+@media screen and (min-width: 1700px) and (max-width: 2200px) {
   .inputContainer{
     width: 100%;
     max-width: 1000px !important;
@@ -252,13 +252,6 @@
     max-width: 1000px !important;
   }
 
-  .conditionInput{
-
-    @extend .input;
-    box-sizing: border-box;
-
-  }
-
   .tag{
     font-size: 18px;
     height: 45px;
@@ -278,5 +271,40 @@
     height: 45px;
   }
 
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1699px) {
+  .input{
+    height: 50px;
+    width: 100% !important;
+    font-size: 14px;
+
+    &::placeholder{
+      font-size: 14px;
+    }
+  }
+
+  .inputContainer{
+    width: 100%;
+    max-width: 1000px !important;
+  }
+
+  .tagsContainer{
+    max-width: 1000px !important;
+  }
+
+  .submitButton{
+    margin-left: -40px;
+  }
+
+  .formContainer{
+    margin-left: -40px;
+  }
+
+  .submitButton{
+    height: 40px;
+    font-size: 15px;
+    margin-right: 40px;
+  }
 }
   
