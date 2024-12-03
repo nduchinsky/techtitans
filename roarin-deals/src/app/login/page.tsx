@@ -160,13 +160,8 @@ const Login: React.FC = () => {
                   id="username"
                   placeholder="Enter your email"
                   value={email}
-<<<<<<< HEAD
-                  onChange={(e) => setEmail(e.target.value)}
-                  className={styles.inputClass}
-=======
                   onChange={handleEmailChange}
                   onBlur={handleEmailBlur}
->>>>>>> 482c0d14b02ec9c55d4e0a6b87a93d36ee869f42
                 />
                 {!isUserMobile && (
                   <div className={styles.divider}></div>
@@ -188,12 +183,8 @@ const Login: React.FC = () => {
                   id="password"
                   placeholder="Enter your password"
                   value={password}
-<<<<<<< HEAD
-                  onChange={(e) => setPassword(e.target.value)}
-=======
                   onChange={handlePasswordChange}
                   onBlur={handlePasswordBlur}
->>>>>>> 482c0d14b02ec9c55d4e0a6b87a93d36ee869f42
                 />
                 <span className={styles.eyeIcon} onClick={togglePasswordVisibility}>
                   {showPassword ? <FaEye /> : <FaEyeSlash />}
