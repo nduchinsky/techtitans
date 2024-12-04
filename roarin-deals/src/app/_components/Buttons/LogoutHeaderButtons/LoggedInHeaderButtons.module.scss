@@ -1,4 +1,56 @@
-.logoutButton{
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    padding-right: 70px;
+    position: relative;
+}
+
+.pfpFrame {
+    width: 70px;
+    height: 70px;
+    border: 1px solid white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dropDownIcon {
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.dropdownContainer {
+    position: absolute; 
+    background-color: rgb(0, 0, 0);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0px 20px 0px;
+}
+
+.dropdownButton{
+    color: white;
+    background-color: transparent;
+    border: none;
+    height: 50px;
+    padding: 10px 0px 10px 0px;
+    font-size: 18px;
+    width: 100%;
+    font-family: "Open Sans", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover{
+        background-color: #F1B82D;
+        color: black;
+    }
+}
+
+.logoutButton {
     background-color: #FFE9B2;
     width: 150px;
     height: 40px;
@@ -6,26 +58,11 @@
     border: none;
     font-size: 18px;
 
-    &:hover{
+    &:hover {
         cursor: pointer;
     }
 }
 
-.container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 16px;
-    padding-right: 70px;
-}
-
-.pfpFrame{
-    width: 70px;
-    height: 70px;
-    border: 1px solid white;
-    border-radius: 50%;
-    cursor: pointer;
-}
 
 @media screen and (max-width: 400px) {
     .container{
@@ -35,5 +72,14 @@
     .pfpFrame{
         width: 60px;
         height: 60px;;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1699px) {
+    .dropdownContainer{
+        height: 100px;
+        width: 120%;
+        margin-top: 260px;
+        margin-left: -110px;
     }
 }
