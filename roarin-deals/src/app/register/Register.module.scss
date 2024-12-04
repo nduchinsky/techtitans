@@ -51,32 +51,39 @@
   background-color: white;
   border-radius: 10px;
   font-family: 'Open Sans', sans-serif;
-}
 
-.inputGroup span {
-  background-color: white;
-  padding: 10px 10px;
-  font-size: 14px;
-  border-radius: 0 10px 10px 0;
-  color: #333;
-  white-space: nowrap;
-  font-family: Arial, sans-serif;
-  font-weight: bold;
-}
+  input {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    border: none;
+    height: 40px;
 
-.inputGroup input {
-  flex: 1;
-  padding: 10px;
-  font-size: 14px;
-  box-sizing: border-box;
-  border: none;
-  height: 40px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
+    &:only-child {
+      border-radius: 10px;
+    }
 
-.inputGroup input::placeholder {
-  font-family: 'Open Sans', sans-serif;
+    &:not(:only-child) {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  }
+
+  input::placeholder {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  span {
+    background-color: white;
+    padding: 10px 10px;
+    font-size: 14px;
+    border-radius: 0 10px 10px 0;
+    color: #333;
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+  }
 }
 
 .divider {
