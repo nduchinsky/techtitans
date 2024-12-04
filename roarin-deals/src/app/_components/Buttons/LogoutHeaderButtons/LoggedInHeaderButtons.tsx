@@ -6,15 +6,15 @@ import { useAuth } from "../../../../../context/AuthContext";
 
 export const LoggedInHeaderButtons = () => {
   const router = useRouter();
-  const { logout } = useAuth(); // Use logout function from AuthContext
+  const { logout } = useAuth();
 
   const handleLogoutClick = () => {
-    logout(); // Clear authentication state and token
-    router.push("/"); // Redirect to the home page
+    logout();
+    router.push("/");
   };
 
   const handleProfileClick = () => {
-    router.push("/settings/editAccount"); // Navigate to the settings page
+    router.push("/settings/editAccount");
   };
 
   return (
