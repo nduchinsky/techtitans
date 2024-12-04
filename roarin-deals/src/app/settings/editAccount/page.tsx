@@ -238,7 +238,6 @@ export default function EditAccount() {
     <div>
     <LoggedInHeader />
 
-    {/* Page Content */}
     <div className={styles.settingsContainer}>
         <div className={styles.sidebar}>
             <Link href="/settings/editAccount">
@@ -307,6 +306,7 @@ export default function EditAccount() {
                 </div>
             </div>
 
+            <h2 className={styles.myListingsText}>MY LISTINGS</h2>
             {/* Listings Section */}
             <div className={styles.listingsSection}>
                 <div className={styles.productsGrid}>

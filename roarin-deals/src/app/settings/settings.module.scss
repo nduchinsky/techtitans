@@ -10,6 +10,14 @@ $listings-gray-dark: #a3a3a3;
 $listings-black: #000000;
 $listings-white: #ffffff;
 
+.myListingsText{
+  font-family: "Open Sans", sans-serif;
+  margin-left: 5%;
+  margin-bottom: -2%;
+  margin-top: 5%;
+  font-size: 30px;
+}
+
 .settingsContainer {
   display: flex;
 }
