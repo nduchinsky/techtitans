@@ -12,7 +12,7 @@ $listings-white: #ffffff;
 
 .myListingsText{
   font-family: "Open Sans", sans-serif;
-  margin-left: 5%;
+  margin-left: 6%;
   margin-bottom: -2%;
   margin-top: 5%;
   font-size: 30px;
@@ -39,6 +39,7 @@ $listings-white: #ffffff;
   cursor: pointer;
   border-radius: 0 20px 20px 0;
   transition: background-color 0.3s ease;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .sidebar button:hover {
@@ -429,6 +430,18 @@ $listings-white: #ffffff;
 
   .open-sans-text{
     text-align: center;
+  }
+
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1699px) {
+  .editAccountButton, .myOrdersButton, .salesHistoryButton {
+    height: 50px;
+    font-size: 16px;
+  }
+
+  .sidebar{
+    margin-top: 3%;
   }
 
 }
