@@ -90,9 +90,7 @@ export default function Listings() {
             </div>
           ))}
         </div>
-        <div className={styles.addButton}>
-          <AddButton />
-        </div>
+        <AddButton />
       </div>
     </div>
   );

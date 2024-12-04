@@ -29,6 +29,7 @@ app.use(morgan('dev')); // Log HTTP requests
 app.use('/api/register', registerRoute); // Registration route
 app.use('/api/login', loginRoute);       // Login route
 app.use('/api/settings', settingsRoute); // Settings route
+app.use('/api/listings', listingsRoute); // Listings route
 
 // Fallback for unhandled routes
 app.use((req, res) => {

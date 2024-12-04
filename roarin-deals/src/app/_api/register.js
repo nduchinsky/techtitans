@@ -4,7 +4,7 @@ const { db } = require('./db');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { email, password, firstName, lastName, phone } = req.body;
+    const { email, password, firstName, lastName, } = req.body;
 
     const fullEmail = `${email}@umsystem.edu`;
     const username = email;
