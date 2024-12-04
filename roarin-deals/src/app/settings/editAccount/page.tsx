@@ -265,7 +265,7 @@ export default function EditAccount() {
                         className={styles.editButton}
                         onClick={() => openModal("profileImage")}
                     >
-                        Edit profile image ✏️
+                        Edit profile image
                     </button>
                 </div>
                 <div className={styles.userInfo}>
@@ -275,33 +275,33 @@ export default function EditAccount() {
                         style={{ fontSize: "2rem" }}
                     >
                         {user?.first_name && user?.last_name
-                            ? `${user.first_name} ${user.last_name} ✏️`
-                            : "USERNAME ✏️"}
+                            ? `${user.first_name} ${user.last_name}`
+                            : "USERNAME"}
                     </button>
                     <button
                         className={styles.editButton}
                         onClick={() => openModal("email")}
                         style={{ fontSize: "1rem" }}
                     >
-                        📧 {user?.email || "username@umsystem.edu"} ✏️
+                       {user?.email || "username@umsystem.edu"}
                     </button>
                     <button
                         className={styles.editButton}
                         onClick={() => openModal("phone")}
                         style={{ fontSize: "1rem" }}
                     >
-                        📱 {user?.phone
+                        {user?.phone
                             ? `(${user.phone.toString().slice(0, 3)}) ${user.phone
                                 .toString()
                                 .slice(3, 6)}-${user.phone.toString().slice(6)}`
-                            : "(xxx) xxx - xxxx"} ✏️
+                            : "(xxx) xxx - xxxx"}
                     </button>
                     <button
                         className={styles.editButton}
                         onClick={() => openModal("password")}
                         style={{ fontSize: "1rem" }}
                     >
-                        🔒 Change Password ✏️
+                        Change Password
                     </button>
                 </div>
             </div>
