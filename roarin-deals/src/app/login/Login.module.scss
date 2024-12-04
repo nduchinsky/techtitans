@@ -35,7 +35,7 @@
   display: block;
   margin-bottom: 8px;
   padding-left: 3px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: bold;
 }
 
@@ -46,34 +46,34 @@
   position: relative;
   background-color: white;
   border-radius: 10px;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
+}
 
-  span {
-    background-color: white;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 0 10px 10px 0;
-    color: #333;
-    white-space: nowrap;
-    font-family: Arial, sans-serif;
-    font-weight: bold;
-    padding-right: 10px;
-  }
+.inputGroup span {
+  background-color: white;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 0 10px 10px 0;
+  color: #333;
+  white-space: nowrap;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  padding-right: 10px;
+}
 
-  input {
-    flex: 1;
-    padding: 10px;
-    font-size: 14px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    box-sizing: border-box;
-    border: none;
-    height: 40px;
-  }
+.inputGroup input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+  height: 40px;
+}
 
-  &::placeholder{
-    font-family: "Open Sans", sans-serif;
-  }
+.inputGroup input::placeholder {
+  font-family: 'Open Sans', sans-serif;
 }
 
 .loginBtnContainer {
@@ -93,26 +93,25 @@
   cursor: pointer;
   margin-top: 25px;
   text-align: center;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
+}
 
-  &:hover {
-    background-color: #e0a800;
-  }
+.loginBtn:hover {
+  background-color: #e0a800;
 }
 
 .loginText {
   text-align: center;
   margin-top: 35px;
   font-size: 14px;
-  font-family: Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: rgb(137, 137, 137);
   font-weight: bold;
-  font-family: "Open Sans", sans-serif;
+}
 
-  span {
-    display: block;
-    margin: 15px 0;
-  }
+.loginText span {
+  display: block;
+  margin: 15px 0;
 }
 
 .registerLink {
@@ -120,7 +119,7 @@
   text-decoration: underline;
   font-size: 20px;
   font-weight: bold;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .divider {
@@ -133,26 +132,44 @@
   display: flex;
   align-items: center;
   position: relative;
+}
 
-  .inputBox {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 10px;
-    box-sizing: border-box;
-    border: none;
-    padding-right: 40px;
-    height: 40px;
-  }
+.passwordInputGroup .inputBox {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  border: none;
+  padding-right: 40px;
+  height: 40px;
+}
 
-  .eyeIcon {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    color: #333;
-    user-select: none;
-  }
+.passwordInputGroup .eyeIcon {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  user-select: none;
+}
+
+/* Styles for error messages */
+.error {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.fieldError {
+  color: #ff4d4d;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.invalidInput {
+  border: 1px solid #ff4d4d !important;
 }
 
 @media screen and (max-width: 400px) {
@@ -172,23 +189,23 @@
   .inputGroup {
     flex-direction: column;
     align-items: stretch;
+  }
 
-    input {
-      border-radius: 10px;
+  .inputGroup input {
+    border-radius: 10px;
+  }
 
-      &:focus{
-        outline: none;
-      }
-    }
+  .inputGroup input:focus {
+    outline: none;
+  }
 
-    span {
-      border-radius: 0 0 10px 10px;
-      width: 80%;
-      text-align: left;
-      padding-left: 10px;
-      margin-top: -5px;
-      display: block;
-    }
+  .inputGroup span {
+    border-radius: 0 0 10px 10px;
+    width: 80%;
+    text-align: left;
+    padding-left: 10px;
+    margin-top: -5px;
+    display: block;
   }
 
   .loginBtn {
@@ -197,15 +214,13 @@
 
   .loginText {
     font-size: 12px;
-
-    .registerLink {
-      font-size: 16px;
-    }
   }
 
-  .passwordInputGroup {
-    .inputBox {
-      padding-right: 40px;
-    }
+  .loginText .registerLink {
+    font-size: 16px;
+  }
+
+  .passwordInputGroup .inputBox {
+    padding-right: 40px;
   }
 }
