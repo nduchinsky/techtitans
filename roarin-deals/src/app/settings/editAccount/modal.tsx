@@ -9,7 +9,7 @@ interface ModalProps {
   onSubmit: () => void;
   title: string;
   error?: string;
-  children?: React.ReactNode; // Accepts children to delegate content rendering
+  children?: React.ReactNode;
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, error, children }) => {
@@ -18,18 +18,15 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, error, 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-            <button className={styles.modalCloseButton} onClick={onClose}>&times;</button>
+        <button className={styles.modalCloseButton} onClick={onClose}>&times;</button>
         <header className={styles.modalHeader}>
           <h2>{title}</h2>
         </header>
         <div className={styles.modalBody}>
           {error && <p className={styles.error}>{error}</p>}
-          {children} {/* Render the dynamic content */}
+          {children}
         </div>
         <footer className={styles.modalFooter}>
-          <button onClick={onSubmit} className={styles.submitButton}>
-            Submit
-          </button>
         </footer>
       </div>
     </div>

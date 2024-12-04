@@ -29,11 +29,9 @@ router.post('/', async (req, res) => {
     }
 
     console.log('Password match, generating token...');
-    // Generate a JWT token with user ID in the payload
     const token = jwt.sign({ id: userCheckResult.id }, JWT_SECRET, { expiresIn: '7d' });
 
     console.log('Login successful, returning token.');
-    // Respond with JSON containing the token and optional user data for frontend
     res.status(200).json({
       message: 'Login successful',
       token,

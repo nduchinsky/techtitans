@@ -3,8 +3,14 @@
 import { useRouter } from 'next/navigation';
 import styles from './OnboardingHeader.module.scss';
 import { OnboardingHeaderButtons } from '../../Buttons/OnboardingHeaderButtons/OnboardingHeaderButtons';
+import logo from '../../../../../public/images/RD_logo.svg';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import checkIfUserIsMobile from '../../../../../_utils/checkIfUserIsMobile';
 
 const OnboardingHeader = () => {
+    const isUserMobile = checkIfUserIsMobile(400);
+
     const router = useRouter();
 
     const handleHomeClick = () => {
@@ -13,10 +19,19 @@ const OnboardingHeader = () => {
 
     return(
         <div className={styles.headerContainer}>
-            <span className={styles.headerText} onClick={handleHomeClick}>Roarin' Deals</span>
-            <div className={styles.buttons}>
-                <OnboardingHeaderButtons />
+
+            <div className={styles.titleContainer}>
+                <span>
+                    <Image src={logo} alt="RD Logo" className={styles.headerImage} />
+                </span>
+                <span className={styles.headerText} onClick={handleHomeClick}>Roarin' Deals</span>
             </div>
+
+            {!isUserMobile && (
+                <div className={styles.buttons}>
+                    <OnboardingHeaderButtons />
+                </div>
+            )}
         </div>
     );
 }

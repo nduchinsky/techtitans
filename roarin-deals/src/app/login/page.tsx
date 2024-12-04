@@ -1,19 +1,32 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import styles from "./Login.module.scss";
-import Link from "next/link";
-import PlainHeader from "../_components/Headers/PlainHeader/PlainHeader";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../../../context/AuthContext";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import PlainHeader from '../_components/Headers/PlainHeader/PlainHeader';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../../context/AuthContext';
+import checkIfUserIsMobile from '../../../_utils/checkIfUserIsMobile';
+import styles from './Login.module.scss';
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  // Field values
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Error states
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  // Touched states for real-time validation
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+
   const [error, setError] = useState("");
 
+  const isUserMobile = checkIfUserIsMobile(400);
   const router = useRouter();
   const { login } = useAuth(); // Use login from AuthContext
 
@@ -27,8 +40,71 @@ const Login: React.FC = () => {
     console.log("Redirect target after login:", redirectTo || "/listings");
   }, []);
 
+  // Validation functions
+  const validateEmail = (value: string) => {
+    if (value.trim() === "") {
+      return "Email is required.";
+    }
+    return "";
+  };
+
+  const validatePassword = (value: string) => {
+    if (value.trim() === "") {
+      return "Password is required.";
+    }
+    return "";
+  };
+
+  // Event handlers for email
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    if (emailTouched) {
+      setEmailError(validateEmail(value));
+    }
+  };
+
+  const handleEmailBlur = () => {
+    setEmailTouched(true);
+    setEmailError(validateEmail(email));
+  };
+
+  // Event handlers for password
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setPassword(value);
+    if (passwordTouched) {
+      setPasswordError(validatePassword(value));
+    }
+  };
+
+  const handlePasswordBlur = () => {
+    setPasswordTouched(true);
+    setPasswordError(validatePassword(password));
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    // Mark fields as touched
+    setEmailTouched(true);
+    setPasswordTouched(true);
+
+    // Validate fields
+    const emailValidationError = validateEmail(email);
+    const passwordValidationError = validatePassword(password);
+
+    setEmailError(emailValidationError);
+    setPasswordError(passwordValidationError);
+
+    // Check if there are any errors
+    if (emailValidationError || passwordValidationError) {
+      setError("Please fix the errors above.");
+      return;
+    }
+
+    // Clear previous error
+    setError("");
 
     const emailWithoutDomain = email.split("@")[0];
     try {
@@ -70,47 +146,54 @@ const Login: React.FC = () => {
       <PlainHeader />
       <div className={styles.pageContainer}>
         <div className={styles.formContainer}>
-          <h2 className={styles.formHeader}>Login</h2>
+          <h2 className={styles.formHeader}>Log In</h2>
           <form onSubmit={handleSubmit}>
+            {/* University Email Field */}
             <div className={styles.formGroup}>
               <label className={styles.formLabel} htmlFor="username">
                 University Email
               </label>
               <div className={styles.inputGroup}>
                 <input
+                  className={emailError ? styles.invalidInput : ""}
                   type="text"
                   id="username"
                   placeholder="Enter your email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)} // Capture email input
+                  onChange={handleEmailChange}
+                  onBlur={handleEmailBlur}
                 />
-                <div className={styles.divider}></div>
+                {!isUserMobile && (
+                  <div className={styles.divider}></div>
+                )}
                 <span>@umsystem.edu</span>
               </div>
+              {emailError && <p className={styles.fieldError}>{emailError}</p>}
             </div>
 
+            {/* Password Field */}
             <div className={styles.formGroup}>
               <label className={styles.formLabel} htmlFor="password">
                 Password
               </label>
               <div className={styles.passwordInputGroup}>
                 <input
-                  className={styles.inputBox}
+                  className={`${styles.inputBox} ${passwordError ? styles.invalidInput : ""}`}
                   type={showPassword ? "text" : "password"}
                   id="password"
                   placeholder="Enter your password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)} // Capture password input
+                  onChange={handlePasswordChange}
+                  onBlur={handlePasswordBlur}
                 />
-                <span
-                  className={styles.eyeIcon}
-                  onClick={togglePasswordVisibility}
-                >
+                <span className={styles.eyeIcon} onClick={togglePasswordVisibility}>
                   {showPassword ? <FaEye /> : <FaEyeSlash />}
                 </span>
               </div>
+              {passwordError && <p className={styles.fieldError}>{passwordError}</p>}
             </div>
 
+            {/* General Error Message */}
             {error && <p className={styles.error}>{error}</p>}
 
             <div className={styles.loginBtnContainer}>
