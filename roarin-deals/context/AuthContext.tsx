@@ -31,15 +31,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [token, setToken] = useState<string | null>(null);
     const [user, setUser] = useState<User | null>(null);
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const [isInitialized, setIsInitialized] = useState(false);
 
-    // Base URL from environment variables
     const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
     useEffect(() => {
         const initializeAuth = async () => {
-            try {
-                const storedToken = localStorage.getItem("token");
-                if (storedToken) {
+            const storedToken = localStorage.getItem("token");
+            if (storedToken) {
+                try {
                     const isValid = await validateToken(storedToken);
                     if (isValid) {
                         setToken(storedToken);
@@ -48,11 +48,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                     } else {
                         logout();
                     }
+                } catch (error) {
+                    console.error("Error during auth initialization:", error);
+                    logout();
                 }
-            } catch (error) {
-                console.error("Error during auth initialization:", error);
-                logout();
             }
+            setIsInitialized(true);
         };
 
         initializeAuth();
@@ -102,6 +103,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             throw new Error("Failed to fetch user details");
         }
     };
+
+    if (!isInitialized) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <AuthContext.Provider value={{ token, isAuthenticated, user, login, logout, validateToken, fetchUserDetails }}>

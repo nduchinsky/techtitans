@@ -26,6 +26,7 @@
 
 .headerText{
     font-family: 'Orbitron', sans-serif;
+    max-width: 500px;
 }
 
 .content{
@@ -33,6 +34,7 @@
     flex-direction: row;
 }
 
+// Mobile size
 @media screen and (max-width: 400px) {
     .container{
         left: 10%;
@@ -54,7 +56,8 @@
     }
 }
 
-@media screen and (min-width: 1500px) and (max-width: 2200px) {
+// Large monitor size
+@media screen and (min-width: 1700px) and (max-width: 2200px) {
     .container{
         align-items: unset;
         margin-left: 20px;
@@ -79,6 +82,35 @@
         margin-left: 1700px;
         margin-bottom: 10px;
         margin-top: 20px;
+    }
+}
+
+// Laptop size
+@media screen and (min-width: 800px) and (max-width: 1699px) {
+    .container{
+        align-items: unset;
+        margin-left: 20px;
+        height: 680px;
+    }
+
+    .content{
+        margin-left: 25%;
+    }
+
+    .addImageContainer{
+        margin-left: -285px;
+        margin-right: 100px;
+    }
+
+    .closeButton{
+        margin-left: 1330px;
+        margin-top: 20px;
+    }
+
+    .headerText{
+        margin-left: 50px;
+        margin-bottom: 50px;
+        margin-top: -40px;
     }
 }
 

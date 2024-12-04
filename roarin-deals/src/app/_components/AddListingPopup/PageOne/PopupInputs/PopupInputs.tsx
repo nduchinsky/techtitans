@@ -4,6 +4,8 @@ import styles from './PopupInputs.module.scss';
 import { FaDollarSign } from 'react-icons/fa';
 import { FaAngleDown } from "react-icons/fa6";
 import AddressInputs from '../../PageTwo/AddressInputs';
+import checkIfUserIsMobile from '../../../../../../_utils/checkIfUserIsMobile';
+import AddImageContainer from '../AddImageContainer/AddImageContainer';
 
 interface PopupInputsProps {
   onClick: () => void;
@@ -33,6 +35,10 @@ const page2Variants = {
     x: 0,
     opacity: 1,
   },
+  out: {
+    x: '-100%',
+    opacity: 0,
+  },
 };
 
 const pageTransition = {
@@ -49,6 +55,9 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   const [condition, setCondition] = useState("");
   const [showPageTwo, setShowPageTwo] = useState(false);
   const [showPageOne, setShowPageOne] = useState(true);
+  const [showAddImageContainer, setShowAddImageContainer] = useState(false);
+
+  const isUserMobile = checkIfUserIsMobile(400);
 
   const handleTagClick = (tag: string) => {
     if (activeTags.includes(tag)) {
@@ -61,12 +70,21 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   const handlePageOneSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowPageOne(false);
-    setShowPageTwo(true);
+    if(isUserMobile){
+      setShowAddImageContainer(true);
+    } else {
+      setShowPageTwo(true);
+    }
   };
 
   const handlePageTwoSubmit = () => {
     setShowPageTwo(false);
     onClick();
+  };
+
+  const handleImageContainerSubmit = () => {
+    setShowAddImageContainer(false);
+    setShowPageTwo(true);
   };
 
   return (
@@ -148,9 +166,15 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
                 )}
               </div>
               <div className={styles.buttonContainer}>
-                <button type="submit" className={styles.submitButton}>
-                  Add Pickup Address
-                </button>
+                {isUserMobile ? (
+                  <button type="submit" className={styles.submitButton}>
+                    Upload Images
+                  </button>
+                ) : (
+                  <button type="submit" className={styles.submitButton}>
+                    &#43; Add Pickup Address
+                  </button>
+                )}
               </div>
             </form>
           </motion.div>
@@ -168,6 +192,22 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
             className={styles.pageContainer}
           >
             <AddressInputs onSubmit={handlePageTwoSubmit} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showAddImageContainer && (
+          <motion.div
+            key="pageTwo"
+            initial="initial"
+            animate="in"
+            exit="out"
+            variants={page2Variants}
+            transition={pageTransition}
+            className={styles.pageContainer}
+          >
+            <AddImageContainer />
+            <button className={styles.imagePageSubmit} onClick={handleImageContainerSubmit}>&#43; Add Pickup Address</button>
           </motion.div>
         )}
       </AnimatePresence>
