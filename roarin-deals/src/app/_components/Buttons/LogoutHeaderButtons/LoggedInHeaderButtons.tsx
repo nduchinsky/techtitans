@@ -29,6 +29,10 @@ export const LoggedInHeaderButtons = () => {
     router.push("/settings/editAccount");
   };
 
+  const handleListingsClick = () => {
+    router.push("/listings");
+  };
+
   const handleMyListingsClick = () => {
     router.push("/settings/editAccount");
   };
@@ -39,6 +43,7 @@ export const LoggedInHeaderButtons = () => {
       <BsCaretDownFill className={styles.dropDownIcon} onClick={handleDropdownClick} />
       {dropdownVisible && (
         <div className={styles.dropdownContainer}>
+          <button className={styles.dropdownButton} onClick={handleListingsClick}>View All Listings</button>
           <button className={styles.dropdownButton} onClick={handleProfileClick}>Edit Profile</button>
           <button className={styles.dropdownButton} onClick={handleLogoutClick}>Log Out</button>
         </div>
