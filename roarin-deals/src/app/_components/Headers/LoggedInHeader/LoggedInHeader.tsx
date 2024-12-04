@@ -5,12 +5,12 @@ import styles from "./LoggedInHeader.module.scss";
 import logo from "../../../../../public/images/RD_logo.svg";
 import Image from "next/image";
 import { LoggedInHeaderButtons } from "../../Buttons/LogoutHeaderButtons/LoggedInHeaderButtons";
-import { useAuth } from "../../../../../context/AuthContext"; // Importing AuthContext for authentication state
+import { useAuth } from "../../../../../context/AuthContext";
 import { useEffect } from "react";
 import checkIfUserIsMobile from '../../../../../_utils/checkIfUserIsMobile';
 
 const LoggedInHeader = () => {
-    const { isAuthenticated, user, validateToken, logout, token } = useAuth(); // Use AuthContext for authentication
+    const { isAuthenticated, user, validateToken, logout, token } = useAuth();
     const router = useRouter();
     const isUserMobile = checkIfUserIsMobile(400);
 
