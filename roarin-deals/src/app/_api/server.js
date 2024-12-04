@@ -4,6 +4,7 @@ const { createUsersTable, dropProductsTable, createTempProductsTable, createTemp
 const registerRoute = require('./register');
 const loginRoute = require('./login');
 const settingsRoute = require('./settings'); // Import the settings route
+const listingsRoute = require('./listings'); // Adding route to fetch listings from backend
 require('dotenv').config();
 
 const app = express();
@@ -17,6 +18,18 @@ app.use(express.json()); // Parse JSON request bodies
 app.use('/api/register', registerRoute); // Registration route
 app.use('/api/login', loginRoute);       // Login route
 app.use('/api/settings', settingsRoute); // Settings route for user details, token validation, etc.
+app.use('/api/listings', listingsRoute); // Listings route
+
+// Catch-all for undefined routes (404 handler)
+app.use((req, res) => {
+    res.status(404).json({ error: 'Route not found' });
+});
+
+// Error handling middleware (optional, for internal server errors)
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong!' });
+});
 
 // Server Initialization
 app.listen(PORT, async () => {
