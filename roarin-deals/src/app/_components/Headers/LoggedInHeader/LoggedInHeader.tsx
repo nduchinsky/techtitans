@@ -21,16 +21,16 @@ const LoggedInHeader = () => {
     useEffect(() => {
         const checkAuthentication = async () => {
             if (token) {
-                const isValid = await validateToken(token); // Pass the token for validation
+                const isValid = await validateToken(token);
                 if (!isValid) {
                     console.warn("Token validation failed. Logging out...");
                     logout();
-                    router.push("/login");
+                    router.push("/");
                 }
             } else {
                 console.warn("No token found. Logging out...");
                 logout();
-                router.push("/login");
+                router.push("/");
             }
         };
 
