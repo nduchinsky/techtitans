@@ -5,14 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import styles from "../settings.module.scss";
-import Modal from "./modal";
-import ModalContent from "./modalContent";
 import placeholderImage from "../placeholder.png";
 import zxcvbn from "zxcvbn";
 import { useAuth } from "../../../../context/AuthContext";
 import { useRouter } from "next/navigation";
 import LoggedInHeader from "../../_components/Headers/LoggedInHeader/LoggedInHeader";
 import AddButton from "../../_components/Buttons/AddButton/AddButton";
+import ModalContent from "./modalContent";
+import Modal from "./modal";
 
 
 export default function EditAccount() {
@@ -234,21 +234,27 @@ export default function EditAccount() {
         return <p>Loading...</p>;
     }
 
+    const handleEditAccountClick = () => {
+        router.push('/settings/editAccount');
+    }
+
+    const handleMyOrdersClick = () => {
+        router.push('/settings/myOrders');
+    }
+
+    const handleSalesHistoryClick = () => {
+        router.push('/settings/salesHistory');
+    }
+
     return (
     <div>
     <LoggedInHeader />
 
     <div className={styles.settingsContainer}>
         <div className={styles.sidebar}>
-            <Link href="/settings/editAccount">
-                <button className={styles.activeButton}>Edit Account</button>
-            </Link>
-            <Link href="/settings/myOrders">
-                <button>My Orders</button>
-            </Link>
-            <Link href="/settings/salesHistory">
-                <button className={styles.salesHistoryButton}>Sales History</button>
-            </Link>
+            <button className={styles.editAccountButton} onClick={handleEditAccountClick}>Edit Account</button>
+            <button className={styles.myOrdersButton} onClick={handleMyOrdersClick}>My Orders</button>
+            <button className={styles.salesHistoryButton} onClick={handleSalesHistoryClick}>Sales History</button>
         </div>
         
         <div className={styles.contentArea}>

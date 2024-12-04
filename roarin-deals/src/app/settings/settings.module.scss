@@ -29,7 +29,7 @@ $listings-white: #ffffff;
   margin-top: 20px;
 }
 
-.sidebar button {
+.editAccountButton, .myOrdersButton, .salesHistoryButton {
   width: 120%;
   text-align: center;
   background-color: #FFE9B2;
@@ -363,12 +363,12 @@ $listings-white: #ffffff;
 @media screen and (max-width: 400px){
   .sidebar {
     flex-direction: row;
-    margin-left: 30px;
+    margin-left: 10%;
     width: 100%;
   }
 
-  .sidebar button {
-    width: 150px;
+  .editAccountButton, .myOrdersButton, .salesHistoryButton {
+    width: 40%;
     height: 40px;
     font-size: 15px;
     font-weight: bold;
@@ -417,6 +417,17 @@ $listings-white: #ffffff;
   .myListingsText{
     margin: 0;
     color: black;
+    text-align: center;
+  }
+
+  .orbitron-text{
+    width: 200%;
+    font-size: 18px;
+    text-align: center;
+    margin-top: -30%;
+  }
+
+  .open-sans-text{
     text-align: center;
   }
 
