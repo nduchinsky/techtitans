@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
   const { email, password } = req.body;
   const fullEmail = `${email}@umsystem.edu`;
 
-  const userCheckQuery = 'SELECT * FROM users WHERE email = $1';
+  const userCheckQuery = 'SELECT * FROM USERS_TABLE WHERE email = $1';
   try {
     console.log('Checking for user with email:', fullEmail);
     const userCheckResult = await db.oneOrNone(userCheckQuery, [fullEmail]);
