@@ -247,7 +247,7 @@ export default function EditAccount() {
                 <button>My Orders</button>
             </Link>
             <Link href="/settings/salesHistory">
-                <button>Sales History</button>
+                <button className={styles.salesHistoryButton}>Sales History</button>
             </Link>
         </div>
         
