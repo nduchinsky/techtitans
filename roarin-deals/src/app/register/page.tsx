@@ -10,7 +10,13 @@ import { FaEye, FaEyeSlash, FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 import zxcvbn from 'zxcvbn';
 import checkIfUserIsMobile from '../../../_utils/checkIfUserIsMobile';
 
+// Import the profanity filter
+import { Filter } from 'bad-words';
+
 const Register: React.FC = () => {
+  // Initialize the profanity filter
+  const filter = new Filter();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
@@ -31,7 +37,7 @@ const Register: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const isUserMobile = checkIfUserIsMobile(400);
-  
+
   // Error states
   const [emailError, setEmailError] = useState('');
   const [firstNameError, setFirstNameError] = useState('');
@@ -65,6 +71,9 @@ const Register: React.FC = () => {
     if (value.trim() === '') {
       return 'First name is required.';
     }
+    if (filter.isProfane(value)) {
+      return 'Inappropriate language is not allowed.';
+    }
     return '';
   };
 
@@ -72,6 +81,9 @@ const Register: React.FC = () => {
   const validateLastName = (value: string) => {
     if (value.trim() === '') {
       return 'Last name is required.';
+    }
+    if (filter.isProfane(value)) {
+      return 'Inappropriate language is not allowed.';
     }
     return '';
   };
@@ -180,19 +192,25 @@ const Register: React.FC = () => {
     setPasswordTouched(true);
     setConfirmPasswordTouched(true);
 
-    setEmailError(validateEmail(email));
-    setFirstNameError(validateFirstName(firstName));
-    setLastNameError(validateLastName(lastName));
-    setPasswordError(validatePassword(password));
-    setConfirmPasswordError(validateConfirmPassword(confirmPassword));
+    const emailErrorMsg = validateEmail(email);
+    const firstNameErrorMsg = validateFirstName(firstName);
+    const lastNameErrorMsg = validateLastName(lastName);
+    const passwordErrorMsg = validatePassword(password);
+    const confirmPasswordErrorMsg = validateConfirmPassword(confirmPassword);
+
+    setEmailError(emailErrorMsg);
+    setFirstNameError(firstNameErrorMsg);
+    setLastNameError(lastNameErrorMsg);
+    setPasswordError(passwordErrorMsg);
+    setConfirmPasswordError(confirmPasswordErrorMsg);
 
     // Check if there are any errors
     if (
-      emailError ||
-      firstNameError ||
-      lastNameError ||
-      passwordError ||
-      confirmPasswordError
+      emailErrorMsg ||
+      firstNameErrorMsg ||
+      lastNameErrorMsg ||
+      passwordErrorMsg ||
+      confirmPasswordErrorMsg
     ) {
       setErrorMessage('Please fix the errors above.');
       return;
@@ -257,9 +275,7 @@ const Register: React.FC = () => {
                   onChange={handleEmailChange}
                   onBlur={handleEmailBlur}
                 />
-                {!isUserMobile && (
-                  <div className={styles.divider}></div>
-                )}
+                {!isUserMobile && <div className={styles.divider}></div>}
                 <span>@umsystem.edu</span>
               </div>
               {emailError && <p className={styles.fieldError}>{emailError}</p>}
