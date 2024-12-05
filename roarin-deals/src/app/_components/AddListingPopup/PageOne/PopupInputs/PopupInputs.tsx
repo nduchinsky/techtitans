@@ -6,6 +6,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import AddressInputs from '../../PageTwo/AddressInputs';
 import checkIfUserIsMobile from '../../../../../../_utils/checkIfUserIsMobile';
 import AddImageContainer from '../AddImageContainer/AddImageContainer';
+import axios from 'axios';  // Add axios for making HTTP requests
 
 interface PopupInputsProps {
   onClick: () => void;
@@ -57,6 +58,13 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   const [showPageOne, setShowPageOne] = useState(true);
   const [showAddImageContainer, setShowAddImageContainer] = useState(false);
 
+  // Address input state
+  const [street1, setStreet1] = useState('');
+  const [street2, setStreet2] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zip, setZip] = useState('');
+
   const isUserMobile = checkIfUserIsMobile(400);
 
   const handleTagClick = (tag: string) => {
@@ -70,16 +78,37 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   const handlePageOneSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowPageOne(false);
-    if(isUserMobile){
+    if (isUserMobile) {
       setShowAddImageContainer(true);
     } else {
       setShowPageTwo(true);
     }
   };
 
-  const handlePageTwoSubmit = () => {
-    setShowPageTwo(false);
-    onClick();
+  const handlePageTwoSubmit = async (addressData: any) => {
+    const formData = {
+      title: name,
+      description: description,
+      price: price,
+      condition: condition,
+      tags: activeTags, // Send tags as an array
+      ...addressData // Include address data
+    };
+
+    console.log('Form data being sent:', formData); // Log the form data
+
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post('http://localhost:3000/api/listings', formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Listing created successfully", response.data);
+      onClick();
+    } catch (error) {
+      console.error("Error creating listing:", error);
+    }
   };
 
   const handleImageContainerSubmit = () => {
@@ -142,7 +171,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
                   onChange={(e) => setCondition(e.target.value)}
                   required
                   className={`${styles.conditionInput} ${condition ? styles.selected : ""}`}
-                  >
+                >
                   <option value="" disabled>Condition</option>
                   <option value="New">New</option>
                   <option value="Like new">Like new</option>

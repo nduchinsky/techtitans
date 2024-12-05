@@ -4,7 +4,8 @@ const morgan = require('morgan');
 const { createUsersTable, addFieldToTable } = require('./db');
 const registerRoute = require('./register');
 const loginRoute = require('./login');
-const settingsRoute = require('./settings');
+const settingsRoute = require('./settings'); // Import the settings route
+const listingsRoute = require('./listings'); // Adding route to fetch listings from backend
 require('dotenv').config();
 
 const app = express();
@@ -25,9 +26,10 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // API Routes
-app.use('/api/register', registerRoute); 
-app.use('/api/login', loginRoute);     
-app.use('/api/settings', settingsRoute);
+app.use('/api/register', registerRoute); // Registration route
+app.use('/api/login', loginRoute);       // Login route
+app.use('/api/settings', settingsRoute); // Settings route
+app.use('/api/listings', listingsRoute); // Listings route
 
 // Fallback for unhandled routes
 app.use((req, res) => {

@@ -1,0 +1,18 @@
+.imageContainer{
+    background-color: gray;
+    border-radius: 50px;
+    border: 1px solid black;
+}
+
+.pageContainer{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1699px) {
+    .imageContainer{
+        height: 500px;
+        width: 600px;
+    }
+}

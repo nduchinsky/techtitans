@@ -4,12 +4,13 @@ const { db } = require('./db');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    const { email, password, firstName, lastName, phone } = req.body;
+    const { email, password, firstName, lastName, } = req.body;
 
     const fullEmail = `${email}@umsystem.edu`;
+    const username = email;
 
     // Checking if the email already exists
-    const userCheckQuery = 'SELECT * FROM users WHERE email = $1';
+    const userCheckQuery = 'SELECT * FROM USERS_TABLE WHERE email = $1';
     try {
         const userCheckResult = await db.any(userCheckQuery, [fullEmail]);
         if (userCheckResult.length > 0) {
@@ -21,14 +22,13 @@ router.post('/', async (req, res) => {
 
         // Inserting the new user into the database
         const insertQuery = `
-            INSERT INTO users (first_name, last_name, email, password, phone)
+            INSERT INTO USERS_TABLE (email, first_name, last_name, username, password)
             VALUES ($1, $2, $3, $4, $5)
-            RETURNING id, first_name, last_name, email, phone
+            RETURNING *;
         `;
-        const values = [firstName, lastName, fullEmail, hashedPassword, phone];
-
-        // Using db.one to get the inserted user's data
+        const values = [fullEmail, firstName, lastName, username, hashedPassword];
         const result = await db.one(insertQuery, values);
+
         res.status(201).json(result);
     } catch (err) {
         console.error('Error registering user:', err);
