@@ -156,6 +156,7 @@ router.delete('/:id', authenticate, async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const listings = await db.any('SELECT * FROM LISTINGS_TABLE ORDER BY created_at DESC');
+        console.log('Fetched listings from database:', listings); // Debug log for fetched listings
         res.status(200).json(listings);
     } catch (err) {
         console.error('Error fetching listings:', err);
