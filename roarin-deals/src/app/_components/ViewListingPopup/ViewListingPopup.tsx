@@ -7,36 +7,51 @@ import PostImages from './PostImages/PostImages';
 type ViewListingPopupProps = {
     listing: {
       id: number;
-      name: string;
+      title: string;
+      description: string;
       price: string;
-      location: string;
-      image: string;
+      condition: string;
+      tags: string;
+      created_at: string;
+      address1: string;
+      address2: string | null;
+      city: string;
+      state: string;
+      zip: string;
+      user_id: number;
+      image: string;  // Added this line
     };
     onClose: () => void;
-  };
+};
 
-const AddListingPopup = ({ onClose }: ViewListingPopupProps) => {
+const ViewListingPopup = ({ listing, onClose }: ViewListingPopupProps) => {
 
   const isUserMobile = checkIfUserIsMobile(400);
 
-  const handleCloseClick = () => {
-    onClose(); 
-  };
-
+  // Add a portal wrapper to mount the popup properly
   return (
     <>
-      <div className={styles.backdrop} />
+      <div className={styles.backdrop} onClick={onClose} />
       <div className={styles.container}>
         <div className={styles.content}>
-            <PostInformation />
-            <PostImages />
-            <div className={styles.closeButton}>
-                <CloseButton onClick={handleCloseClick} />
-            </div>
+          <div className={styles.listingImage}>
+            <img src={listing.image || '/placeholder-image.jpg'} alt={listing.title} />
+          </div>
+          <PostInformation
+            title={listing.title}
+            price={listing.price}
+            location={listing.zip}
+            description={listing.description}
+            condition={listing.condition}
+            tags={listing.tags}
+          />
+          <div className={styles.closeButton}>
+            <CloseButton onClick={onClose} />
+          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default AddListingPopup;
+export default ViewListingPopup;
