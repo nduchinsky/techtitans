@@ -3,5 +3,10 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "pg": "^8.13.0"
+  },
+  "scripts": {
+    "dev": "node server.js", // Adjust this if your entry point is different
+    "build": "echo 'No build step defined'",
+    "start": "node server.js"
   }
 }
