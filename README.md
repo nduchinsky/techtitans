@@ -1,2 +1,2 @@
 # techtitans
-Capstone Project for INFOTC 4970W. Team 9 - Tech Titans 
+Capstone Project for INFOTC 4970W. Team 1 - Tech Titans 
