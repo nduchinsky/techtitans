@@ -13,6 +13,7 @@ export default function Listings() {
   const [selectedListing, setSelectedListing] = useState<any | null>(null);  // State to manage the selected listing
   const [listings, setListings] = useState<any[]>([]); // State to store listings
   const [userId, setUserId] = useState<number | null>(null); // State to store the current user's ID
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -55,16 +56,28 @@ export default function Listings() {
     setSelectedListing(listing);  // Set the selected listing to show the popup
   };
 
+  const handleTagClick = (tag: string) => {
+    setSelectedTag(tag === selectedTag ? null : tag);
+  };
+
   useEffect(() => {
     console.log('User ID:', userId); // Debug log for user ID
     console.log('Listings:', listings); // Debug log for listings
   }, [userId, listings]);
 
   const filteredListings = listings.filter(listing => {
-    const matchesSearchTerm = listing.title?.toLowerCase().includes(searchTerm.toLowerCase());
+    // Split search term into individual words and remove empty strings
+    const searchWords = searchTerm.toLowerCase().split(' ').filter(word => word.length > 0);
+    
+    // Check if all search words are included in the title
+    const matchesSearchTerm = searchWords.length === 0 || searchWords.every(word => 
+        listing.title?.toLowerCase().includes(word)
+    );
+    
     const isNotCreatedByCurrentUser = listing.user_id !== userId;
-    console.log(`Listing: ${listing.title}, Matches Search Term: ${matchesSearchTerm}, Is Not Created By Current User: ${isNotCreatedByCurrentUser}`);
-    return matchesSearchTerm && isNotCreatedByCurrentUser;
+    const matchesTag = selectedTag ? listing.tags?.toLowerCase().includes(selectedTag.toLowerCase()) : true;
+    
+    return matchesSearchTerm && isNotCreatedByCurrentUser && matchesTag;
   });
 
   console.log('Filtered listings:', filteredListings); // Debug log for filtered listings
@@ -74,12 +87,15 @@ export default function Listings() {
       <LoggedInHeader />
       <div className={styles.categoryBar}>
         <div className={styles.categoriesBubble}>
-            <button className={styles.categoryButton}>Furniture</button>
-            <button className={styles.categoryButton}>Electronics</button>
-            <button className={styles.categoryButton}>Books</button>
-            <button className={styles.categoryButton}>Clothing</button>
-            <button className={styles.categoryButton}>Home Goods</button>
-            <button className={styles.categoryButton}>Misc.</button>
+          {['Furniture', 'Electronics', 'Books', 'Clothing', 'Home Goods', 'Misc'].map((tag) => (
+            <button
+              key={tag}
+              className={`${styles.categoryButton} ${selectedTag === tag ? styles.selected : ''}`}
+              onClick={() => handleTagClick(tag)}
+            >
+              {tag}
+            </button>
+          ))}
         </div>
         <div className={styles.searchWrapper}>
           <input

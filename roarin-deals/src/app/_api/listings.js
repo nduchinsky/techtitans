@@ -155,12 +155,24 @@ router.delete('/:id', authenticate, async (req, res) => {
 // Route to fetch all listings
 router.get('/', async (req, res) => {
     try {
-        const listings = await db.any('SELECT * FROM LISTINGS_TABLE ORDER BY created_at DESC');
-        console.log('Fetched listings from database:', listings); // Debug log for fetched listings
-        res.status(200).json(listings);
-    } catch (err) {
-        console.error('Error fetching listings:', err);
-        res.status(500).json({ error: 'Internal server error' });
+        const query = `
+            SELECT 
+                l.*,
+                u.first_name,
+                u.last_name 
+            FROM LISTINGS_TABLE l
+            LEFT JOIN USERS_TABLE u ON u.id = l.user_id
+        `;
+        
+        const listings = await db.any(query);
+        console.log('First listing tags:', listings[0]?.tags); // Debug log
+        res.json(listings);
+    } catch (error) {
+        console.error('Database error:', error);
+        res.status(500).json({ 
+            error: 'Error fetching listings',
+            message: error.message
+        });
     }
 });
 

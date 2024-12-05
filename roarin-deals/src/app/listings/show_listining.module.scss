@@ -46,6 +46,13 @@ $listings-white: #ffffff;
       transform: scale(1.05);
       box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
     }
+
+    &.selected {
+      background-color: $listings-yellow-dark;
+      color: $listings-white;
+      transform: scale(1.05);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
   }
   
   .searchWrapper {
