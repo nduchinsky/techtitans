@@ -5,6 +5,7 @@ import Image from 'next/image';
 import styles from '../settings.module.scss';
 import LoggedInHeader from "../../_components/Headers/LoggedInHeader/LoggedInHeader";
 import placeholderImage from '../placeholder.png'; // Ensure the placeholder image path is correct
+import { useRouter } from 'next/navigation';
 
 export default function SalesHistory() {
   // Sample listings data
@@ -14,21 +15,28 @@ export default function SalesHistory() {
     { id: 3, title: "Sample Product 3", description: "Description for Product 3", image: placeholderImage },
   ]);
 
+  const router = useRouter();
+
+  const handleEditAccountClick = () => {
+    router.push('/settings/editAccount');
+  }
+
+  const handleMyOrdersClick = () => {
+    router.push('/settings/myOrders');
+  }
+
+  const handleSalesHistoryClick = () => {
+    router.push('/settings/salesHistory');
+  }
+
   return (
     <div>
       <LoggedInHeader />
       <div className={styles.settingsContainer}>
-        {/* Sidebar */}
-        <div className={styles.sidebar}>
-          <Link href="/settings/editAccount">
-            <button>Edit Account</button>
-          </Link>
-          <Link href="/settings/myOrders">
-            <button className={styles.activeButton}>My Orders</button>
-          </Link>
-          <Link href="/settings/salesHistory">
-            <button>Sales History</button>
-          </Link>
+      <div className={styles.sidebar}>
+            <button className={styles.editAccountButton} onClick={handleEditAccountClick}>Edit Account</button>
+            <button className={styles.myOrdersButton} onClick={handleMyOrdersClick}>My Orders</button>
+            <button className={styles.salesHistoryButton} onClick={handleSalesHistoryClick}>Sales History</button>
         </div>
 
         {/* Sales History Content */}

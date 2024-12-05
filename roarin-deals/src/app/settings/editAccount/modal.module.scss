@@ -22,7 +22,8 @@
   max-width: 500px;
   padding: 2rem;
   position: relative;
-  text-align: left;
+  text-align: center;
+
   
 }
 
@@ -86,32 +87,6 @@
   margin-top: 0.5rem;
 }
 
-.submitButton {
-  background-color: #ffc107;
-  color: black;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  text-align: center;
-  font-weight: bold;
-  
-  &:hover {
-    background-color: #ffca28;
-  }
-
-  &:disabled, &.locked {
-    background-color: #e0e0e0;
-    color: #b0b0b0; 
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-}
-
-
-
 .inputGroup {
   display: flex;
   align-items: flex;
@@ -144,10 +119,6 @@
   box-sizing: border-box
 }
 
-
-///////
-/// 
-/// 
 .inputEmailGroup {
   display: flex;
   align-items: center;
@@ -158,13 +129,13 @@
 }
 
 .inputEmailBox {
-    flex: 2;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 10px;
-    box-sizing: flex;
-    border: 1px solid #ccc;
-    padding-right: 1rem;
+  flex: 2;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+  box-sizing: flex;
+  border: 1px solid #ccc;
+  padding-right: 1rem;
 }
 
 .emailDomain {
@@ -254,3 +225,63 @@
   font-size: 12px;
   color: #ff4d4d;
 }
+
+.uploadFileButton{
+  color: black;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 3%;
+  
+  &:hover {
+    background-color: #ffca28;
+  }
+  
+}
+
+.submitButton {
+  background-color: #ffc107;
+  color: black;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 5%;
+  
+  &:hover {
+    background-color: #ffca28;
+  }
+
+  &:disabled, &.locked {
+    background-color: #e0e0e0;
+    color: #b0b0b0; 
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+.fileName{
+  font-family: 'Open-Sans ', sans-serif;
+
+}
+
+@media screen and (max-width: 400px){
+  .modalCloseButton{
+    margin-right: 35%;
+  }
+
+  .modalContent{
+    padding-top: 80px;
+  }
+}
+
+

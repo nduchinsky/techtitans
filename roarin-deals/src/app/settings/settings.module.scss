@@ -10,6 +10,14 @@ $listings-gray-dark: #a3a3a3;
 $listings-black: #000000;
 $listings-white: #ffffff;
 
+.myListingsText{
+  font-family: "Open Sans", sans-serif;
+  margin-left: 6%;
+  margin-bottom: -2%;
+  margin-top: 5%;
+  font-size: 30px;
+}
+
 .settingsContainer {
   display: flex;
 }
@@ -21,7 +29,7 @@ $listings-white: #ffffff;
   margin-top: 20px;
 }
 
-.sidebar button {
+.editAccountButton, .myOrdersButton, .salesHistoryButton {
   width: 120%;
   text-align: center;
   background-color: #FFE9B2;
@@ -31,6 +39,7 @@ $listings-white: #ffffff;
   cursor: pointer;
   border-radius: 0 20px 20px 0;
   transition: background-color 0.3s ease;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .sidebar button:hover {
@@ -349,5 +358,101 @@ $listings-white: #ffffff;
   }
   
   
+}
+
+// Mobile Size
+@media screen and (max-width: 400px){
+  .sidebar {
+    flex-direction: row;
+    margin-left: 10%;
+    width: 100%;
+  }
+
+  .editAccountButton, .myOrdersButton, .salesHistoryButton {
+    width: 40%;
+    height: 40px;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 20px;
+  }
+
+  .salesHistoryButton{
+    margin-left: -225px;
+    margin-top: 50px;
+  }
+
+  .contentArea{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .settingsContainer{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profileSection{
+    display: flex;
+    flex-direction: column;
+    margin-top: -30%;
+    margin-bottom: 15%;
+  }
+
+  .userInfo{
+    margin-top: 5%;
+    margin-left: 5%;
+    text-align: center !important;
+  }
+
+  .userInfo button{
+    text-align: center !important;
+  }
+
+  .listingsSection{
+    display: flex;
+    flex-direction: column;
+    margin-left: -6%;
+  }
+
+  .myListingsText{
+    margin: 0;
+    color: black;
+    text-align: center;
+  }
+
+  .orbitron-text{
+    width: 200%;
+    font-size: 18px;
+    text-align: center;
+    margin-top: -30%;
+  }
+
+  .open-sans-text{
+    text-align: center;
+  }
+
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1699px) {
+  .editAccountButton, .myOrdersButton, .salesHistoryButton {
+    height: 50px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .sidebar{
+    margin-top: 3%;
+  }
+
+  .profileSection{
+    margin-left: 2%;
+  }
+
+  .uploadFileButton{
+    border: none;
+    width: 50% !important; 
+  }
+
 }
 

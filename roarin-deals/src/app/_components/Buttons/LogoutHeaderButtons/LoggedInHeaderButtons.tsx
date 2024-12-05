@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import styles from "./LoggedInHeaderButtons.module.scss";
 import { useAuth } from "../../../../../context/AuthContext";
 import { BsCaretDownFill } from "react-icons/bs";
-import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import checkIfUserIsMobile from '../../../../../_utils/checkIfUserIsMobile';
+import { useEffect, useState } from "react";
 
 export const LoggedInHeaderButtons = () => {
   const router = useRouter();
@@ -14,6 +14,39 @@ export const LoggedInHeaderButtons = () => {
   const isUserMobile = checkIfUserIsMobile(400);
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch the user's profile data, including the profile picture URL
+    const fetchProfileData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No authentication token found.");
+          return;
+        }
+
+        const response = await fetch("http://localhost:3000/api/settings", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          console.error("Failed to fetch profile data.");
+          return;
+        }
+
+        const data = await response.json();
+        console.log("from logged in header:", data);
+        setProfileImageUrl(data.profile_image_url || null); // Ensure default fallback
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
 
   const handleDropdownClick = () => {
     setDropdownVisible(true);
@@ -96,7 +129,15 @@ export const LoggedInHeaderButtons = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.pfpFrame} onClick={handleProfileClick} />
+        <div
+          className={styles.pfpFrame}
+          onClick={handleProfileClick}
+          style={{
+            backgroundImage: profileImageUrl ? `url(${profileImageUrl})` : undefined,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
       <BsCaretDownFill className={styles.dropDownIcon} onClick={handleDropdownClick} />
       <AnimatePresence>
         {dropdownVisible && (
