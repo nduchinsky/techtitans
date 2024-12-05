@@ -4,7 +4,13 @@ import styles from './AddressInputs.module.scss';
 import { FaAngleDown } from 'react-icons/fa6';
 
 interface AddressInputProps {
-  onSubmit: () => void;
+  onSubmit: (addressData: {
+    address1: string;
+    address2: string | null;
+    city: string;
+    state: string;
+    zip: string;
+  }) => void;
 }
 
 const AddressInputs: React.FC<AddressInputProps> = ({ onSubmit }) => {
@@ -18,31 +24,21 @@ const AddressInputs: React.FC<AddressInputProps> = ({ onSubmit }) => {
   const handlePageTwoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = {
-      street1,
-      street2,
-      city,
-      state,
-      zip,
+    const addressData = {
+      address1: street1,
+      address2: street2 || null, // Ensure address2 can be null
+      city: city,
+      state: state,
+      zip: zip,
     };
+
+    console.log('Address data being sent:', addressData); // Log the address data
 
     setIsSubmitting(true); // Start loading
 
     try {
-      const token = localStorage.getItem('token'); // Get the JWT token from local storage or wherever it's saved
-      const response = await axios.post('http://localhost:3000/api/listings', formData, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Include JWT token in the headers
-        },
-      });
-      console.log('Listing created successfully:', response.data);
-      // Reset the form fields after success
-      setStreet1('');
-      setStreet2('');
-      setCity('');
-      setState('');
-      setZip('');
-      onSubmit(); // Call the onSubmit callback to handle the next steps (e.g., close modal)
+      // Pass the address data to the parent component
+      onSubmit(addressData);
     } catch (error) {
       console.error('Error creating listing:', error);
       // Handle error (e.g., show a message to the user)

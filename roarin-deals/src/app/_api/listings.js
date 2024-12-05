@@ -28,8 +28,9 @@ const authenticate = async (req, res, next) => {
 };
 
 // Route to create a new listing
-router.post('/listings', async (req, res) => {
+router.post('/', authenticate, async (req, res) => {
     console.log('POST /api/listings route hit'); // Debug log to confirm route is hit
+    console.log('Request body:', req.body); // Log the request body
 
     const { 
         title, 
@@ -45,11 +46,12 @@ router.post('/listings', async (req, res) => {
     } = req.body;
 
     if (!title || !description || price == null || !condition || !tags || !address1 || !city || !state || !zip) {
+        console.log('Validation failed:', { title, description, price, condition, tags, address1, city, state, zip });
         return res.status(400).json({ error: 'All required fields must be provided' });
     }
 
     // Ensure tags are stored as a string of comma-separated values
-    const tagsString = tags.join(',');
+    const tagsString = Array.isArray(tags) ? tags.join(',') : tags;
 
     try {
         const result = await db.one(
@@ -66,7 +68,7 @@ router.post('/listings', async (req, res) => {
 
         res.status(201).json({ 
             message: 'Listing created successfully',
-            listing: result.rows[0],
+            listing: result,
             success: true 
         });
     } catch (err) {

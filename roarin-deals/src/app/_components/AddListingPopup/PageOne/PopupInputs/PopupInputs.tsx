@@ -85,34 +85,30 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
     }
   };
 
-  const handlePageTwoSubmit = () => {
-    // Combine all form data from both pages
+  const handlePageTwoSubmit = async (addressData: any) => {
     const formData = {
       title: name,
       description: description,
       price: price,
       condition: condition,
-      tags: activeTags.join(","),  // Join tags into a comma-separated string
-      address1: street1,  // Address from AddressInputs
-      address2: street2,
-      city: city,
-      state: state,
-      zip: zip
+      tags: activeTags, // Send tags as an array
+      ...addressData // Include address data
     };
 
-    // Send data to backend
-    axios.post('/api/listings', formData)
-      .then(response => {
-        console.log("Listing created successfully", response.data);
-        // Handle successful form submission (e.g., close popup, show success message, etc.)
-        onClick();
-      })
-      .catch(error => {
-        console.error("Error creating listing:", error);
-        // Handle error (e.g., show error message)
-      });
+    console.log('Form data being sent:', formData); // Log the form data
 
-    setShowPageTwo(false);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post('http://localhost:3000/api/listings', formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("Listing created successfully", response.data);
+      onClick();
+    } catch (error) {
+      console.error("Error creating listing:", error);
+    }
   };
 
   const handleImageContainerSubmit = () => {
