@@ -71,13 +71,21 @@
     }
 
     .dropdownContainer{
-        margin-top: 300px;
+        margin-top: 310px;
         width: 100%;
         margin-left: -15%;
     }
 
     .dropdownButton{
         font-size: 15px;
+    }
+
+    .dropdownCaret{
+        margin-top: -45px;
+        transform: rotate(180deg);
+        font-size: 40px;
+        position: absolute; 
+        margin-left: 56%;
     }
 }
 

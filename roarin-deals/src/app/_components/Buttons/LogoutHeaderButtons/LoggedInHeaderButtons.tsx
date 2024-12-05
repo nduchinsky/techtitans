@@ -6,10 +6,12 @@ import { useAuth } from "../../../../../context/AuthContext";
 import { BsCaretDownFill } from "react-icons/bs";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import checkIfUserIsMobile from '../../../../../_utils/checkIfUserIsMobile';
 
 export const LoggedInHeaderButtons = () => {
   const router = useRouter();
   const { logout } = useAuth();
+  const isUserMobile = checkIfUserIsMobile(400);
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -63,6 +65,35 @@ export const LoggedInHeaderButtons = () => {
     },
   }
 
+  const mobileDropdownVariants = {
+    hidden: {
+      scale: 0,
+      opacity: 0,
+      y: -150,
+      x: 20
+    },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 15,
+      },
+    },
+    exit: {
+      scale: 0,
+      opacity: 0, 
+      y: -150,
+      x: 20,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.pfpFrame} onClick={handleProfileClick} />
@@ -70,8 +101,8 @@ export const LoggedInHeaderButtons = () => {
       <AnimatePresence>
         {dropdownVisible && (
           <motion.div
-            variants={dropdownVariants}
-            initial="hidden"
+          variants={isUserMobile ? mobileDropdownVariants : dropdownVariants}
+          initial="hidden"
             animate="visible"
             exit="exit"
             className={styles.dropdownContainer}
