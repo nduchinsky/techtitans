@@ -1,15 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddButton from "../_components/Buttons/AddButton/AddButton";
 import styles from "./show_listining.module.scss";
 import LoggedInHeader from "../_components/Headers/LoggedInHeader/LoggedInHeader";
 import { BsSearch } from "react-icons/bs";
 import ViewListingPopup from '../_components/ViewListingPopup/ViewListingPopup';
+import axios from 'axios';
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedListing, setSelectedListing] = useState<any | null>(null);  // State to manage the selected listing
+  const [listings, setListings] = useState<any[]>([]); // State to store listings
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/listings');
+        setListings(response.data);
+      } catch (error) {
+        console.error('Error fetching listings:', error);
+      }
+    };
+
+    fetchListings();
+  }, []);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -19,36 +34,9 @@ export default function Listings() {
     setSelectedListing(listing);  // Set the selected listing to show the popup
   };
 
-  const mockListings = [
-    {
-      id: 1,
-      name: "Name of Product",
-      price: "Price of Product",
-      location: "Location of Product",
-      image: "https://via.placeholder.com/300x200",
-    },
-    {
-      id: 2,
-      name: "Name of Product",
-      price: "Price of Product",
-      location: "Location of Product",
-      image: "https://via.placeholder.com/300x200",
-    },
-    {
-      id: 3,
-      name: "Name of Product",
-      price: "Price of Product",
-      location: "Location of Product",
-      image: "https://via.placeholder.com/300x200",
-    },
-    {
-      id: 4,
-      name: "Name of Product",
-      price: "Price of Product",
-      location: "Location of Product",
-      image: "https://via.placeholder.com/300x200",
-    },
-  ];
+  const filteredListings = listings.filter(listing =>
+    listing.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className={styles.listingsPage}>
@@ -76,7 +64,7 @@ export default function Listings() {
 
       <div className={styles.content}>
         <div className={styles.productsGrid}>
-          {mockListings.map((listing) => (
+          {filteredListings.map((listing) => (
             <div key={listing.id} className={styles.productCard} onClick={() => handleClickListing(listing)} >
               <img
                 src={listing.image}

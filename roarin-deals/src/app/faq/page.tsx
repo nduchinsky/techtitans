@@ -22,8 +22,15 @@ const faqs = [
   },
   {
     question: "How can I contact customer support?",
-    answer:
-      "You can reach out to our customer support team via the 'Contact Us' page or email us at support@roarin-deals.com.",
+    answer: (
+      <>
+        You can reach out to our customer support team via the{' '}
+        <a href="/contactUs" className={styles.link}>
+          Contact Us
+        </a>{' '}
+        page or email us at roarindeals@outlook.com.
+      </>
+    ),
   },
   {
     question: "What payment methods are accepted?",

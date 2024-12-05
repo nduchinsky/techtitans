@@ -23,8 +23,7 @@ const authenticate = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        const user = await db.oneOrNone('SELECT id FROM users WHERE id = $1', [decoded.id]);
-
+        const user = await db.oneOrNone('SELECT id FROM USERS_TABLE WHERE id = $1', [decoded.id]);
         if (!user) {
             console.log('Authentication failed: User not found');
             return res.status(401).json({ error: 'Unauthorized: Invalid token' });
@@ -41,11 +40,8 @@ const authenticate = async (req, res, next) => {
 // Route to fetch user details
 router.get('/', authenticate, async (req, res) => {
     try {
-        const user = await db.oneOrNone(
-            'SELECT first_name, last_name, email, phone FROM users WHERE id = $1',
-            [req.userId]
-        );
-
+        console.log("Fetching details for user ID:", req.userId); // Log user ID
+        const user = await db.oneOrNone('SELECT first_name, last_name, email, phone FROM USERS_TABLE WHERE id = $1', [req.userId]);
         if (!user) {
             console.log(`User with ID ${req.userId} not found.`);
             return res.status(404).json({ error: 'User not found' });
@@ -84,7 +80,8 @@ router.put('/', authenticate, async (req, res) => {
     }
 
     try {
-        const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', [req.userId]);
+        console.log("Updating details for user ID:", req.userId); // Log user ID
+        const user = await db.oneOrNone('SELECT * FROM USERS_TABLE WHERE id = $1', [req.userId]);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -121,6 +118,15 @@ router.put('/', authenticate, async (req, res) => {
                 ]
             );
         }
+
+        // Hash new password if provided
+        const updatedPassword = newPassword ? await bcrypt.hash(newPassword, 10) : user.password;
+
+        // Update user details
+        await db.none(
+            'UPDATE USERS_TABLE SET first_name = $1, last_name = $2, email = $3, phone = $4, password = $5 WHERE id = $6',
+            [first_name, last_name, email, phone, updatedPassword, req.userId]
+        );
 
         res.status(200).json({ message: 'User details updated successfully' });
     } catch (err) {
