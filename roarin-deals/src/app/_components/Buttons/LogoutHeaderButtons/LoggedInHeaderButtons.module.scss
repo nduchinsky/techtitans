@@ -30,6 +30,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px 0px 20px 0px;
+    width: 120%;
 }
 
 .dropdownButton{
@@ -63,7 +64,14 @@
     }
 }
 
+.dropdownCaret{
+    color: black;
+    transform: rotate(180deg);
+    position: absolute;
+    font-size: 40px;
+}
 
+// Mobile size
 @media screen and (max-width: 400px) {
     .pfpFrame{
         width: 60px;
@@ -82,28 +90,33 @@
 
     .dropdownCaret{
         margin-top: -45px;
-        transform: rotate(180deg);
-        font-size: 40px;
-        position: absolute; 
         margin-left: 56%;
     }
 }
 
-@media screen and (min-width: 1000px) and (max-width: 1699px) {
+// Laptop size
+@media screen and (min-width: 1300px) and (max-width: 1799px) {
     .dropdownContainer{
         height: 190%;
-        width: 120%;
         margin-top: 295px;
         margin-left: -105px;
     }
 
     .dropdownCaret{
-        color: black;
         margin-top: -45px;
-        transform: rotate(180deg);
-        font-size: 40px;
-        position: absolute; 
         margin-left: 83%;
 
+    }
+}
+
+@media screen and (min-width: 1800px) and (max-width: 2500px) {
+    .dropdownContainer{
+        margin-top: 310px;
+        margin-left: -55%;
+    }
+    
+    .dropdownCaret{
+        margin-top: -45px;
+        margin-left: 84%;
     }
 }
