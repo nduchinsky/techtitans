@@ -1,7 +1,6 @@
-// modal.tsx
 import React from 'react';
 import styles from './modal.module.scss';
-import styleSet from '../modal.module.scss';
+import CloseButton from '@/app/_components/Buttons/CloseButton/CloseButton';
 
 interface ModalProps {
   isOpen: boolean;
@@ -18,7 +17,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, error, 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <button className={styles.modalCloseButton} onClick={onClose}>&times;</button>
+        <div className={styles.modalCloseButton}>
+          <CloseButton onClick={onClose} />
+        </div>
         <header className={styles.modalHeader}>
           <h2>{title}</h2>
         </header>
