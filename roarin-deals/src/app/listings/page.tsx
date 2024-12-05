@@ -35,7 +35,7 @@ export default function Listings() {
   };
 
   const filteredListings = listings.filter(listing =>
-    listing.name.toLowerCase().includes(searchTerm.toLowerCase())
+    listing.name?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

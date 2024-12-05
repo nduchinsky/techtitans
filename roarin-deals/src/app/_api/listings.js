@@ -98,7 +98,7 @@ router.put('/:id', authenticate, async (req, res) => {
     }
 
     // Ensure tags are stored as a string of comma-separated values
-    const tagsString = tags.join(',');
+    const tagsString = Array.isArray(tags) ? tags.join(',') : tags;
 
     try {
         const listing = await db.oneOrNone('SELECT * FROM LISTINGS_TABLE WHERE id = $1 AND user_id = $2', [listingId, req.userId]);
