@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const { createUsersTable, dropProductsTable, createTempProductsTable, createTempAddressesTable } = require('./db');
+const { createUsersTable, addFieldToTable } = require('./db');
 const registerRoute = require('./register');
 const loginRoute = require('./login');
 const settingsRoute = require('./settings');
@@ -20,14 +20,14 @@ requiredEnv.forEach((key) => {
 });
 
 // Middleware
-app.use(cors()); // Allow cross-origin requests
-app.use(express.json()); // Parse JSON request bodies
-app.use(morgan('dev')); // Log HTTP requests
+app.use(cors()); 
+app.use(express.json());
+app.use(morgan('dev'));
 
 // API Routes
-app.use('/api/register', registerRoute); // Registration route
-app.use('/api/login', loginRoute);       // Login route
-app.use('/api/settings', settingsRoute); // Settings route
+app.use('/api/register', registerRoute); 
+app.use('/api/login', loginRoute);     
+app.use('/api/settings', settingsRoute);
 
 // Fallback for unhandled routes
 app.use((req, res) => {
@@ -35,23 +35,18 @@ app.use((req, res) => {
     res.status(404).json({ error: 'Route not found' });
 });
 
-// Centralized error handling
 app.use((err, req, res, next) => {
     console.error("Unhandled error:", err);
     res.status(500).json({ error: 'Internal server error' });
 });
 
-// Server Initialization
 app.listen(PORT, async () => {
     console.log(`Server is running on port ${PORT}`);
     
     try {
-        await createUsersTable(); // Ensure Users table exists
-        // Uncomment if needed
-        // await createTempProductsTable();
-        // await createTempAddressesTable();
+        await createUsersTable();
     } catch (error) {
         console.error("Error during table creation:", error);
-        process.exit(1); // Exit the server on critical failure
+        process.exit(1);
     }
 });

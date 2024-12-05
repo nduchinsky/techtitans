@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Modal from "./modal"; // Assuming a Modal component exists
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./modal.module.scss";
 import styleSet from "../settings.module.scss";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Modal from "./modal";
 
 interface ModalContentProps {
   isModalOpen: boolean;
@@ -92,6 +92,10 @@ const ModalContent: React.FC<ModalContentProps> = ({
   const [confirmPasswordValue, setConfirmPasswordValue] = useState(confirmPassword || "");
   const [passwordStrength, setPasswordStrength] = useState(0);
 
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [image, setImage] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+
   const passwordsMatch = inputPassword === confirmPasswordValue;
 
   const calculatePasswordStrength = (password: string) => {
@@ -151,14 +155,6 @@ const ModalContent: React.FC<ModalContentProps> = ({
     confirmEmail,
     validationErrors.passwordError,
   ]);
-  
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      console.log("Selected file:", file);
-    }
-  };
 
   const handleSubmit = async () => {
     if (!validationErrors || Object.values(validationErrors).some((error) => error)) {
@@ -173,7 +169,8 @@ const ModalContent: React.FC<ModalContentProps> = ({
             return;
         }
 
-        const response = await fetch("/api/settings", {
+        // Send the image URL as part of the request body
+        const response = await fetch("http://localhost:3000/api/settings", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -186,6 +183,7 @@ const ModalContent: React.FC<ModalContentProps> = ({
                 phone: inputPhone,
                 currentPassword: inputPassword,
                 newPassword: confirmPasswordValue,
+                profileImageUrl: image, // Include the image URL
             }),
         });
 
@@ -200,9 +198,25 @@ const ModalContent: React.FC<ModalContentProps> = ({
         console.error("Error submitting form:", error);
         alert("An error occurred.");
     }
-};
+  };
 
-  
+
+
+  const handleUploadClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+      setFileName(file.name);
+    }
+  };
+
 
   return (
     <Modal
@@ -214,9 +228,23 @@ const ModalContent: React.FC<ModalContentProps> = ({
     >
       {modalType === "profileImage" && (
         <div>
-          <label className={styles.modalLabel}>Change Profile Image</label>
-          <input type="file" accept="image/*" onChange={handleFileChange} />
-          {error && <p className={styleSet.invalidFileError}>{error}</p>}
+          {image ? (
+            <button className={styles.uploadFileButton} onClick={handleUploadClick}>
+              Choose Different File
+            </button>
+          ):(
+            <button className={styles.uploadFileButton} onClick={handleUploadClick}>
+              Choose File
+            </button>
+          )}
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+            accept="image/*"
+          />
+          {fileName && <p className={styles.fileName}>{fileName}</p>}
         </div>
       )}
 

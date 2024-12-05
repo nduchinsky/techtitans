@@ -63,7 +63,7 @@
     }
 }
 
-
+// Mobile size
 @media screen and (max-width: 400px) {
     .pfpFrame{
         width: 60px;
@@ -81,6 +81,8 @@
     }
 }
 
+
+// Laptop Size
 @media screen and (min-width: 1000px) and (max-width: 1699px) {
     .dropdownContainer{
         height: 190%;
