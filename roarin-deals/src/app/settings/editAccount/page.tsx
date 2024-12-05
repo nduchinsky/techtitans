@@ -5,14 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import styles from "../settings.module.scss";
-import Modal from "./modal";
-import ModalContent from "./modalContent";
 import placeholderImage from "../placeholder.png";
 import zxcvbn from "zxcvbn";
 import { useAuth } from "../../../../context/AuthContext";
 import { useRouter } from "next/navigation";
 import LoggedInHeader from "../../_components/Headers/LoggedInHeader/LoggedInHeader";
 import AddButton from "../../_components/Buttons/AddButton/AddButton";
+import ModalContent from "./modalContent";
+import Modal from "./modal";
 
 
 export default function EditAccount() {
@@ -234,22 +234,27 @@ export default function EditAccount() {
         return <p>Loading...</p>;
     }
 
+    const handleEditAccountClick = () => {
+        router.push('/settings/editAccount');
+    }
+
+    const handleMyOrdersClick = () => {
+        router.push('/settings/myOrders');
+    }
+
+    const handleSalesHistoryClick = () => {
+        router.push('/settings/salesHistory');
+    }
+
     return (
     <div>
     <LoggedInHeader />
 
-    {/* Page Content */}
     <div className={styles.settingsContainer}>
         <div className={styles.sidebar}>
-            <Link href="/settings/editAccount">
-                <button className={styles.activeButton}>Edit Account</button>
-            </Link>
-            <Link href="/settings/myOrders">
-                <button>My Orders</button>
-            </Link>
-            <Link href="/settings/salesHistory">
-                <button>Sales History</button>
-            </Link>
+            <button className={styles.editAccountButton} onClick={handleEditAccountClick}>Edit Account</button>
+            <button className={styles.myOrdersButton} onClick={handleMyOrdersClick}>My Orders</button>
+            <button className={styles.salesHistoryButton} onClick={handleSalesHistoryClick}>Sales History</button>
         </div>
         
         <div className={styles.contentArea}>
@@ -266,7 +271,7 @@ export default function EditAccount() {
                         className={styles.editButton}
                         onClick={() => openModal("profileImage")}
                     >
-                        Edit profile image ✏️
+                        Edit profile image
                     </button>
                 </div>
                 <div className={styles.userInfo}>
@@ -276,37 +281,38 @@ export default function EditAccount() {
                         style={{ fontSize: "2rem" }}
                     >
                         {user?.first_name && user?.last_name
-                            ? `${user.first_name} ${user.last_name} ✏️`
-                            : "USERNAME ✏️"}
+                            ? `${user.first_name} ${user.last_name}`
+                            : "USERNAME"}
                     </button>
                     <button
                         className={styles.editButton}
                         onClick={() => openModal("email")}
                         style={{ fontSize: "1rem" }}
                     >
-                        📧 {user?.email || "username@umsystem.edu"} ✏️
+                       {user?.email || "username@umsystem.edu"}
                     </button>
                     <button
                         className={styles.editButton}
                         onClick={() => openModal("phone")}
                         style={{ fontSize: "1rem" }}
                     >
-                        📱 {user?.phone
+                        {user?.phone
                             ? `(${user.phone.toString().slice(0, 3)}) ${user.phone
                                 .toString()
                                 .slice(3, 6)}-${user.phone.toString().slice(6)}`
-                            : "(xxx) xxx - xxxx"} ✏️
+                            : "(xxx) xxx - xxxx"}
                     </button>
                     <button
                         className={styles.editButton}
                         onClick={() => openModal("password")}
                         style={{ fontSize: "1rem" }}
                     >
-                        🔒 Change Password ✏️
+                        Change Password
                     </button>
                 </div>
             </div>
 
+            <h2 className={styles.myListingsText}>MY LISTINGS</h2>
             {/* Listings Section */}
             <div className={styles.listingsSection}>
                 <div className={styles.productsGrid}>

@@ -86,14 +86,7 @@ $listings-white: #ffffff;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
-    margin-top: 2rem;
-  }
-
-  .productsGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+    margin: 20px 20px 0px 20px;
   }
   
   .productCard {
