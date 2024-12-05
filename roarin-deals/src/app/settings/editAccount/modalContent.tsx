@@ -445,7 +445,7 @@ const ModalContent: React.FC<ModalContentProps> = ({
         className={styles.submitButton}
         onClick={() => {
           console.log('Button clicked');
-          handleSubmit(); // Ensure this is directly invoked
+          handleSubmit();
         }}
       >
         Submit
