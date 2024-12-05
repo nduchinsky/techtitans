@@ -13,13 +13,9 @@ type ViewListingPopupProps = {
       condition: string;
       tags: string;
       created_at: string;
-      address1: string;
-      address2: string | null;
-      city: string;
-      state: string;
       zip: string;
       user_id: number;
-      image: string;  // Added this line
+      image: string;
     };
     onClose: () => void;
 };
@@ -28,15 +24,11 @@ const ViewListingPopup = ({ listing, onClose }: ViewListingPopupProps) => {
 
   const isUserMobile = checkIfUserIsMobile(400);
 
-  // Add a portal wrapper to mount the popup properly
   return (
     <>
       <div className={styles.backdrop} onClick={onClose} />
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={styles.listingImage}>
-            <img src={listing.image || '/placeholder-image.jpg'} alt={listing.title} />
-          </div>
           <PostInformation
             title={listing.title}
             price={listing.price}
@@ -45,6 +37,7 @@ const ViewListingPopup = ({ listing, onClose }: ViewListingPopupProps) => {
             condition={listing.condition}
             tags={listing.tags}
           />
+          <PostImages />
           <div className={styles.closeButton}>
             <CloseButton onClick={onClose} />
           </div>

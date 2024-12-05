@@ -28,7 +28,7 @@ const PostInformation = ({ title, price, location, description, condition, tags 
 
             <div className={styles.nameTag}>
                 <div className={styles.pfp} />
-                <p className={styles.name}>Location: {location}</p>
+                <p className={styles.name}>First Last</p>
             </div>
 
             <p className={styles.subtitle}>Description</p>
@@ -38,9 +38,9 @@ const PostInformation = ({ title, price, location, description, condition, tags 
             <p className={styles.plainText}>{condition}</p>
 
             <p className={styles.subtitle}>Tags</p>
-            <p className={styles.plainText}>{tags}</p>
-
-            <button className={styles.contactSellerButton}>Contact Seller</button>
+            <div className={styles.tagsContainer}>
+                <p className={styles.plainText}>{tags}</p>
+            </div>
         </div>
     )
 }
