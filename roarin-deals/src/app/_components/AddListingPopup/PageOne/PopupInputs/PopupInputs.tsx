@@ -6,6 +6,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import AddressInputs from '../../PageTwo/AddressInputs';
 import checkIfUserIsMobile from '../../../../../../_utils/checkIfUserIsMobile';
 import AddImageContainer from '../AddImageContainer/AddImageContainer';
+import axios from 'axios';  // Add axios for making HTTP requests
 
 interface PopupInputsProps {
   onClick: () => void;
@@ -57,6 +58,13 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   const [showPageOne, setShowPageOne] = useState(true);
   const [showAddImageContainer, setShowAddImageContainer] = useState(false);
 
+  // Address input state
+  const [street1, setStreet1] = useState('');
+  const [street2, setStreet2] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zip, setZip] = useState('');
+
   const isUserMobile = checkIfUserIsMobile(400);
 
   const handleTagClick = (tag: string) => {
@@ -70,7 +78,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   const handlePageOneSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowPageOne(false);
-    if(isUserMobile){
+    if (isUserMobile) {
       setShowAddImageContainer(true);
     } else {
       setShowPageTwo(true);
@@ -78,8 +86,33 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   };
 
   const handlePageTwoSubmit = () => {
+    // Combine all form data from both pages
+    const formData = {
+      title: name,
+      description: description,
+      price: price,
+      condition: condition,
+      tags: activeTags.join(","),  // Join tags into a comma-separated string
+      address1: street1,  // Address from AddressInputs
+      address2: street2,
+      city: city,
+      state: state,
+      zip: zip
+    };
+
+    // Send data to backend
+    axios.post('/api/listings', formData)
+      .then(response => {
+        console.log("Listing created successfully", response.data);
+        // Handle successful form submission (e.g., close popup, show success message, etc.)
+        onClick();
+      })
+      .catch(error => {
+        console.error("Error creating listing:", error);
+        // Handle error (e.g., show error message)
+      });
+
     setShowPageTwo(false);
-    onClick();
   };
 
   const handleImageContainerSubmit = () => {
@@ -142,7 +175,7 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
                   onChange={(e) => setCondition(e.target.value)}
                   required
                   className={`${styles.conditionInput} ${condition ? styles.selected : ""}`}
-                  >
+                >
                   <option value="" disabled>Condition</option>
                   <option value="New">New</option>
                   <option value="Like new">Like new</option>

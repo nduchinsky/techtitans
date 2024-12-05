@@ -28,7 +28,9 @@ const authenticate = async (req, res, next) => {
 };
 
 // Route to create a new listing
-router.post('/', authenticate, async (req, res) => {
+router.post('/listings', async (req, res) => {
+    console.log('POST /api/listings route hit'); // Debug log to confirm route is hit
+
     const { 
         title, 
         description, 
@@ -46,6 +48,9 @@ router.post('/', authenticate, async (req, res) => {
         return res.status(400).json({ error: 'All required fields must be provided' });
     }
 
+    // Ensure tags are stored as a string of comma-separated values
+    const tagsString = tags.join(',');
+
     try {
         const result = await db.one(
             `
@@ -56,10 +61,14 @@ router.post('/', authenticate, async (req, res) => {
             VALUES ($1, $2, $3, $4, $5, NOW(), $6, $7, $8, $9, $10, $11)
             RETURNING *;
             `,
-            [title, description, price, condition, tags, address1, address2, city, state, zip, req.userId]
+            [title, description, price, condition, tagsString, address1, address2, city, state, zip, req.userId]
         );
 
-        res.status(201).json({ message: 'Listing created successfully', listing: result });
+        res.status(201).json({ 
+            message: 'Listing created successfully',
+            listing: result.rows[0],
+            success: true 
+        });
     } catch (err) {
         console.error('Error creating listing:', err);
         res.status(500).json({ error: 'Internal server error' });
@@ -86,6 +95,9 @@ router.put('/:id', authenticate, async (req, res) => {
         return res.status(400).json({ error: 'All required fields must be provided' });
     }
 
+    // Ensure tags are stored as a string of comma-separated values
+    const tagsString = tags.join(',');
+
     try {
         const listing = await db.oneOrNone('SELECT * FROM LISTINGS_TABLE WHERE id = $1 AND user_id = $2', [listingId, req.userId]);
         if (!listing) {
@@ -109,7 +121,7 @@ router.put('/:id', authenticate, async (req, res) => {
                 zip = $10
             WHERE id = $11 AND user_id = $12;
             `,
-            [title, description, price, condition, tags, address1, address2, city, state, zip, listingId, req.userId]
+            [title, description, price, condition, tagsString, address1, address2, city, state, zip, listingId, req.userId]
         );
 
         res.status(200).json({ message: 'Listing updated successfully' });
