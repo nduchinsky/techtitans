@@ -5,12 +5,18 @@ import AddButton from "../_components/Buttons/AddButton/AddButton";
 import styles from "./show_listining.module.scss";
 import LoggedInHeader from "../_components/Headers/LoggedInHeader/LoggedInHeader";
 import { BsSearch } from "react-icons/bs";
+import ViewListingPopup from '../_components/ViewListingPopup/ViewListingPopup';
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedListing, setSelectedListing] = useState<any | null>(null);  // State to manage the selected listing
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleClickListing = (listing: any) => {
+    setSelectedListing(listing);  // Set the selected listing to show the popup
   };
 
   const mockListings = [
@@ -71,7 +77,7 @@ export default function Listings() {
       <div className={styles.content}>
         <div className={styles.productsGrid}>
           {mockListings.map((listing) => (
-            <div key={listing.id} className={styles.productCard}>
+            <div key={listing.id} className={styles.productCard} onClick={() => handleClickListing(listing)} >
               <img
                 src={listing.image}
                 alt={listing.name}
@@ -89,6 +95,12 @@ export default function Listings() {
           <AddButton />
         </div>
       </div>
+      {selectedListing && (
+        <ViewListingPopup
+          listing={selectedListing}
+          onClose={() => setSelectedListing(null)}  // Close the popup when the close button is clicked
+        />
+      )}
     </div>
   );
 }
