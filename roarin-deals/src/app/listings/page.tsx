@@ -12,6 +12,7 @@ interface Listing {
   location: string;
   image: string;
 }
+import ViewListingPopup from '../_components/ViewListingPopup/ViewListingPopup';
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,9 +36,18 @@ export default function Listings() {
 
     fetchListings();
   }, []);
+  const [selectedListing, setSelectedListing] = useState<any | null>(null);  // State to manage the selected listing
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+  };
+
+  const handleClickListing = (listing: any) => {
+    setSelectedListing(listing);  // Set the selected listing to show the popup
+  };
+
+  const handleClickListing = (listing: any) => {
+    setSelectedListing(listing);  // Set the selected listing to show the popup
   };
 
   const filteredListings = listings.filter(
@@ -75,8 +85,8 @@ export default function Listings() {
 
       <div className={styles.content}>
         <div className={styles.productsGrid}>
-          {filteredListings.map((listing) => (
-            <div key={listing.id} className={styles.productCard}>
+          {mockListings.map((listing) => (
+            <div key={listing.id} className={styles.productCard} onClick={() => handleClickListing(listing)} >
               <img
                 src={listing.image}
                 alt={listing.title}
@@ -92,6 +102,12 @@ export default function Listings() {
         </div>
         <AddButton />
       </div>
+      {selectedListing && (
+        <ViewListingPopup
+          listing={selectedListing}
+          onClose={() => setSelectedListing(null)}  // Close the popup when the close button is clicked
+        />
+      )}
     </div>
   );
 }
