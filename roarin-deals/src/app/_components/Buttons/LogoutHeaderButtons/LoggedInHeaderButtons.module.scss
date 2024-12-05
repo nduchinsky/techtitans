@@ -85,7 +85,17 @@
     .dropdownContainer{
         height: 190%;
         width: 120%;
-        margin-top: 280px;
-        margin-left: -110px;
+        margin-top: 295px;
+        margin-left: -105px;
+    }
+
+    .dropdownCaret{
+        color: black;
+        margin-top: -45px;
+        transform: rotate(180deg);
+        font-size: 40px;
+        position: absolute; 
+        margin-left: 83%;
+
     }
 }
