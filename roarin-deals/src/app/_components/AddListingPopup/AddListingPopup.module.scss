@@ -57,7 +57,7 @@
 }
 
 // Large monitor size
-@media screen and (min-width: 1700px) and (max-width: 2200px) {
+@media screen and (min-width: 1800px) and (max-width: 2500px) {
     .container{
         align-items: unset;
         margin-left: 20px;
@@ -86,7 +86,7 @@
 }
 
 // Laptop size
-@media screen and (min-width: 800px) and (max-width: 1699px) {
+@media screen and (min-width: 1300px) and (max-width: 1799px) {
     .container{
         align-items: unset;
         margin-left: 20px;

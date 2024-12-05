@@ -71,11 +71,25 @@ router.get('/health', async (req, res) => {
     }
 });
 
-// Route to update user details
 router.put('/', authenticate, async (req, res) => {
-    const { first_name, last_name, email, phone, currentPassword, newPassword } = req.body;
+    const {
+        first_name,
+        last_name,
+        email,
+        phone,
+        currentPassword,
+        newPassword,
+        profileImageUrl,
+    } = req.body;
 
-    if (!first_name && !last_name && !email && !phone && !newPassword) {
+    if (
+        !first_name &&
+        !last_name &&
+        !email &&
+        !phone &&
+        !newPassword &&
+        !profileImageUrl
+    ) {
         return res.status(400).json({ error: 'No valid fields provided for update' });
     }
 
@@ -86,7 +100,7 @@ router.put('/', authenticate, async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Verify current password if new password is being set
+        // Handle password change
         if (newPassword) {
             const passwordMatches = await bcrypt.compare(currentPassword, user.password);
             if (!passwordMatches) {
@@ -95,25 +109,27 @@ router.put('/', authenticate, async (req, res) => {
 
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             await db.none(
-                'UPDATE users SET first_name = $1, last_name = $2, email = $3, phone = $4, password = $5 WHERE id = $6',
+                'UPDATE users SET first_name = $1, last_name = $2, email = $3, phone = $4, password = $5, profile_image_url = $6 WHERE id = $7',
                 [
                     first_name || user.first_name,
                     last_name || user.last_name,
                     email || user.email,
                     phone || user.phone,
                     hashedPassword,
+                    profileImageUrl || user.profile_image_url,
                     req.userId,
                 ]
-            );
+            );            
         } else {
             // Update without changing password
             await db.none(
-                'UPDATE users SET first_name = $1, last_name = $2, email = $3, phone = $4 WHERE id = $5',
+                'UPDATE users SET first_name = $1, last_name = $2, email = $3, phone = $4, profile_image_url = $5 WHERE id = $6',
                 [
                     first_name || user.first_name,
                     last_name || user.last_name,
                     email || user.email,
                     phone || user.phone,
+                    profileImageUrl || user.profile_image_url,
                     req.userId,
                 ]
             );
@@ -134,6 +150,7 @@ router.put('/', authenticate, async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 // Fallback route for unhandled requests (404)
 router.use((req, res) => {
