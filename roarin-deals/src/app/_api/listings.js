@@ -176,4 +176,35 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Update the /user route with better error handling and connection checks
+router.get('/user', authenticate, async (req, res) => {
+    try {
+        // Add error checking for userId
+        if (!req.userId) {
+            console.error('[ERROR] No userId provided');
+            return res.status(400).json({ error: 'User ID is required' });
+        }
+
+        console.log(`[DEBUG] Fetching listings for userId: ${req.userId}`);
+
+        // Simplified query with better error handling
+        const listings = await db.any(`
+            SELECT id, title, description, price, condition 
+            FROM LISTINGS_TABLE 
+            WHERE user_id = $1
+            ORDER BY created_at DESC
+        `, [req.userId]);
+
+        console.log(`[DEBUG] Found ${listings.length} listings for user ${req.userId}`);
+        return res.json(listings);
+        
+    } catch (error) {
+        console.error('[ERROR] Failed to fetch listings:', error);
+        return res.status(500).json({ 
+            error: 'Failed to fetch listings',
+            details: error.message
+        });
+    }
+});
+
 module.exports = router;

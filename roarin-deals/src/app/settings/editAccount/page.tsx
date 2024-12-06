@@ -14,9 +14,7 @@ import AddButton from "../../_components/Buttons/AddButton/AddButton";
 import ModalContent from "./modalContent";
 import Modal from "./modal";
 
-
 export default function EditAccount() {
-    
     const { isAuthenticated, user, validateToken, logout, fetchUserDetails, token } = useAuth();
     const router = useRouter();
 
@@ -45,12 +43,19 @@ export default function EditAccount() {
     const [isUserFetched, setIsUserFetched] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    const [listings, setListings] = useState<Array<{ id: number; title: string; description: string; image?: string }>>([
-        { id: 1, title: "Sample Product 1", description: "Description for Product 1", image: placeholderImage.src },
-        { id: 2, title: "Sample Product 2", description: "Description for Product 2", image: placeholderImage.src },
-        { id: 3, title: "Sample Product 3", description: "Description for Product 3", image: placeholderImage.src },
-    ]);
+    // Update the listings state type to match database schema
+    const [listings, setListings] = useState<Array<{
+        id: number;
+        title: string;
+        description: string;
+        price: string;
+        condition: string;
+    }>>([]);
     
+    // Add loading state for listings
+    const [listingsLoading, setListingsLoading] = useState(true);
+    const [listingsError, setListingsError] = useState('');
+
     useEffect(() => {
         console.log("User data:", user);
     }, [user]);
@@ -90,6 +95,46 @@ export default function EditAccount() {
         };
         fetchUser();
     }, [token, fetchUserDetails, isUserFetched, logout]);
+
+    // Replace the entire useEffect for fetching listings with this debugged version
+    useEffect(() => {
+        async function fetchUserListings() {
+            if (!token) {
+                console.error('No token found');
+                return;
+            }
+            
+            console.log('Starting to fetch listings...');
+            setListingsLoading(true);
+    
+            try {
+                const response = await fetch('/api/listings/user', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                });
+    
+                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch listings: ${response.statusText}`);
+                }
+    
+                const data = await response.json();
+                console.log('Fetched data:', data);
+    
+                setListings(data);
+                setListingsError('');
+            } catch (error) {
+                console.error('Fetch error:', error);
+                setListingsError('Error loading listings');
+            } finally {
+                setListingsLoading(false);
+            }
+        }
+    
+        fetchUserListings();
+    }, [token]);
 
     const openModal = (type: string) => {
         setModalType(type);
@@ -316,24 +361,32 @@ export default function EditAccount() {
             {/* Listings Section */}
             <div className={styles.listingsSection}>
                 <div className={styles.productsGrid}>
-                    {/* Render each listing */}
-                    {listings.map((listing, index) => (
-                        <div key={index} className={styles.productCard}>
-                            <Image
-                                src={listing.image || placeholderImage}
-                                alt={listing.title || "Listing"}
-                                width={200}
-                                height={150}
-                                className={styles.productImage}
-                            />
-                            <div className={styles.productDetails}>
-                                <h3 className={styles.productName}>{listing.title || "Product Name"}</h3>
-                                <p className={styles.productLocation}>
-                                    {listing.description || "Product Description"}
-                                </p>
+                    {listingsLoading ? (
+                        <div>Loading listings...</div>
+                    ) : listingsError ? (
+                        <div>Error: {listingsError}</div>
+                    ) : listings.length === 0 ? (
+                        <div>No listings found</div>
+                    ) : (
+                        // Render each listing
+                        listings.map((listing, index) => (
+                            <div key={index} className={styles.productCard}>
+                                <Image
+                                    src={placeholderImage}
+                                    alt={listing.title || "Listing"}
+                                    width={200}
+                                    height={150}
+                                    className={styles.productImage}
+                                />
+                                <div className={styles.productDetails}>
+                                    <h3 className={styles.productName}>{listing.title || "Product Name"}</h3>
+                                    <p className={styles.productLocation}>
+                                        {listing.description || "Product Description"}
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    )}
 
                     {/* Add New Listing Button */}
                     <div className={styles.addListingBox}>
@@ -394,5 +447,4 @@ export default function EditAccount() {
 </div>
 
     );
-    
 }
