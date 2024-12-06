@@ -2,14 +2,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1;
-  flex-direction: column;
 }
 
 .formContainer {
   display: flex;
   flex-direction: column;
-  background-color: #e8e8e8;
+  background-color: #E8E8E8;
   padding: 35px;
   border-radius: 30px;
   border: 1px solid #000000;
@@ -22,11 +20,9 @@
 .formHeader {
   text-align: center;
   font-size: 28px;
-  margin-top: 0;
-  margin-bottom: 20px;
-  color: #333;
   text-decoration: underline;
   font-family: 'Orbitron', sans-serif;
+  margin-top: 0;
 }
 
 .formGroup {
@@ -39,7 +35,7 @@
   display: block;
   margin-bottom: 8px;
   padding-left: 3px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: bold;
 }
 
@@ -50,16 +46,38 @@
   position: relative;
   background-color: white;
   border-radius: 10px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
+
+  span {
+    background-color: white;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 0 10px 10px 0;
+    color: #333;
+    white-space: nowrap;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    padding-right: 10px;
+  }
 
   input {
     flex: 1;
     padding: 10px;
     font-size: 14px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     box-sizing: border-box;
     border: none;
-    height: 40px;
+  }
 
+  &::placeholder{
+    font-family: "Open Sans", sans-serif;
+  }
+}
+
+.registerBtnContainer {
+  display: flex;
+  justify-content: center;
     &:only-child {
       border-radius: 10px;
     }
@@ -69,22 +87,6 @@
       border-bottom-left-radius: 10px;
     }
   }
-
-  input::placeholder {
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  span {
-    background-color: white;
-    padding: 10px 10px;
-    font-size: 14px;
-    border-radius: 0 10px 10px 0;
-    color: #333;
-    white-space: nowrap;
-    font-family: Arial, sans-serif;
-    font-weight: bold;
-  }
-}
 
 .divider {
   width: 1px;
@@ -101,11 +103,6 @@
   border: none;
 }
 
-.registerBtnContainer {
-  display: flex;
-  justify-content: center;
-}
-
 .registerBtn {
   width: 75%;
   padding: 12px;
@@ -118,139 +115,74 @@
   cursor: pointer;
   margin-top: 25px;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
-}
+  font-family: "Open Sans", sans-serif;
 
-.registerBtn:hover {
-  background-color: #e0a800;
-}
-
-.registerBtn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+  &:hover {
+    background-color: #e0a800;
+  }
 }
 
 .loginText {
   text-align: center;
-  font-size: 14px;
   margin-top: 35px;
-  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
   color: rgb(137, 137, 137);
   font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+
+  span {
+    display: block;
+    margin: 15px 0;
+  }
 }
 
-.loginText a {
+.loginLink {
   color: rgb(106, 106, 106);
   text-decoration: underline;
   font-size: 16px;
   font-weight: bold;
+  font-family: "Open Sans", sans-serif;
 }
 
-.loginText span {
-  display: block;
-  margin: 15px 0;
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #aeaeae;
 }
 
 .passwordInputGroup {
   display: flex;
   align-items: center;
   position: relative;
+
+  .inputBox {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: none;
+    padding-right: 40px;
+  }
+
+  .eyeIcon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+    user-select: none;
+  }
 }
 
-.passwordInputGroup .inputBox {
-  flex: 1;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 10px;
-  box-sizing: border-box;
-  border: none;
-  padding-right: 40px;
-  height: 40px;
-}
-
-.passwordInputGroup .eyeIcon {
-  position: absolute;
-  right: 10px;
-  cursor: pointer;
-  font-size: 20px;
-  color: #333;
-  user-select: none;
-}
-
-.passwordInputGroup .matchIcon {
-  position: absolute;
-  right: 40px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px;
-}
-
-.errorMessage {
-  color: red;
-  margin-top: 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.fieldError {
-  color: #ff4d4d;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.invalidInput {
-  border: 1px solid #ff4d4d !important;
-}
-
-.passwordStrength {
-  margin-top: 10px;
-}
-
-.passwordStrength .strengthBar {
-  width: 100%;
-  height: 8px;
-  background-color: #e0e0e0;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 5px;
-}
-
-.passwordStrength .strengthIndicator {
-  height: 100%;
-  transition: width 0.3s ease-in-out;
-}
-
-.passwordStrength .strengthLabel {
-  font-size: 14px;
-  color: #333;
-  margin: 0;
-}
-
-.passwordStrength .passwordFeedback {
-  font-size: 12px;
-  color: #ff4d4d;
-  margin-top: 5px;
-}
-
-.passwordMismatch {
-  color: #ff4d4d;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-.mismatch {
-  border: 1px solid #ff4d4d;
-}
-
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 400px) {
   .formContainer {
-    padding: 20px;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    padding: 20px 20px 60px 20px;
+    margin: 50px 30px 50px 30px;
   }
 
   .formHeader {
-    font-size: 24px;
     margin-bottom: 35px;
   }
 
@@ -261,48 +193,40 @@
   .inputGroup {
     flex-direction: column;
     align-items: stretch;
+
+    input {
+      border-radius: 10px;
+
+      &:focus{
+        outline: none;
+      }
+    }
+
+    span {
+      border-radius: 0 0 10px 10px;
+      width: 80%;
+      text-align: left;
+      padding-left: 10px;
+      margin-top: -5px;
+      display: block;
+    }
   }
 
-  .inputGroup input {
-    border-radius: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-
-  .inputGroup input:focus {
-    outline: none;
-  }
-
-  .inputGroup .divider {
-    display: none;
-  }
-
-  .inputGroup span {
-    border-radius: 0 0 10px 10px;
-    width: 100%;
-    text-align: left;
-    padding-left: 10px;
-    margin-top: 5px;
-    display: block;
-  }
-
-  .registerBtn {
+  .loginBtn {
     width: 100%;
   }
 
   .loginText {
     font-size: 12px;
+
+    .registerLink {
+      font-size: 16px;
+    }
   }
 
-  .loginText a {
-    font-size: 16px;
-  }
-
-  .passwordInputGroup .inputBox {
-    padding-right: 40px;
-  }
-
-  .passwordInputGroup .matchIcon {
-    right: 10px;
+  .passwordInputGroup {
+    .inputBox {
+      padding-right: 40px;
+    }
   }
 }
