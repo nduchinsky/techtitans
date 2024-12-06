@@ -55,7 +55,7 @@ const LoggedInHeader = () => {
                     <span>
                         <Image src={logo} alt="RD Logo" width={60} height={60} />
                     </span>
-                    <span className={styles.headerText} onClick={handleHomeClick}>Roarin' Deals</span>
+                    <span className={styles.headerText} onClick={handleHomeClick}>Roarin&apos; Deals</span>
                 </div>
             )}
             <LoggedInHeaderButtons />

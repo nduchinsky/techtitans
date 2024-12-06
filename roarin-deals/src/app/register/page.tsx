@@ -10,11 +10,10 @@ import { FaEye, FaEyeSlash, FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
 import zxcvbn from 'zxcvbn';
 import checkIfUserIsMobile from '../../../_utils/checkIfUserIsMobile';
 
-// Import the profanity filter
+// profanity filter
 import { Filter } from 'bad-words';
 
 const Register: React.FC = () => {
-  // Initialize the profanity filter
   const filter = new Filter();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +25,6 @@ const Register: React.FC = () => {
   const [firstNameTouched, setFirstNameTouched] = useState(false);
   const [lastName, setLastName] = useState('');
   const [lastNameTouched, setLastNameTouched] = useState(false);
-  const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [passwordScore, setPasswordScore] = useState(0);
@@ -38,7 +36,6 @@ const Register: React.FC = () => {
 
   const isUserMobile = checkIfUserIsMobile(400);
 
-  // Error states
   const [emailError, setEmailError] = useState('');
   const [firstNameError, setFirstNameError] = useState('');
   const [lastNameError, setLastNameError] = useState('');
@@ -90,7 +87,8 @@ const Register: React.FC = () => {
 
   // Password validation function
   const validatePassword = (value: string) => {
-    if (passwordScore < 3) {
+    const result = zxcvbn(value);
+    if (result.score < 3) {
       return 'Password is not strong enough.';
     }
     return '';

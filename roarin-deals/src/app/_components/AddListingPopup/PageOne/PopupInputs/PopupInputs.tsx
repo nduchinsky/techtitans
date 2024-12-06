@@ -6,7 +6,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import AddressInputs from '../../PageTwo/AddressInputs';
 import checkIfUserIsMobile from '../../../../../../_utils/checkIfUserIsMobile';
 import AddImageContainer from '../AddImageContainer/AddImageContainer';
-import axios from 'axios';  // Add axios for making HTTP requests
+import axios from 'axios';
 
 interface PopupInputsProps {
   onClick: () => void;
@@ -58,13 +58,6 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
   const [showPageOne, setShowPageOne] = useState(true);
   const [showAddImageContainer, setShowAddImageContainer] = useState(false);
 
-  // Address input state
-  const [street1, setStreet1] = useState('');
-  const [street2, setStreet2] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
-
   const isUserMobile = checkIfUserIsMobile(400);
 
   const handleTagClick = (tag: string) => {
@@ -91,11 +84,9 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
       description: description,
       price: price,
       condition: condition,
-      tags: activeTags, // Send tags as an array
-      ...addressData // Include address data
+      tags: activeTags,
+      ...addressData 
     };
-
-    console.log('Form data being sent:', formData); // Log the form data
 
     try {
       const token = localStorage.getItem('token');
@@ -104,10 +95,9 @@ const PopupInputs: React.FC<PopupInputsProps> = ({ onClick }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("Listing created successfully", response.data);
       onClick();
     } catch (error) {
-      console.error("Error creating listing:", error);
+      // Error UI to be added here (Day two)
     }
   };
 
