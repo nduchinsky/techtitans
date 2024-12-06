@@ -5,7 +5,6 @@ import styles from './OnboardingHeader.module.scss';
 import { OnboardingHeaderButtons } from '../../Buttons/OnboardingHeaderButtons/OnboardingHeaderButtons';
 import logo from '../../../../../public/images/RD_logo.svg';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import checkIfUserIsMobile from '../../../../../_utils/checkIfUserIsMobile';
 
 const OnboardingHeader = () => {
@@ -24,7 +23,7 @@ const OnboardingHeader = () => {
                 <span>
                     <Image src={logo} alt="RD Logo" className={styles.headerImage} />
                 </span>
-                <span className={styles.headerText} onClick={handleHomeClick}>Roarin' Deals</span>
+                <span className={styles.headerText} onClick={handleHomeClick}>Roarin&apos; Deals</span>
             </div>
 
             {!isUserMobile && (

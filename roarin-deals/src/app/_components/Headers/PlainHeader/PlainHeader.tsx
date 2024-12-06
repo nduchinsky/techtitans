@@ -12,7 +12,7 @@ const PlainHeader = () => {
 
     return(
         <div className={styles.headerContainer}>
-            <span className={styles.headerText} onClick={handleHomeClick}>Roarin' Deals</span>
+            <span className={styles.headerText} onClick={handleHomeClick}>Roarin&apos; Deals</span>
         </div>
     );
 }

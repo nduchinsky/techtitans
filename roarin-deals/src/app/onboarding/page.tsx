@@ -54,7 +54,7 @@ const Onboarding = () => {
 
         {/* Main text */}
         <div className={styles.textSection}>
-          <h1 className={styles.oswaldHeading}>Welcome to Roarin' Deals!</h1>
+          <h1 className={styles.oswaldHeading}>Welcome to Roarin&apos; Deals!</h1>
           <p className={styles.openSansText}>
             To get started, register with the email provided by your university. List items and connect with fellow students to buy and sell effortlessly!
           </p>

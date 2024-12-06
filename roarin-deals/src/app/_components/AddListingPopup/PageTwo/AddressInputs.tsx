@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios'; // Ensure axios is imported
 import styles from './AddressInputs.module.scss';
 import { FaAngleDown } from 'react-icons/fa6';
 
@@ -19,31 +18,27 @@ const AddressInputs: React.FC<AddressInputProps> = ({ onSubmit }) => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zip, setZip] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false); // Add loading state for submit button
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handlePageTwoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const addressData = {
       address1: street1,
-      address2: street2 || null, // Ensure address2 can be null
+      address2: street2 || null,
       city: city,
       state: state,
       zip: zip,
     };
 
-    console.log('Address data being sent:', addressData); // Log the address data
-
-    setIsSubmitting(true); // Start loading
+    setIsSubmitting(true); 
 
     try {
-      // Pass the address data to the parent component
       onSubmit(addressData);
     } catch (error) {
-      console.error('Error creating listing:', error);
-      // Handle error (e.g., show a message to the user)
+      // Error UI to be added here eventually (Day two)
     } finally {
-      setIsSubmitting(false); // Stop loading
+      setIsSubmitting(false);
     }
   };
 
