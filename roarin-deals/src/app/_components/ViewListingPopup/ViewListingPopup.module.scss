@@ -30,6 +30,46 @@
 }
 
 .closeButton{
-  margin-left: -5%;
   margin-bottom: 500px;
+}
+
+.contactSellerButton{
+  height: 30px;
+  padding: 10px 20px 30px 20px;
+  font-size: 14px;
+  border-radius: 50px;
+  margin-top: 20px;
+  background-color: #F1B82D;
+  border: none;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+}
+
+.buttonsContainer{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+// Mobile size
+@media screen and (max-width: 400px) {
+  .content{
+    gap: 0px;
+    flex-direction: column-reverse;
+    margin-left: 0;
+    padding: 30px;
+  }
+
+  .closeButton{
+    margin-bottom: 0px;
+  }
+
+  .content{
+    max-height: 100%;
+  }
+
+  .buttonsContainer{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }

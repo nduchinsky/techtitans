@@ -7,7 +7,7 @@
 .pageContainer{
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 48%;
     justify-content: center !important;
     text-align: center;
 }
@@ -16,6 +16,10 @@
     background-color: #F1B82D;
     border: none;
     font-family: "Open Sans", sans-serif;
+    width: 100%;
+}
+
+.buttonContainer{
     margin-left: auto;
     margin-right: auto;
 }
@@ -28,10 +32,15 @@
     }
 
     .contactSellerButton{
-        width: 50%;
         height: 45px;
+        padding: 15px 25px 40px 25px;
         font-size: 18px;
         border-radius: 50px;
         margin-top: 20px;
+
+    }
+
+    .pageContainer{
+        margin-top: 30px;
     }
 }

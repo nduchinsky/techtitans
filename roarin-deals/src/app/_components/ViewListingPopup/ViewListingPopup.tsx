@@ -29,6 +29,14 @@ const ViewListingPopup = ({ listing, onClose }: ViewListingPopupProps) => {
       <div className={styles.backdrop} onClick={onClose} />
       <div className={styles.container}>
         <div className={styles.content}>
+
+          {isUserMobile && (
+            <div className={styles.buttonsContainer}>
+              <button className={styles.contactSellerButton}>Contact Seller</button>
+              <button className={styles.contactSellerButton}>See Images</button>
+            </div>
+          )}
+
           <PostInformation
             title={listing.title}
             price={listing.price}
@@ -37,7 +45,9 @@ const ViewListingPopup = ({ listing, onClose }: ViewListingPopupProps) => {
             condition={listing.condition}
             tags={listing.tags}
           />
-          <PostImages />
+          {!isUserMobile && (
+            <PostImages />
+          )}
           <div className={styles.closeButton}>
             <CloseButton onClick={onClose} />
           </div>

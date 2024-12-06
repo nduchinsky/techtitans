@@ -4,7 +4,9 @@ const PostImages = () => {
     return(
         <div className={styles.pageContainer}>
             <div className={styles.imageContainer}></div>
-            <button className={styles.contactSellerButton}>Contact Seller</button>
+            <div className={styles.buttonContainer}>
+                <button className={styles.contactSellerButton}>Contact Seller</button>
+            </div>
         </div>
     )
 }
