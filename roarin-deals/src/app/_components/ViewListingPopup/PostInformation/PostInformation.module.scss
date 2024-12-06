@@ -58,7 +58,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
     grid-template-rows: repeat(auto-fill, 1fr);
-    gap: 10px;
     justify-content: center;
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
     max-width: 400px;
@@ -96,6 +95,10 @@
 
     .postPrice{
         font-size: 20px;
+    }
+
+    .tagsContainer{
+        gap: 5px;
     }
 }
 
@@ -142,6 +145,7 @@
         max-width: 315px;
         grid-template-columns: repeat(auto-fit, minmax(50px, 100px));
         row-gap: 0px;
+        column-gap: 5px;
         padding: 5px 10px 5px 10px;
         margin-left: auto;
         margin-right: auto;

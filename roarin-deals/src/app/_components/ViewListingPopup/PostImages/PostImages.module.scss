@@ -44,3 +44,16 @@
         margin-top: 30px;
     }
 }
+
+@media screen and (max-width: 400px){
+    .pageContainer{
+        width: 100%;
+    }
+
+    .imageContainer{
+        height: 300px;
+        width: 280px;
+        margin-top: 150px;
+        margin-left: 8%;
+    }
+}

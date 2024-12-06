@@ -51,6 +51,12 @@
   gap: 10px;
 }
 
+.backButton{
+  @extend .contactSellerButton;
+
+  margin-left: 30%;
+}
+
 // Mobile size
 @media screen and (max-width: 400px) {
   .content{
@@ -58,6 +64,7 @@
     flex-direction: column-reverse;
     margin-left: 0;
     padding: 30px;
+    margin-top: -10px;
   }
 
   .closeButton{
