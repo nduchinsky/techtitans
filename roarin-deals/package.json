@@ -2,15 +2,15 @@
   "name": "roarin-deals",
   "version": "0.1.0",
   "private": true,
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "lint": "next lint",
-  "test": "echo \"No tests specified\" && exit 0"
-},
-
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
   "dependencies": {
+    "aws-amplify": "^6.10.2",
     "axios": "^1.7.9",
     "bad-words": "^4.0.0",
     "bcrypt": "^5.1.1",
@@ -36,12 +36,20 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "@aws-amplify/backend": "^1.8.0",
+    "@aws-amplify/backend-cli": "^1.4.2",
+    "@types/json-schema": "^7.0.15",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/zxcvbn": "^4.4.5",
+    "aws-cdk": "^2.171.1",
+    "aws-cdk-lib": "^2.171.1",
+    "constructs": "^10.4.2",
+    "esbuild": "^0.24.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.13",
-    "typescript": "^5"
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
   }
 }

@@ -8,5 +8,8 @@
     "dev": "node server.js",
     "build": "echo 'No build step defined'",
     "start": "node server.js"
+  },
+  "devDependencies": {
+    "@types/json-schema": "^7.0.15"
   }
 }
