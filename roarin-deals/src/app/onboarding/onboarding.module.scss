@@ -1,15 +1,12 @@
-/* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
-/* Page container setup */
 .pageContainer {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure the container takes the full viewport height */
+  min-height: 100vh;
 }
 
-/* Main content setup */
 .mainContent {
   display: flex;
   justify-content: space-between;
@@ -19,32 +16,29 @@
   padding: 10px 64px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  flex-grow: 1; /* Allow the main content to grow */
-  overflow-y: auto; /* Enable scrolling within the main content */
-  max-width: 1200px; /* Prevent stretching on large screens */
+  flex-grow: 1;
+  overflow-y: auto;
+  max-width: 1200px;
 }
 
-/* Placeholder */
 .imageContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-
+  padding: 0%;
 }
 
 .image {
   width: 400px;
   height: 400px;
-  background-color: #d3d3d3; /* Gray background */
   border-radius: 15px;
-  object-fit: contain; /* Make sure the image fits well */
+  object-fit: contain;
 
   @media screen and (max-width: 400px) {
     margin-top: 0px;
   }
 }
 
-/* Main text */
 .textSection {
   flex: 1;
   margin-left: 2rem;
@@ -58,7 +52,6 @@
 
 }
 
-/* Heading styled with Oswald font */
 .oswaldHeading {
   font-family: "Oswald", sans-serif;
   font-size: 2.5rem;
@@ -67,11 +60,10 @@
   margin-bottom: 1rem;
 }
 
-/* Paragraph styled with Open Sans font */
 .openSansText {
   font-family: "Open Sans", sans-serif;
   font-size: 1.2rem;
-  font-weight: 400; /* Choose weight between 300-800 */
+  font-weight: 400;
   color: #333;
   line-height: 1.6;
 }
@@ -101,7 +93,6 @@
   background-color: #FFE9B2;
 }
 
-/* Media queries for responsive design */
 @media screen and (min-width: 401px) and (max-width: 768px) {
   .mainContent {
     flex-direction: column;

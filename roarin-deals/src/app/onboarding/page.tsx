@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image';
-import placeholderImage from './placeholder.png';
+import harry_s from './harry_s.png';
 import styles from './onboarding.module.scss';
 import Header from '../_components/Headers/OnboardingHeader/OnboardingHeader';
 import LoggedInHeader from '../_components/Headers/LoggedInHeader/LoggedInHeader';
@@ -10,7 +10,7 @@ import checkIfUserIsMobile from '../../../_utils/checkIfUserIsMobile';
 import { useRouter } from 'next/navigation';
 
 const Onboarding = () => {
-  const {isUserLoggedIn} = useAuth();
+  const {isAuthenticated} = useAuth();
   const isUserMobile = checkIfUserIsMobile(400);
   const router = useRouter();
 
@@ -33,7 +33,7 @@ const Onboarding = () => {
   return (
     <div className={styles.pageContainer}>
 
-      {isUserLoggedIn ? (
+      {isAuthenticated ? (
         <LoggedInHeader />
       ) : (
         <Header />
@@ -44,7 +44,7 @@ const Onboarding = () => {
         {/* Placeholder */}
         <div className={styles.imageContainer}>
           <Image
-            src={placeholderImage}
+            src={harry_s}
             alt="Placeholder"
             width={300}
             height={300}
@@ -62,7 +62,7 @@ const Onboarding = () => {
 
         {isUserMobile && (
           <>
-            {isUserLoggedIn ? (
+            {isAuthenticated ? (
               <div className={styles.userButtonContainer}>
                 <button className={styles.loginButton} onClick={handleListingsClick}>Listings</button>
                 <button className={styles.registerButton} onClick={handleProfileClick}>Profile</button>
