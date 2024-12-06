@@ -10,7 +10,7 @@ import checkIfUserIsMobile from '../../../_utils/checkIfUserIsMobile';
 import { useRouter } from 'next/navigation';
 
 const Onboarding = () => {
-  const {isUserLoggedIn} = useAuth();
+  const {isAuthenticated} = useAuth();
   const isUserMobile = checkIfUserIsMobile(400);
   const router = useRouter();
 
@@ -33,7 +33,7 @@ const Onboarding = () => {
   return (
     <div className={styles.pageContainer}>
 
-      {isUserLoggedIn ? (
+      {isAuthenticated ? (
         <LoggedInHeader />
       ) : (
         <Header />
@@ -62,7 +62,7 @@ const Onboarding = () => {
 
         {isUserMobile && (
           <>
-            {isUserLoggedIn ? (
+            {isAuthenticated ? (
               <div className={styles.userButtonContainer}>
                 <button className={styles.loginButton} onClick={handleListingsClick}>Listings</button>
                 <button className={styles.registerButton} onClick={handleProfileClick}>Profile</button>
