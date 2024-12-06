@@ -52,7 +52,6 @@ export default function EditAccount() {
     ]);
     
     useEffect(() => {
-        console.log("User data:", user);
     }, [user]);
 
     useEffect(() => {
@@ -60,14 +59,12 @@ export default function EditAccount() {
             if (token) {
                 const isValid = await validateToken(token);
                 if (!isValid) {
-                    console.warn("Token validation failed. Logging out...");
                     logout();
-                    router.push("/login");
+                    router.push("/");
                 }
             } else {
-                console.warn("No token found. Logging out...");
                 logout();
-                router.push("/login");
+                router.push("/");
             }
         };
         checkAuth();
@@ -81,7 +78,6 @@ export default function EditAccount() {
                     await fetchUserDetails(token);
                     setIsUserFetched(true);
                 } catch (err) {
-                    console.error("Failed to fetch user details:", err);
                     logout();
                 } finally {
                     setLoading(false);
@@ -119,7 +115,6 @@ export default function EditAccount() {
     };
 
     const handleModalSubmit = async () => {
-        console.log('Form submitted');
         const payload: Record<string, string | undefined> = {};
         setError("");
     
@@ -178,7 +173,6 @@ export default function EditAccount() {
             closeModal();
             await fetchUserDetails(token || "");
         } catch (err) {
-            console.error("Error submitting data:", err);
             setError("An error occurred. Please try again.");
         }
     };
@@ -228,7 +222,6 @@ export default function EditAccount() {
     };
 
     if (!isAuthenticated || !user) {
-        console.log("User is not authenticated. Hiding header.");
         return null;
     }
 

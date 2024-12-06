@@ -37,7 +37,6 @@ const Login: React.FC = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const redirectTo = params.get("redirectTo");
-    console.log("Redirect target after login:", redirectTo || "/listings");
   }, []);
 
   // Validation functions
@@ -116,10 +115,8 @@ const Login: React.FC = () => {
         body: JSON.stringify({ email: emailWithoutDomain, password }),
       });
 
-      console.log("Response status:", response.status);
 
       const contentType = response.headers.get("content-type");
-      console.log("Content-Type:", contentType);
 
       if (response.ok && contentType && contentType.includes("application/json")) {
         const data = await response.json();
@@ -136,7 +133,6 @@ const Login: React.FC = () => {
         setError(errorData.error);
       }
     } catch (error) {
-      console.error("There was an error logging you in. Please try again." + error);
       setError("An unexpected error occurred");
     }
   };

@@ -11,13 +11,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 const authenticate = async (req, res, next) => {
     const authHeader = req.headers['authorization'];
     if (!authHeader) {
-        console.log('Authentication failed: No Authorization header');
         return res.status(401).json({ error: 'Unauthorized: Authorization header is missing' });
     }
 
     const token = authHeader.split(' ')[1];
     if (!token) {
-        console.log('Authentication failed: No token provided');
         return res.status(401).json({ error: 'Unauthorized: Token is missing' });
     }
 
@@ -25,14 +23,12 @@ const authenticate = async (req, res, next) => {
         const decoded = jwt.verify(token, JWT_SECRET);
         const user = await db.oneOrNone('SELECT id FROM USERS_TABLE WHERE id = $1', [decoded.id]);
         if (!user) {
-            console.log('Authentication failed: User not found');
             return res.status(401).json({ error: 'Unauthorized: Invalid token' });
         }
 
         req.userId = decoded.id;
         next();
     } catch (err) {
-        console.log('Authentication error:', err.message);
         return res.status(401).json({ error: 'Unauthorized: Invalid or expired token' });
     }
 };
@@ -40,23 +36,19 @@ const authenticate = async (req, res, next) => {
 // Route to fetch user details
 router.get('/', authenticate, async (req, res) => {
     try {
-        console.log("Fetching details for user ID:", req.userId); // Log user ID
         const user = await db.oneOrNone('SELECT first_name, last_name, email, phone FROM USERS_TABLE WHERE id = $1', [req.userId]);
         if (!user) {
-            console.log(`User with ID ${req.userId} not found.`);
             return res.status(404).json({ error: 'User not found' });
         }
 
         res.status(200).json(user);
     } catch (err) {
-        console.error('Database error fetching user:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
 
 // Route to verify the token
 router.get('/verify-token', authenticate, (req, res) => {
-    console.log('GET /api/settings/verify-token - Token verified for user ID:', req.userId);
     res.status(200).json({ message: 'Token is valid' });
 });
 
@@ -66,7 +58,6 @@ router.get('/health', async (req, res) => {
         await db.one('SELECT 1'); // Test database connection
         res.status(200).json({ message: 'Server is healthy and database connected' });
     } catch (err) {
-        console.error('Health check failed:', err);
         res.status(500).json({ error: 'Server or database is unavailable' });
     }
 });
@@ -94,7 +85,6 @@ router.put('/', authenticate, async (req, res) => {
     }
 
     try {
-        console.log("Updating details for user ID:", req.userId); // Log user ID
         const user = await db.oneOrNone('SELECT * FROM USERS_TABLE WHERE id = $1', [req.userId]);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -146,7 +136,6 @@ router.put('/', authenticate, async (req, res) => {
 
         res.status(200).json({ message: 'User details updated successfully' });
     } catch (err) {
-        console.error('Error updating user data:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -154,7 +143,6 @@ router.put('/', authenticate, async (req, res) => {
 
 // Fallback route for unhandled requests (404)
 router.use((req, res) => {
-    console.log(`Unhandled route: ${req.method} ${req.originalUrl}`);
     res.status(404).json({ error: 'Route not found' });
 });
 

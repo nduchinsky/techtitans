@@ -22,7 +22,6 @@ export const LoggedInHeaderButtons = () => {
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          console.error("No authentication token found.");
           return;
         }
 
@@ -33,15 +32,12 @@ export const LoggedInHeaderButtons = () => {
         });
 
         if (!response.ok) {
-          console.error("Failed to fetch profile data.");
           return;
         }
 
         const data = await response.json();
-        console.log("from logged in header:", data);
-        setProfileImageUrl(data.profile_image_url || null); // Ensure default fallback
+        setProfileImageUrl(data.profile_image_url || null); // default fallback
       } catch (error) {
-        console.error("Error fetching profile data:", error);
       }
     };
 

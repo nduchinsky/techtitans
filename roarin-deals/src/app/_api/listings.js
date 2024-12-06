@@ -29,8 +29,6 @@ const authenticate = async (req, res, next) => {
 
 // Route to create a new listing
 router.post('/', authenticate, async (req, res) => {
-    console.log('POST /api/listings route hit'); // Debug log to confirm route is hit
-    console.log('Request body:', req.body); // Log the request body
 
     const { 
         title, 
@@ -46,7 +44,6 @@ router.post('/', authenticate, async (req, res) => {
     } = req.body;
 
     if (!title || !description || price == null || !condition || !tags || !address1 || !city || !state || !zip) {
-        console.log('Validation failed:', { title, description, price, condition, tags, address1, city, state, zip });
         return res.status(400).json({ error: 'All required fields must be provided' });
     }
 
@@ -72,7 +69,6 @@ router.post('/', authenticate, async (req, res) => {
             success: true 
         });
     } catch (err) {
-        console.error('Error creating listing:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -128,7 +124,6 @@ router.put('/:id', authenticate, async (req, res) => {
 
         res.status(200).json({ message: 'Listing updated successfully' });
     } catch (err) {
-        console.error('Error updating listing:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -147,7 +142,6 @@ router.delete('/:id', authenticate, async (req, res) => {
 
         res.status(200).json({ message: 'Listing deleted successfully' });
     } catch (err) {
-        console.error('Error deleting listing:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
@@ -165,10 +159,8 @@ router.get('/', async (req, res) => {
         `;
         
         const listings = await db.any(query);
-        console.log('First listing tags:', listings[0]?.tags); // Debug log
         res.json(listings);
     } catch (error) {
-        console.error('Database error:', error);
         res.status(500).json({ 
             error: 'Error fetching listings',
             message: error.message

@@ -222,13 +222,11 @@ const Register: React.FC = () => {
         lastName,
         password,
       });
-      console.log('Registration successful');
       window.location.href = '/login';
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         setErrorMessage('An error occurred. Please try again.');
       } else {
-        console.error('Unknown error:', error);
         setErrorMessage('An unexpected error occurred. Please try again.');
       }
     }

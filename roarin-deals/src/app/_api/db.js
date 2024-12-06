@@ -24,11 +24,9 @@ const createUsersTable = async () => {
         )
     `;
     try {
-        // Use db.none() for queries that don't return data (like CREATE TABLE)
         await db.none(query);
-        console.log("Users table created successfully");
     } catch (err) {
-        console.error("Error creating Users table:", err);
+        //Error handling
     }
 };
 

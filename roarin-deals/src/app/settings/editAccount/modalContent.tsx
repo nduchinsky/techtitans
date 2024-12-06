@@ -195,7 +195,6 @@ const ModalContent: React.FC<ModalContentProps> = ({
             alert(result.error || "Failed to update profile.");
         }
     } catch (error) {
-        console.error("Error submitting form:", error);
         alert("An error occurred.");
     }
   };
@@ -452,7 +451,6 @@ const ModalContent: React.FC<ModalContentProps> = ({
           type="submit"
           className={styles.submitButton}
           onClick={() => {
-            console.log('Button clicked');
             handleSubmit();
           }}
         >

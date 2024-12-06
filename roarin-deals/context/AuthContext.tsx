@@ -49,7 +49,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                         logout();
                     }
                 } catch (error) {
-                    console.error("Error during auth initialization:", error);
                     logout();
                 }
             }
@@ -64,7 +63,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         localStorage.setItem("token", newToken);
         setIsAuthenticated(true);
         fetchUserDetails(newToken).catch((error) => {
-            console.error("Error fetching user details after login:", error);
             logout();
         });
     };
@@ -83,7 +81,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
             return response.status === 200;
         } catch (error) {
-            console.error("Token validation failed:", error);
             return false;
         }
     };
@@ -99,7 +96,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
             setUser(response.data);
         } catch (error) {
-            console.error("Error fetching user details:", error);
             throw new Error("Failed to fetch user details");
         }
     };

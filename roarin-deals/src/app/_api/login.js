@@ -14,24 +14,18 @@ router.post('/', async (req, res) => {
 
   const userCheckQuery = 'SELECT * FROM USERS_TABLE WHERE email = $1';
   try {
-    console.log('Checking for user with email:', fullEmail);
     const userCheckResult = await db.oneOrNone(userCheckQuery, [fullEmail]);
     if (!userCheckResult) {
-      console.log('User not found:', fullEmail);
       return res.status(400).json({ error: 'Invalid email or password' });
     }
 
-    console.log('User found, checking password...');
     const isMatch = await bcrypt.compare(password, userCheckResult.password);
     if (!isMatch) {
-      console.log('Password mismatch for user:', fullEmail);
       return res.status(400).json({ error: 'Invalid email or password' });
     }
 
-    console.log('Password match, generating token...');
     const token = jwt.sign({ id: userCheckResult.id }, JWT_SECRET, { expiresIn: '7d' });
 
-    console.log('Login successful, returning token.');
     res.status(200).json({
       message: 'Login successful',
       token,
@@ -43,7 +37,6 @@ router.post('/', async (req, res) => {
       },
     });
   } catch (err) {
-    console.error('Error during login:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

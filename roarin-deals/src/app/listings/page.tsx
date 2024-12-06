@@ -22,7 +22,6 @@ export default function Listings() {
         const response = await axios.get('http://localhost:3000/api/listings');
         setListings(response.data);
       } catch (error) {
-        console.error('Error fetching listings:', error);
       }
     };
 
@@ -36,11 +35,9 @@ export default function Listings() {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
           }).join(''));
           const decoded = JSON.parse(jsonPayload);
-          console.log('Decoded user ID:', decoded.id);
           setUserId(decoded.id);
         }
       } catch (error) {
-        console.error('Error decoding token:', error);
       }
     };
 

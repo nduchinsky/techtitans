@@ -23,12 +23,10 @@ const LoggedInHeader = () => {
             if (token) {
                 const isValid = await validateToken(token);
                 if (!isValid) {
-                    console.warn("Token validation failed. Logging out...");
                     logout();
                     router.push("/");
                 }
             } else {
-                console.warn("No token found. Logging out...");
                 logout();
                 router.push("/");
             }
@@ -38,13 +36,10 @@ const LoggedInHeader = () => {
     }, [token, validateToken, logout, router]);
 
     useEffect(() => {
-        console.log("LoggedInHeader - isAuthenticated:", isAuthenticated);
-        console.log("LoggedInHeader - user:", user);
     }, [isAuthenticated, user]);
 
     // Show the header only if the user is authenticated
     if (!isAuthenticated) {
-        console.log("User is not authenticated. Hiding header.");
         return null;
     }
 
