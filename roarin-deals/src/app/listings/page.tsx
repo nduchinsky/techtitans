@@ -7,19 +7,19 @@ import LoggedInHeader from "../_components/Headers/LoggedInHeader/LoggedInHeader
 import { BsSearch } from "react-icons/bs";
 import ViewListingPopup from '../_components/ViewListingPopup/ViewListingPopup';
 import axios from 'axios';
+import { AnimatePresence } from "framer-motion";
 
 export default function Listings() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedListing, setSelectedListing] = useState<any | null>(null);  // State to manage the selected listing
-  const [listings, setListings] = useState<any[]>([]); // State to store listings
-  const [userId, setUserId] = useState<number | null>(null); // State to store the current user's ID
+  const [selectedListing, setSelectedListing] = useState<any | null>(null); 
+  const [listings, setListings] = useState<any[]>([]);
+  const [userId, setUserId] = useState<number | null>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchListings = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/listings');
-        console.log('Fetched listings:', response.data); // Debug log for fetched listings
         setListings(response.data);
       } catch (error) {
         console.error('Error fetching listings:', error);
@@ -36,7 +36,7 @@ export default function Listings() {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
           }).join(''));
           const decoded = JSON.parse(jsonPayload);
-          console.log('Decoded user ID:', decoded.id); // Debug log for decoded user ID
+          console.log('Decoded user ID:', decoded.id);
           setUserId(decoded.id);
         }
       } catch (error) {
@@ -53,23 +53,16 @@ export default function Listings() {
   };
 
   const handleClickListing = (listing: any) => {
-    setSelectedListing(listing);  // Set the selected listing to show the popup
+    setSelectedListing(listing);
   };
 
   const handleTagClick = (tag: string) => {
     setSelectedTag(tag === selectedTag ? null : tag);
   };
 
-  useEffect(() => {
-    console.log('User ID:', userId); // Debug log for user ID
-    console.log('Listings:', listings); // Debug log for listings
-  }, [userId, listings]);
-
   const filteredListings = listings.filter(listing => {
-    // Split search term into individual words and remove empty strings
     const searchWords = searchTerm.toLowerCase().split(' ').filter(word => word.length > 0);
     
-    // Check if all search words are included in the title
     const matchesSearchTerm = searchWords.length === 0 || searchWords.every(word => 
         listing.title?.toLowerCase().includes(word)
     );
@@ -79,8 +72,6 @@ export default function Listings() {
     
     return matchesSearchTerm && isNotCreatedByCurrentUser && matchesTag;
   });
-
-  console.log('Filtered listings:', filteredListings); // Debug log for filtered listings
 
   return (
     <div className={styles.listingsPage}>
@@ -134,12 +125,15 @@ export default function Listings() {
           <AddButton />
         </div>
       </div>
-      {selectedListing && (
-        <ViewListingPopup
-          listing={selectedListing}
-          onClose={() => setSelectedListing(null)}  // Close the popup when the close button is clicked
-        />
-      )}
+      <AnimatePresence>
+        {selectedListing && (
+            <ViewListingPopup
+                key={selectedListing.id} 
+                listing={selectedListing}
+                onClose={() => setSelectedListing(null)}
+            />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
