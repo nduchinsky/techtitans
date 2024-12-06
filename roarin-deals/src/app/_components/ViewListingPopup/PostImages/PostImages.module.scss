@@ -7,12 +7,53 @@
 .pageContainer{
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 48%;
+    justify-content: center !important;
+    text-align: center;
 }
 
-@media screen and (min-width: 1000px) and (max-width: 1699px) {
+.contactSellerButton{
+    background-color: #F1B82D;
+    border: none;
+    font-family: "Open Sans", sans-serif;
+    width: 100%;
+}
+
+.buttonContainer{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1799px) {
     .imageContainer{
         height: 500px;
         width: 600px;
+        margin-top: 30px;
+    }
+
+    .contactSellerButton{
+        height: 45px;
+        padding: 15px 25px 40px 25px;
+        font-size: 18px;
+        border-radius: 50px;
+        margin-top: 20px;
+
+    }
+
+    .pageContainer{
+        margin-top: 30px;
+    }
+}
+
+@media screen and (max-width: 400px){
+    .pageContainer{
+        width: 100%;
+    }
+
+    .imageContainer{
+        height: 300px;
+        width: 280px;
+        margin-top: 150px;
+        margin-left: 8%;
     }
 }

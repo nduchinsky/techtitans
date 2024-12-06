@@ -183,7 +183,7 @@ const ModalContent: React.FC<ModalContentProps> = ({
                 phone: inputPhone,
                 currentPassword: inputPassword,
                 newPassword: confirmPasswordValue,
-                profileImageUrl: image, // Include the image URL
+                profileImageUrl: image, 
             }),
         });
 
@@ -440,18 +440,25 @@ const ModalContent: React.FC<ModalContentProps> = ({
         </>
       )}
 
-      <button
-        type="submit"
-        className={styles.submitButton}
-        onClick={() => {
-          console.log('Button clicked');
-          handleSubmit();
-        }}
-      >
-        Submit
-      </button>
+      {modalType === "post-options" && (
+        <>
+          <button className={styles.submitButton}>Edit Post</button>
+          <button className={styles.submitButton}>Delete Post</button>
+        </>
+      )}
 
-
+      {modalType !== "post-options" && (
+        <button
+          type="submit"
+          className={styles.submitButton}
+          onClick={() => {
+            console.log('Button clicked');
+            handleSubmit();
+          }}
+        >
+          Submit
+        </button>
+      )}
     </Modal>
   );
 };

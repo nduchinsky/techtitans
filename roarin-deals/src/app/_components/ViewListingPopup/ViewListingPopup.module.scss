@@ -1,183 +1,82 @@
-// Variables for styling
-$popup-background: #f5f5f5;
-$popup-border-color: #e0e0e0;
-$text-color: #333;
-$primary-color: #f9c74f; // Matches the "Contact Seller" button color
-$font-family: "Arial", sans-serif;
-
-.popupWrapper {
+.backdrop {
+  background-color: rgba(255, 255, 255, 0.86);
   position: fixed;
-  top: 0;
+  top: 0; 
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 9998;
 }
 
-.popup-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40%;
-  background-color: $popup-background;
-  border-radius: 10px;
-  border: 1px solid $popup-border-color;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: $font-family;
-  padding: 20px;
-  z-index: 1000;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-
-  .post-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: $text-color;
-  }
-
-  .price {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: $text-color;
-  }
-}
-
-.seller-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-
-  .profile-picture {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #ddd;
-    margin-right: 10px;
-  }
-
-  .seller-name {
-    font-size: 1rem;
-    font-weight: bold;
-    color: $text-color;
-  }
-}
-
-.description,
-.condition,
-.pickup {
-  margin-bottom: 15px;
-
-  h4 {
-    font-size: 1rem;
-    font-weight: bold;
-    color: $text-color;
-    margin-bottom: 5px;
-  }
-
-  p {
-    font-size: 0.9rem;
-    color: $text-color;
-    line-height: 1.5;
-  }
-}
-
-.image-container {
-  width: 100%;
-  height: 200px;
-  background-color: #ccc;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  border: 1px dashed $popup-border-color;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-
-  .contact-seller {
-    background-color: $primary-color;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: darken($primary-color, 10%);
-    }
-  }
-}
-
-.close-button {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background-color: $primary-color;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-
-  &:hover {
-    background-color: darken($primary-color, 10%);
-  }
-}
-
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
 .container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 800px;
-  background-color: $popup-background;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1001;
+  background: #E4E4E4; 
+  border-radius: 20px;
+  width: 90%; 
+  height: 85%; 
+  position: fixed; 
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); 
+  z-index: 9999;
+  top: 5%;
+  left: 4%;
 }
 
-.content {
+.content{
   display: flex;
-  flex-direction: column;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 20px;
+  flex-direction: row; 
+  align-items: center; 
+  margin-left: 10%;
+  gap: 100px;
+  padding: 10px;
 }
 
-.listingImage {
-  width: 100%;
-  height: 300px;
-  margin-bottom: 20px;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
+.closeButton{
+  margin-bottom: 500px;
+}
+
+.contactSellerButton{
+  height: 30px;
+  padding: 10px 20px 30px 20px;
+  font-size: 14px;
+  border-radius: 50px;
+  margin-top: 20px;
+  background-color: #F1B82D;
+  border: none;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+}
+
+.buttonsContainer{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.backButton{
+  @extend .contactSellerButton;
+
+  margin-left: 30%;
+}
+
+// Mobile size
+@media screen and (max-width: 400px) {
+  .content{
+    gap: 0px;
+    flex-direction: column-reverse;
+    margin-left: 0;
+    padding: 30px;
+    margin-top: -10px;
+  }
+
+  .closeButton{
+    margin-bottom: 0px;
+  }
+
+  .content{
+    max-height: 100%;
+  }
+
+  .buttonsContainer{
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 }

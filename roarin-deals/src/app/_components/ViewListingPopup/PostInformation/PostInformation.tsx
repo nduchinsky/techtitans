@@ -11,11 +11,15 @@ interface PostInformationProps {
 
 const PostInformation = ({ title, price, location, description, condition, tags }: PostInformationProps) => {
     const formatPrice = (price: string) => {
-        // Remove any non-numeric characters except decimal point
         const numericPrice = price.replace(/[^\d.]/g, '');
-        // Parse the price and format with commas
         return `$${Number(numericPrice).toLocaleString()}`;
     };
+
+    const tagArray = tags.split(',')
+    .map(tag => tag.trim())
+    .filter(tag => tag.length > 0);
+
+    const containerClassName = tagArray.length > 0 ? styles.tagsContainer : '';
 
     return(
         <div className={styles.container}>
@@ -28,7 +32,7 @@ const PostInformation = ({ title, price, location, description, condition, tags 
 
             <div className={styles.nameTag}>
                 <div className={styles.pfp} />
-                <p className={styles.name}>Location: {location}</p>
+                <p className={styles.name}>First Last</p>
             </div>
 
             <p className={styles.subtitle}>Description</p>
@@ -37,10 +41,20 @@ const PostInformation = ({ title, price, location, description, condition, tags 
             <p className={styles.subtitle}>Condition</p>
             <p className={styles.plainText}>{condition}</p>
 
-            <p className={styles.subtitle}>Tags</p>
-            <p className={styles.plainText}>{tags}</p>
+            <p className={styles.subtitle}>Location</p>
+            <p className={styles.plainText}>{location}</p>
 
-            <button className={styles.contactSellerButton}>Contact Seller</button>
+            <p className={styles.subtitle}>Tags</p>
+            <div className={containerClassName}>
+                {tagArray.length > 0
+                    ? tagArray.map((tag, index) => (
+                        <p key={index} className={styles.tagText}>
+                            {tag}
+                        </p>
+                    ))
+                    : <p className={styles.plainText}>None</p>
+                }
+            </div>
         </div>
     )
 }

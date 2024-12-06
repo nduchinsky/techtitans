@@ -13,3 +13,16 @@
 .icon{
     font-size: 30px;
 }
+
+@media screen and (max-width: 400px){
+
+    .buttonContainer{
+        height: 50px;
+        width: 50px;
+    }
+
+    .icon{
+        font-size: 25px;
+    }
+
+}
