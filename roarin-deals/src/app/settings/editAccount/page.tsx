@@ -215,6 +215,8 @@ export default function EditAccount() {
                 return "Change Password";
             case "profileImage":
                 return "Change Profile Image";
+            case "post-options":
+                return "Post Title";
             default:
                 return "";
         }
@@ -318,7 +320,7 @@ export default function EditAccount() {
                 <div className={styles.productsGrid}>
                     {/* Render each listing */}
                     {listings.map((listing, index) => (
-                        <div key={index} className={styles.productCard}>
+                        <div key={index} className={styles.productCard} onClick={() => openModal("post-options")}>
                             <Image
                                 src={listing.image || placeholderImage}
                                 alt={listing.title || "Listing"}
