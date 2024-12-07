@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./modal.module.scss";
-import styleSet from "../settings.module.scss";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Modal from "./modal";
 
@@ -67,10 +66,6 @@ const ModalContent: React.FC<ModalContentProps> = ({
   setConfirmfirst_name,
   setlast_name,
   setConfirmlast_name,
-  setInputValue,
-  setConfirmValue,
-  setPhone,
-  setConfirmPhone,
   togglePasswordVisibility,
   togglePasswordConfirmVisibility,
   getModalTitle,

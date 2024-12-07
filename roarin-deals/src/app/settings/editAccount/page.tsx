@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import axios from "axios";
 import styles from "../settings.module.scss";
 import placeholderImage from "../placeholder.png";
 import zxcvbn from "zxcvbn";
@@ -28,7 +26,6 @@ export default function EditAccount() {
     const [last_name, setlast_name] = useState(user?.last_name || "");
     const [confirmfirst_name, setConfirmfirst_name] = useState("");
     const [confirmlast_name, setConfirmlast_name] = useState("");
-    const [email, setEmail] = useState(user?.email || "");
     const [phone, setPhone] = useState(user?.phone || "");
     const [confirmPhone, setConfirmPhone] = useState("");
     const [password, setPassword] = useState("");
@@ -45,7 +42,7 @@ export default function EditAccount() {
     const [isUserFetched, setIsUserFetched] = useState(false);
     const [loading, setLoading] = useState(true);
 
-    const [listings, setListings] = useState<Array<{ id: number; title: string; description: string; image?: string }>>([
+    const [listings] = useState<Array<{ id: number; title: string; description: string; image?: string }>>([
         { id: 1, title: "Sample Product 1", description: "Description for Product 1", image: placeholderImage.src },
         { id: 2, title: "Sample Product 2", description: "Description for Product 2", image: placeholderImage.src },
         { id: 3, title: "Sample Product 3", description: "Description for Product 3", image: placeholderImage.src },

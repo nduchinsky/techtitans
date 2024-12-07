@@ -1,6 +1,5 @@
 const pgp = require('pg-promise')();
 require('dotenv').config();
-
 // Initialize pg-promise with the database connection
 const db = pgp({
     host: process.env.DB_HOST,
@@ -26,7 +25,7 @@ const createUsersTable = async () => {
     try {
         await db.none(query);
     } catch (err) {
-        //Error handling
+        console.error('Error creating Users table:', err);
     }
 };
 
